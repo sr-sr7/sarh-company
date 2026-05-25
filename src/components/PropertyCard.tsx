@@ -1,43 +1,105 @@
-import Image from 'next/image'
-import type { Property } from '@/lib/supabase'
+'use client'
+import { Property } from '@/lib/supabase'
+import { useFavorites, useCompare } from '@/lib/favorites'
 
-const fmt = new Intl.NumberFormat('ar-SA')
+const ICONS: Record<string, string> = {
+  'فيلا':'🏡','أرض':'🏗️','شقة':'🏢','استراحة':'🏖️',
+  'دبلكس':'🏘️','محل تجاري':'🏪','مستودع':'🏭','مزرعة':'🌾','قصر':'🏰'
+}
 
 export default function PropertyCard({ property: p }: { property: Property }) {
-  const opColor = p.operation === 'للبيع' ? 'bg-ink' : p.operation === 'للإيجار' ? 'bg-moss-600' : 'bg-[#2d7d5a]'
-  const fallback = 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80'
+  const price   = new Intl.NumberFormat('ar-SA').format(p.price)
+  const img     = p.main_image || (p.images?.[0] ?? null)
+  const favs    = useFavorites()
+  const compare = useCompare()
+  const isFav   = favs.has(p.id)
+  const isCmp   = compare.has(p.id)
 
   return (
-    <article className="bg-white rounded-2xl overflow-hidden border border-ink/10 hover:border-ink/25 transition group">
-      <a href={`/property/${p.id}`} className="block">
-        <div className="relative aspect-[4/3] bg-sand overflow-hidden">
-          <Image src={p.main_image || fallback} alt={p.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-105 transition duration-500" />
-          <div className={`absolute top-3 right-3 ${opColor} text-sand text-[10px] px-3 py-1 rounded-full font-medium`}>{p.operation}</div>
-          {p.is_featured && (<div className="absolute top-3 left-3 bg-cream/95 backdrop-blur text-ink text-[10px] px-3 py-1 rounded-full font-medium border border-ink/10">مميز</div>)}
+    <div
+      onClick={() => window.location.href = `/properties/${p.id}`}
+      className="bg-white border border-[#27423e]/10 rounded-xl overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:border-[#27423e]/25 transition-all duration-300 cursor-pointer slide-in"
+      style={{ position:'relative' }}
+    >
+      {/* Image */}
+      <div className="relative h-48 bg-[#d3e2dc] flex items-center justify-center overflow-hidden">
+        {img ? (
+          <img src={img} alt={p.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+        ) : (
+          <span className="text-5xl opacity-20">{ICONS[p.type] || '🏠'}</span>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a34]/60 to-transparent" />
+
+        {/* Badges */}
+        <div className="absolute top-3 right-3 flex gap-2">
+          <span className="text-xs font-bold px-3 py-1 rounded-md bg-[#d3e2dc] text-[#1e3a34]">{p.operation}</span>
+          {p.is_featured && <span className="text-xs font-bold px-3 py-1 rounded-md bg-[#b8986a] text-[#1e3a34]">مميز</span>}
+          {p.is_new      && <span className="text-xs font-bold px-3 py-1 rounded-md bg-[#d3e2dc] text-[#1e3a34]">جديد</span>}
         </div>
-        <div className="p-4">
-          <h3 className="font-medium text-ink text-base mb-1 line-clamp-1">{p.title}</h3>
-          <div className="flex items-center gap-1 text-xs text-moss-500 mb-3">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-            <span>{p.city}{p.district ? ` — ${p.district}` : ''}</span>
+
+        {/* ❤️ Favorite + ⚖️ Compare buttons */}
+        <div style={{ position:'absolute', top:10, left:10, display:'flex', flexDirection:'column', gap:6, zIndex:10 }}>
+          <button
+            onClick={e => { e.stopPropagation(); favs.toggle(p.id) }}
+            title={isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة'}
+            style={{ width:34, height:34, borderRadius:'50%', border:'none', background:isFav ? '#e74c3c' : 'rgba(255,255,255,0.85)', color:isFav ? '#fff' : '#666', fontSize:'1rem', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 8px rgba(0,0,0,0.2)', transition:'all 0.2s' }}>
+            {isFav ? '❤️' : '🤍'}
+          </button>
+          <button
+            onClick={e => { e.stopPropagation(); compare.toggle(p.id) }}
+            title={isCmp ? 'إلغاء المقارنة' : 'إضافة للمقارنة'}
+            style={{ width:34, height:34, borderRadius:'50%', border:'none', background:isCmp ? '#27423e' : 'rgba(255,255,255,0.85)', color:isCmp ? '#b8986a' : '#666', fontSize:'0.85rem', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 8px rgba(0,0,0,0.2)', transition:'all 0.2s', fontWeight:800 }}>
+            ⚖️
+          </button>
+        </div>
+
+        {/* Listing number */}
+        {p.listing_number && (
+          <div className="absolute bottom-3 left-3">
+            <span style={{ background:'rgba(0,0,0,0.55)', color:'#b8986a', fontSize:'0.7rem', fontWeight:800, padding:'3px 9px', borderRadius:6, fontFamily:'monospace', backdropFilter:'blur(4px)' }}>
+              #{p.listing_number}
+            </span>
           </div>
-          <div className="flex items-center gap-4 pb-3 mb-3 border-b border-ink/10 text-xs text-moss-500">
-            {p.bedrooms > 0 && (<span className="inline-flex items-center gap-1"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 8v12M22 8v12M2 14h20M2 8c0-2 1-3 3-3h14c2 0 3 1 3 3" /></svg>{p.bedrooms}</span>)}
-            {p.bathrooms > 0 && (<span className="inline-flex items-center gap-1"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 12h18M5 12V7a3 3 0 0 1 6 0M3 12v3a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4v-3" /></svg>{p.bathrooms}</span>)}
-            {p.area && (<span className="inline-flex items-center gap-1"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /></svg>{p.area} م²</span>)}
+        )}
+      </div>
+
+      {/* Body */}
+      <div className="p-5">
+        <p className="text-xs text-[#2d5750] font-bold tracking-wider uppercase mb-1">{p.type}</p>
+        <h3 className="font-amiri text-lg text-[#1e3a34] leading-snug mb-2 line-clamp-2">{p.title}</h3>
+        <p className="text-xs text-[#7a9188] mb-4">📍 {p.city}{p.district ? ` — ${p.district}` : ''}</p>
+
+        {/* Specs */}
+        <div className="flex flex-wrap gap-3 py-3 border-t border-b border-[#27423e]/08 mb-4 text-xs text-[#7a9188]">
+          {p.area       ? <span>📐 {p.area} م²</span>   : null}
+          {p.bedrooms>0 ? <span>🛏️ {p.bedrooms} غرف</span> : null}
+          {p.bathrooms>0? <span>🚿 {p.bathrooms} حمام</span>: null}
+          {p.has_pool   && <span>🏊 مسبح</span>}
+          {p.has_parking&& <span>🚗 مواقف</span>}
+        </div>
+
+        {/* Footer */}
+        <div className="flex items-center justify-between">
+          <div className="font-amiri text-xl text-[#1e3a34] font-bold">
+            {price} <span className="text-xs font-normal text-[#7a9188]">{p.price_unit}</span>
           </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-amiri text-xl text-ink-700 font-medium leading-none">{fmt.format(p.price)}</div>
-              <div className="text-[10px] text-moss-500 mt-1">{p.price_unit}</div>
-            </div>
-            <div className="flex gap-2">
-              <a href={`https://wa.me/${p.whatsapp}?text=${encodeURIComponent(`أهتم بالعقار: ${p.title}`)}`} onClick={e => e.stopPropagation()} target="_blank" rel="noopener" className="w-9 h-9 rounded-full bg-[#25D366] flex items-center justify-center hover:scale-110 transition" aria-label="واتساب"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487" /></svg></a>
-              <div className="w-9 h-9 rounded-full bg-ink flex items-center justify-center group-hover:bg-ink-900 transition"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f4ede4" strokeWidth="2"><path d="M5 12h14M12 5l-7 7 7 7" /></svg></div>
-            </div>
+          <div className="flex gap-2">
+            <a
+              href={`https://wa.me/${p.whatsapp}?text=${encodeURIComponent('مرحبا انا استفسر عن عقار رقم ' + (p.listing_number ?? p.id))}`}
+              target="_blank"
+              onClick={e => e.stopPropagation()}
+              className="bg-[#25D366] text-white text-sm px-3 py-2 rounded-lg hover:opacity-85 transition">
+              💬
+            </a>
+            <a
+              href={`/properties/${p.id}`}
+              onClick={e => e.stopPropagation()}
+              className="bg-[#1e3a34]/08 border border-[#1e3a34]/15 text-[#1e3a34] text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#d3e2dc] transition">
+              التفاصيل
+            </a>
           </div>
         </div>
-      </a>
-    </article>
+      </div>
+    </div>
   )
 }

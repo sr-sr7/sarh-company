@@ -1,15 +1,21 @@
-import { createClient } from '@supabase/supabase-js'
+// ── Supabase config — single source of truth ──────────────────
+export const SB_URL = 'https://mhawrjypmydnpcalnjlf.supabase.co'
+export const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oYXdyanlwbXlkbnBjYWxuamxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNDg2NDksImV4cCI6MjA5MzYyNDY0OX0.jisZ21dv5M3wmTT8RbOnLT-2W4hxlwTo5Mf_qqROzkY'
+export const SB_HEADERS = { 'apikey': SB_KEY, 'authorization': `Bearer ${SB_KEY}` }
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+export async function sbFetch(path: string, opts: RequestInit = {}) {
+  const r = await fetch(`${SB_URL}/rest/v1/${path}`, {
+    headers: SB_HEADERS,
+    cache: 'no-store',
+    ...opts,
+  })
+  return r.ok ? r.json() : []
+}
 
-export const supabase =
-  supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null
-
+// ── Types ──────────────────────────────────────────────────────
 export type Property = {
   id: string
   created_at: string
-  updated_at?: string
   title: string
   description: string | null
   type: string
@@ -25,12 +31,17 @@ export type Property = {
   has_pool: boolean
   has_parking: boolean
   has_garden: boolean
+  images: string[]
   main_image: string | null
-  images: string[] | null
-  video_url: string | null
   is_featured: boolean
   is_new: boolean
   whatsapp: string
+  video_url: string | null
+  listing_number: number | null
+  map_url: string | null
+  maid_rooms: number | null
+  kitchens: number | null
+  has_annex: boolean
 }
 
 export type Inquiry = {
