@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { supabase, type Property } from '@/lib/supabase'
+import { sbFetch, type Property } from '@/lib/supabase'
 import PropertyCard from './PropertyCard'
 
 export default function PropertiesGrid() {
@@ -8,9 +8,13 @@ export default function PropertiesGrid() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!supabase) { setLoading(false); return }
     let cancelled = false
-    supabase.from('properties').select('*').eq('status', 'active').order('is_featured', { ascending: false }).order('created_at', { ascending: false }).limit(12).then(({ data }) => { if (cancelled) return; setItems((data as Property[]) || []); setLoading(false) })
+    sbFetch('properties?select=*&status=eq.active&order=is_featured.desc,created_at.desc&limit=12')
+      .then((data: Property[]) => {
+        if (cancelled) return
+        setItems(data || [])
+        setLoading(false)
+      })
     return () => { cancelled = true }
   }, [])
 
