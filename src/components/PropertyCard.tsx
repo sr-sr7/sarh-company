@@ -1,4 +1,6 @@
 'use client'
+import { useState } from 'react'
+import PropertyModal from './PropertyModal'
 import { Property } from '@/lib/supabase'
 import { useFavorites, useCompare } from '@/lib/favorites'
 
@@ -8,6 +10,7 @@ const ICONS: Record<string, string> = {
 }
 
 export default function PropertyCard({ property: p }: { property: Property }) {
+  const [modalId, setModalId] = useState<string|null>(null)
   const price   = new Intl.NumberFormat('ar-SA').format(p.price)
   const img     = p.main_image || (p.images?.[0] ?? null)
   const favs    = useFavorites()
@@ -17,7 +20,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
 
   return (
     <div
-      onClick={() => window.location.href = `/properties/${p.id}/`}
+      onClick={() => setModalId(p.id)}
       className="bg-white border border-[#27423e]/10 rounded-xl overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:border-[#27423e]/25 transition-all duration-300 cursor-pointer slide-in"
       style={{ position:'relative' }}
     >
@@ -92,7 +95,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
               💬
             </a>
             <a
-              href={`/properties/${p.id}/`}
+              href='#' onClick={e => { e.preventDefault(); e.stopPropagation(); setModalId(p.id) }}
               onClick={e => e.stopPropagation()}
               className="bg-[#1e3a34]/08 border border-[#1e3a34]/15 text-[#1e3a34] text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#d3e2dc] transition">
               التفاصيل
@@ -101,5 +104,6 @@ export default function PropertyCard({ property: p }: { property: Property }) {
         </div>
       </div>
     </div>
+    {modalId && <PropertyModal id={modalId} onClose={() => setModalId(null)} />}
   )
 }
