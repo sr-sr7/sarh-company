@@ -4,6 +4,12 @@ import { Property, SB_URL, SB_HEADERS } from '@/lib/supabase'
 
 export default function PropertyModal({ id, onClose }: { id: string; onClose: () => void }) {
   const [p, setP] = useState<Property | null>(null)
+
+  // Lock background scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
   const [loading, setLoading] = useState(true)
   const [activeImg, setActiveImg] = useState(0)
 
