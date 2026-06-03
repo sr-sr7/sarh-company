@@ -3,6 +3,7 @@ import Script from 'next/script'
 import './globals.css'
 import PromoWidget from '@/components/PromoWidget'
 import CapacitorInit from '@/components/CapacitorInit'
+import PushNotifications from '@/components/PushNotifications'
 import CompareBar  from '@/components/CompareBar'
 
 export const metadata: Metadata = {
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-tajawal bg-cream text-green-dark antialiased">
         {children}
         <CapacitorInit />
+        <PushNotifications />
         <PromoWidget />
         <CompareBar />
 
