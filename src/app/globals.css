@@ -9,3 +9,11 @@ body { font-family: 'Tajawal', 'Cairo', sans-serif; background: #f4ede4; color: 
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #f4ede4; }
 ::-webkit-scrollbar-thumb { background: #41646d; border-radius: 4px; }
+
+/* ── Safe Area for iOS (Capacitor) ── */
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}

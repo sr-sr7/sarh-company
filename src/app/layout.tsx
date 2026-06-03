@@ -39,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
         <meta name="mobile-web-app-capable"      content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
         <link rel="icon"             type="image/png" href="/icon-512.png" />
         <link rel="shortcut icon"    type="image/png" href="/icon-512.png" />
         <link rel="apple-touch-icon"               href="/icon-192.png" />
