@@ -57,9 +57,9 @@ export default function Navbar() {
     <>
       <nav style={{
         position: 'fixed', top: 0, right: 0, left: 0, zIndex: 1000,
-        paddingTop: 'env(safe-area-inset-top)',
+        paddingTop: 'var(--status-bar-height, env(safe-area-inset-top, 0px))',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 3%', height: 'calc(80px + env(safe-area-inset-top))',
+        padding: '0 3%', height: 'calc(80px + var(--status-bar-height, env(safe-area-inset-top, 0px)))',
         background: navBg,
         backdropFilter: 'blur(16px)',
         boxShadow: scrolled ? '0 2px 24px rgba(30,58,52,0.14)' : '0 1px 0 rgba(30,58,52,0.08)',
