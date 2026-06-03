@@ -19,6 +19,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
   const isCmp   = compare.has(p.id)
 
   return (
+    <>
     <div
       onClick={() => setModalId(p.id)}
       className="bg-white border border-[#27423e]/10 rounded-xl overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:border-[#27423e]/25 transition-all duration-300 cursor-pointer slide-in"
@@ -104,5 +105,6 @@ export default function PropertyCard({ property: p }: { property: Property }) {
       </div>
     </div>
     {modalId && <PropertyModal id={modalId} onClose={() => setModalId(null)} />}
+    </>
   )
 }
