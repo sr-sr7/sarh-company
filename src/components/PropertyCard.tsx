@@ -95,8 +95,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
               💬
             </a>
             <a
-              href='#' onClick={e => { e.preventDefault(); e.stopPropagation(); setModalId(p.id) }}
-              onClick={e => e.stopPropagation()}
+              href='javascript:void(0)' onClick={e => { e.preventDefault(); e.stopPropagation(); setModalId(p.id) }}
               className="bg-[#1e3a34]/08 border border-[#1e3a34]/15 text-[#1e3a34] text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#d3e2dc] transition">
               التفاصيل
             </a>
