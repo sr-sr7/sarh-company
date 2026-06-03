@@ -37,8 +37,8 @@ const S = {
   heroBtns: { display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' as const },
   btnPrimary: { background: '#b8986a', color: '#1e3a34', padding: '14px 32px', borderRadius: 10, fontWeight: 700, fontSize: '1rem', textDecoration: 'none', display: 'inline-block' },
   btnOutline: { background: 'rgba(30,58,52,0.08)', color: '#1e3a34', border: '1px solid rgba(30,58,52,0.2)', padding: '14px 32px', borderRadius: 10, fontWeight: 600, fontSize: '1rem', textDecoration: 'none', display: 'inline-block' },
-  heroStats: { display: 'flex', justifyContent: 'center', gap: 48, marginTop: 64, flexWrap: 'wrap' as const },
-  statNum: { display: 'block', fontSize: '2.5rem', fontWeight: 800, color: '#b8986a' },
+  heroStats: { display: 'flex', justifyContent: 'center', gap: 24, marginTop: 48, flexWrap: 'wrap' as const, padding: '0 16px' },
+  statNum: { display: 'block', fontSize: 'clamp(1.6rem,5vw,2.5rem)', fontWeight: 800, color: '#b8986a' },
   statLabel: { color: '#4a7a72', fontSize: '0.85rem', marginTop: 4, display: 'block' },
 
   // About

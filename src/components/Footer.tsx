@@ -91,7 +91,7 @@ export default function Footer() {
           rel="noopener noreferrer"
           style={{ display: 'flex', flexDirection: 'column' as const, alignItems: 'center', gap: 8, textDecoration: 'none' }}
         >
-          <img src="/asimjed-logo.png" alt="AsiMjed" style={{ width: 100, height: 100, objectFit: 'contain' }} />
+          <img src="/asimjed-logo.png" alt="AsiMjed" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} style={{ width: 100, height: 100, objectFit: 'contain' }} />
           <span style={{ color: 'rgba(30,58,52,0.7)', fontSize: '0.78rem', fontWeight: 500, fontFamily: "'Tajawal','Cairo',sans-serif", textAlign: 'center' as const }}>
             تم تطوير وتنفيذ هذا الموقع من قبل مجموعة AsiMjed لتطوير المواقع — للتواصل 0591088884
           </span>
