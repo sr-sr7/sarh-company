@@ -54,7 +54,7 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
 export async function generateStaticParams() {
   try {
     const res = await fetch(
-      `${SB_URL}/rest/v1/properties?select=id&status=eq.active`,
+      `${SB_URL}/rest/v1/properties?select=id`,
       { headers: SB_HEADERS }
     )
     const data: { id: string }[] = res.ok ? await res.json() : []
