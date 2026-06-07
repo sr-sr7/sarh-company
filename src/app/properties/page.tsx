@@ -28,18 +28,23 @@ function PropertiesInner() {
 
   async function loadProperties() {
     setLoading(true)
-    let url = `${SB_URL}/rest/v1/properties?select=*&status=eq.active&order=is_featured.desc,created_at.desc`
-    if (filters.operation) url += `&operation=eq.${encodeURIComponent(filters.operation)}`
-    if (filters.type)      url += `&type=eq.${encodeURIComponent(filters.type)}`
-    if (filters.city)      url += `&city=eq.${encodeURIComponent(filters.city)}`
-    if (filters.search)    url += `&title=ilike.${encodeURIComponent('%' + filters.search + '%')}`
-    if (filters.minPrice)  url += `&price=gte.${filters.minPrice}`
-    if (filters.maxPrice)  url += `&price=lte.${filters.maxPrice}`
-    if (filters.bedrooms)  url += `&bedrooms=gte.${filters.bedrooms}`
-    const res = await fetch(url, { headers: H, cache: 'no-store' })
-    const data = res.ok ? await res.json() : []
-    setProperties(Array.isArray(data) ? data : [])
-    setLoading(false)
+    try {
+      let url = `${SB_URL}/rest/v1/properties?select=*&status=eq.active&order=is_featured.desc,created_at.desc`
+      if (filters.operation) url += `&operation=eq.${encodeURIComponent(filters.operation)}`
+      if (filters.type)      url += `&type=eq.${encodeURIComponent(filters.type)}`
+      if (filters.city)      url += `&city=eq.${encodeURIComponent(filters.city)}`
+      if (filters.search)    url += `&title=ilike.${encodeURIComponent('%' + filters.search + '%')}`
+      if (filters.minPrice)  url += `&price=gte.${filters.minPrice}`
+      if (filters.maxPrice)  url += `&price=lte.${filters.maxPrice}`
+      if (filters.bedrooms)  url += `&bedrooms=gte.${filters.bedrooms}`
+      const res = await fetch(url, { headers: H, cache: 'no-store' })
+      const data = res.ok ? await res.json() : []
+      setProperties(Array.isArray(data) ? data : [])
+    } catch {
+      setProperties([])
+    } finally {
+      setLoading(false)
+    }
   }
 
   function setF(k: string, v: string) {

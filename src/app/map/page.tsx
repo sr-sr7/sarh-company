@@ -22,14 +22,19 @@ export default function MapPage() {
 
   async function load() {
     setLoading(true)
-    let url = `${SB_URL}/rest/v1/properties?select=*&status=eq.active&order=is_featured.desc`
-    if (filters.operation) url += `&operation=eq.${encodeURIComponent(filters.operation)}`
-    if (filters.type)      url += `&type=eq.${encodeURIComponent(filters.type)}`
-    if (filters.city)      url += `&city=eq.${encodeURIComponent(filters.city)}`
-    const res  = await fetch(url, { headers: SB_HEADERS, cache:'no-store' })
-    const data = res.ok ? await res.json() : []
-    setProperties(Array.isArray(data) ? data : [])
-    setLoading(false)
+    try {
+      let url = `${SB_URL}/rest/v1/properties?select=*&status=eq.active&order=is_featured.desc`
+      if (filters.operation) url += `&operation=eq.${encodeURIComponent(filters.operation)}`
+      if (filters.type)      url += `&type=eq.${encodeURIComponent(filters.type)}`
+      if (filters.city)      url += `&city=eq.${encodeURIComponent(filters.city)}`
+      const res  = await fetch(url, { headers: SB_HEADERS, cache:'no-store' })
+      const data = res.ok ? await res.json() : []
+      setProperties(Array.isArray(data) ? data : [])
+    } catch {
+      setProperties([])
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => { load() }, [filters])
