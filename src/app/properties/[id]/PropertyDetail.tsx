@@ -26,11 +26,15 @@ const CITY_COORDS: Record<string, [number, number]> = {
 }
 
 function extractCoords(url: string): [number,number]|null {
-  const m = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)
-  if (m) return [parseFloat(m[1]),parseFloat(m[2])]
-  const q = url.match(/[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)/)
-  if (q) return [parseFloat(q[1]),parseFloat(q[2])]
-  return null
+  const patterns = [
+    url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/),
+    url.match(/[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)/),
+    url.match(/[?&]ll=(-?\d+\.\d+),(-?\d+\.\d+)/),
+    url.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/),
+    url.match(/pb=.*!3d(-?\d+\.\d+).*!4d(-?\d+\.\d+)/),
+  ]
+  const m = patterns.find(Boolean)
+  return m ? [parseFloat(m[1]), parseFloat(m[2])] : null
 }
 function osmEmbed(lat:number,lng:number,z=0.008){
   return `https://www.openstreetmap.org/export/embed.html?bbox=${lng-z},${lat-z},${lng+z},${lat+z}&layer=mapnik&marker=${lat},${lng}`

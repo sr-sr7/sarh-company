@@ -910,12 +910,24 @@ export default function AdminPage() {
                 </div>
                 {form.map_url && (() => {
                   // استخرج إحداثيات من رابط قوقل ماب
-                  const cm = form.map_url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)
-                  const qm = form.map_url.match(/[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)/)
-                  const coords = cm ? [parseFloat(cm[1]), parseFloat(cm[2])] : qm ? [parseFloat(qm[1]), parseFloat(qm[2])] : null
+                  // أنماط إحداثيات قوقل ماب المختلفة
+                  const cm  = form.map_url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)                      // @lat,lng
+                  const qm  = form.map_url.match(/[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)/)                // ?q=lat,lng
+                  const llm = form.map_url.match(/[?&]ll=(-?\d+\.\d+),(-?\d+\.\d+)/)               // ll=lat,lng
+                  const d3m = form.map_url.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/)                 // !3dlat!4dlng
+                  const pbm = form.map_url.match(/pb=.*!3d(-?\d+\.\d+).*!4d(-?\d+\.\d+)/)          // pb=...!3d...!4d
+                  const raw = cm || qm || llm || d3m || pbm
+                  const coords = raw ? [parseFloat(raw[1]), parseFloat(raw[2])] : null
                   if (!coords) return (
-                    <div style={{ marginTop:10, background:'#fff8e1', border:'1px solid #f0d060', borderRadius:10, padding:'10px 14px', fontSize:'0.8rem', color:'#7a6000' }}>
-                      ⚠️ تعذّر استخراج الإحداثيات من الرابط. تأكد أن الرابط من قوقل ماب ويحتوي على <strong>@lat,lng</strong> — جرّب افتح الموقع في قوقل ماب ثم انسخ رابط الصفحة مباشرة من شريط العنوان.
+                    <div style={{ marginTop:10, background:'#fff8e1', border:'1px solid #f0d060', borderRadius:10, padding:'12px 16px', fontSize:'0.8rem', color:'#7a6000' }}>
+                      <div style={{ fontWeight:800, marginBottom:8 }}>⚠️ تعذّر استخراج الإحداثيات من الرابط</div>
+                      <div style={{ marginBottom:8 }}>إذا كان الرابط مختصراً (مثل <strong>maps.app.goo.gl/...</strong>) اتبع هذه الخطوات:</div>
+                      <ol style={{ margin:'0 0 0 16px', paddingRight:0, lineHeight:2 }}>
+                        <li>افتح الرابط في المتصفح</li>
+                        <li>انتظر حتى تنفتح الخريطة كاملاً</li>
+                        <li>انسخ الرابط الجديد من شريط العنوان (سيكون طويلاً ويحتوي على <strong>@lat,lng</strong>)</li>
+                        <li>الصقه هنا</li>
+                      </ol>
                     </div>
                   )
                   const [lat, lng] = coords
