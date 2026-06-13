@@ -39,7 +39,7 @@ export function sanitizeProperty(body: Record<string, unknown>) {
     whatsapp:    sanitizeText(body.whatsapp).replace(/\D/g, ''),
     video_url:   body.video_url ? sanitizeText(body.video_url) : null,
     map_url:     body.map_url ? sanitizeText(body.map_url) : null,
-    listing_number: body.listing_number ? sanitizeNumber(body.listing_number) : null,
+    listing_number: body.listing_number != null ? sanitizeNumber(body.listing_number) : undefined,
     maid_rooms:  body.maid_rooms != null ? sanitizeNumber(body.maid_rooms) : null,
     kitchens:    body.kitchens != null ? sanitizeNumber(body.kitchens) : null,
   }
