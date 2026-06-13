@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import './globals.css'
 import PromoWidget     from '@/components/PromoWidget'
+import InstallPrompt   from '@/components/InstallPrompt'
 import CapacitorInit   from '@/components/CapacitorInit'
 import PushNotifications from '@/components/PushNotifications'
 import CompareBar      from '@/components/CompareBar'
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="font-tajawal bg-cream text-green-dark antialiased">
         {children}
+        <InstallPrompt />
         <CapacitorInit />
         <PushNotifications />
         <PromoWidget />
