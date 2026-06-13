@@ -297,8 +297,7 @@ export default function Home() {
           {viewMode === 'grid' && !loading && properties.length === 0 && (
             <div style={S.empty}>
               <span style={S.emptyIcon}>🏠</span>
-              <p style={S.emptyText}>لا توجد عقارات في هذه الفئة حالياً</p>
-              <a href="/admin" style={S.emptyBtn}>أضف من لوحة التحكم</a>
+              <p style={S.emptyText}>انتظروا عروضنا قريباً</p>
             </div>
           )}
           {viewMode === 'grid' && !loading && properties.length > 0 && (
