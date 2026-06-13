@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { isAuthenticated } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { sanitizeProperty } from '@/lib/sanitize'
 
 export const runtime = 'nodejs'
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   if (!isAuthenticated()) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
   try {
-    const body = await req.json()
+    const raw  = await req.json()
+    const body = sanitizeProperty(raw)
     const { error } = await supabaseAdmin.from('properties').update(body).eq('id', params.id)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     return NextResponse.json({ success: true })

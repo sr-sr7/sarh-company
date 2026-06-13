@@ -74,15 +74,16 @@ export default function PropertyDetail({ id }: { id: string }) {
 
   useEffect(() => {
     if (!id) return
+    let cancelled = false
     fetch(`${SB_URL}/rest/v1/properties?id=eq.${id}&select=*`, { headers:H, cache:'no-store' })
       .then(r => r.ok ? r.json() : [])
-      .then((data:Property[]) => { if (data.length>0) setProperty(data[0]); setLoading(false) })
-      .catch(() => setLoading(false))
-    // Fetch approved reviews for this property
+      .then((data:Property[]) => { if (!cancelled) { if (data.length>0) setProperty(data[0]); setLoading(false) } })
+      .catch(() => { if (!cancelled) setLoading(false) })
     fetch(`${SB_URL}/rest/v1/inquiries?property_id=eq.${id}&type=eq.review&status=eq.approved&order=created_at.desc`, { headers:H, cache:'no-store' })
       .then(r => r.ok ? r.json() : [])
-      .then(data => setReviews(Array.isArray(data) ? data : []))
+      .then(data => { if (!cancelled) setReviews(Array.isArray(data) ? data : []) })
       .catch(() => {})
+    return () => { cancelled = true }
   }, [id])
 
   async function sendReview(e: React.FormEvent) {

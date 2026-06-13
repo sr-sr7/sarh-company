@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { isAuthenticated } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { sanitizeProperty } from '@/lib/sanitize'
 
 export const runtime = 'nodejs'
 
@@ -17,7 +18,11 @@ export async function GET() {
 export async function POST(req: Request) {
   if (!isAuthenticated()) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
   try {
-    const body = await req.json()
+    const raw  = await req.json()
+    const body = sanitizeProperty(raw)
+    if (!body.title || !body.type || !body.city || !body.price) {
+      return NextResponse.json({ error: 'حقول مطلوبة ناقصة' }, { status: 400 })
+    }
     const { data, error } = await supabaseAdmin
       .from('properties')
       .insert(body)
