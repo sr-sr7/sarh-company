@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { COOKIE_NAME } from '@/lib/auth'
+import { COOKIE_NAME, makeSessionToken } from '@/lib/auth'
 
 export const runtime = 'nodejs'
 
@@ -14,12 +14,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'كلمة السر غير صحيحة' }, { status: 401 })
     }
     const res = NextResponse.json({ ok: true })
-    res.cookies.set(COOKIE_NAME, password, {
+    res.cookies.set(COOKIE_NAME, makeSessionToken(expected), {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 30,
+      secure:   process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path:     '/',
+      maxAge:   60 * 60 * 24 * 7,
     })
     return res
   } catch {
