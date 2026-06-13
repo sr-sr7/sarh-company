@@ -37,6 +37,8 @@ export default function PropertyCard({ property: p }: { property: Property }) {
           -webkit-backface-visibility: hidden;
           border-radius: 16px;
           overflow: hidden;
+          -webkit-transform: translateZ(0);
+          transform: translateZ(0);
         }
         .flip-back {
           transform: rotateY(180deg);
@@ -60,13 +62,13 @@ export default function PropertyCard({ property: p }: { property: Property }) {
           <div className="flip-front bg-white border border-[#27423e]/10 shadow-sm">
 
             {/* صورة */}
-            <div className="relative h-48 bg-[#d3e2dc] flex items-center justify-center overflow-hidden">
+            <div style={{ position:'relative', height:192, background:'#d3e2dc', overflow:'hidden', flexShrink:0 }}>
               {img ? (
-                <img src={img} alt={p.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                <img src={img} alt={p.title} loading="eager" style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
               ) : (
-                <span className="text-5xl opacity-20">{ICONS[p.type] || '🏠'}</span>
+                <span style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', fontSize:'3rem', opacity:0.2 }}>{ICONS[p.type] || '🏠'}</span>
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a34]/60 to-transparent" />
+              <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top, rgba(30,58,52,0.55) 0%, transparent 60%)', pointerEvents:'none' }} />
 
               {/* شارات */}
               <div className="absolute top-3 right-3 flex gap-2">
