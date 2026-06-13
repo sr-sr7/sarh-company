@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /api/
+Disallow: /maintenance
+
+Sitemap: https://sarh-company.com/sitemap.xml
