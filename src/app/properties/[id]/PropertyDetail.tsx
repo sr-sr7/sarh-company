@@ -91,19 +91,17 @@ export default function PropertyDetail({ id }: { id: string }) {
     if (!revName.trim() || !revMsg.trim()) return
     setSending(true)
     try {
-      await fetch(`${SB_URL}/rest/v1/inquiries`, {
-        method:'POST',
-        headers:{ ...H, 'content-type':'application/json', 'prefer':'return=minimal' },
+      const res = await fetch('/api/public/inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          property_id: id,
-          client_name: revName.trim(),
-          client_phone: String(revRating),   // نحفظ التقييم في حقل الهاتف
-          client_email: '',
-          message: revMsg.trim(),
-          type: 'review',
-          status: 'pending',
-        })
+          property_id:  id,
+          client_name:  revName.trim(),
+          rating:       revRating,
+          message:      revMsg.trim(),
+        }),
       })
+      if (!res.ok) { const d = await res.json(); throw new Error(d.error) }
       setSent(true)
     } catch {}
     setSending(false)

@@ -149,17 +149,22 @@ export default function Home() {
 
   async function loadProperties(tab: TabKey) {
     setLoading(true)
-    let filter = ''
-    if      (tab === 'الكل')    filter = ''
-    else if (tab === 'إيجار')  filter = `&operation=eq.${encodeURIComponent('للإيجار')}`
-    else if (tab === 'تجاري')  filter = `&type=in.(${encodeURIComponent('محل تجاري')},${encodeURIComponent('مستودع')})`
-    else                        filter = `&type=eq.${encodeURIComponent(tab)}`
-    const data = await sbFetch(
-      `properties?select=*&status=eq.active${filter}&order=is_featured.desc,created_at.desc`,
-      { cache: 'no-store' }
-    )
-    setProperties(Array.isArray(data) ? data : [])
-    setLoading(false)
+    try {
+      let filter = ''
+      if      (tab === 'الكل')    filter = ''
+      else if (tab === 'إيجار')  filter = `&operation=eq.${encodeURIComponent('للإيجار')}`
+      else if (tab === 'تجاري')  filter = `&type=in.(${encodeURIComponent('محل تجاري')},${encodeURIComponent('مستودع')})`
+      else                        filter = `&type=eq.${encodeURIComponent(tab)}`
+      const data = await sbFetch(
+        `properties?select=*&status=eq.active${filter}&order=is_featured.desc,created_at.desc`,
+        { cache: 'no-store' }
+      )
+      setProperties(Array.isArray(data) ? data : [])
+    } catch {
+      setProperties([])
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

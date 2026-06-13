@@ -1,7 +1,6 @@
 'use client'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { SB_URL, SB_KEY } from '@/lib/supabase'
 
 const PROPERTY_TYPES = ['فيلا','أرض','شقة','استراحة','دبلكس','مستودع','مزرعة','قصر','تجاري','أخرى']
 
@@ -24,17 +23,13 @@ export default function PromoWidget() {
     setLoading(true)
     setError('')
     try {
-      const res = await fetch(`${SB_URL}/rest/v1/promo_leads`, {
+      const res = await fetch('/api/public/promo', {
         method: 'POST',
-        headers: {
-          'apikey': SB_KEY,
-          'authorization': `Bearer ${SB_KEY}`,
-          'content-type': 'application/json',
-          'prefer': 'return=minimal',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name.trim(), phone: phone.trim(), property_type: propType }),
       })
-      if (!res.ok) throw new Error(await res.text())
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'حدث خطأ')
       setDone(true)
       setName(''); setPhone(''); setPropType('')
     } catch {

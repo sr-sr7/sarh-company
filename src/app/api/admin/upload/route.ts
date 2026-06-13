@@ -32,9 +32,32 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'امتداد الملف غير مسموح' }, { status: 400 })
     }
 
+    const buffer   = Buffer.from(await file.arrayBuffer())
+
+    // Validate magic bytes (prevent MIME/extension spoofing)
+    const magic = buffer.slice(0, 12)
+    const isJpeg = magic[0] === 0xFF && magic[1] === 0xD8 && magic[2] === 0xFF
+    const isPng  = magic[0] === 0x89 && magic[1] === 0x50 && magic[2] === 0x4E && magic[3] === 0x47
+    const isGif  = magic[0] === 0x47 && magic[1] === 0x49 && magic[2] === 0x46 && magic[3] === 0x38
+    const isWebp = magic[0] === 0x52 && magic[1] === 0x49 && magic[2] === 0x46 && magic[3] === 0x46 &&
+                   magic[8] === 0x57 && magic[9] === 0x45 && magic[10] === 0x42 && magic[11] === 0x50
+    const isMp4  = magic[4] === 0x66 && magic[5] === 0x74 && magic[6] === 0x79 && magic[7] === 0x70
+    const isMov  = isMp4 // MOV and MP4 share the ftyp box structure
+    const isImage = isJpeg || isPng || isGif || isWebp
+    const isVideo = isMp4 || isMov
+    if (!isImage && !isVideo) {
+      return NextResponse.json({ error: 'محتوى الملف لا يتطابق مع نوعه — تلاعب محتمل' }, { status: 400 })
+    }
+    // Cross-check: image bytes must match image MIME and vice versa
+    if (isImage && file.type.startsWith('video/')) {
+      return NextResponse.json({ error: 'نوع الملف لا يتطابق مع محتواه' }, { status: 400 })
+    }
+    if (isVideo && file.type.startsWith('image/')) {
+      return NextResponse.json({ error: 'نوع الملف لا يتطابق مع محتواه' }, { status: 400 })
+    }
+
     const fileName = Date.now() + '-' + Math.random().toString(36).slice(2, 9) + '.' + ext
     const path     = 'properties/' + fileName
-    const buffer   = Buffer.from(await file.arrayBuffer())
 
     const { error } = await supabaseAdmin.storage
       .from('property-media')
