@@ -94,7 +94,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="font-tajawal bg-cream text-green-dark antialiased">
         {children}
-        <WaterDropIntro />
         <InstallPrompt />
         <CapacitorInit />
         <PushNotifications />
