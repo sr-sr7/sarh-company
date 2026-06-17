@@ -14,6 +14,16 @@ export function sanitizeNumber(value: unknown, fallback = 0): number {
   return isFinite(n) && n >= 0 ? n : fallback
 }
 
+// Partial sanitize — only includes keys that exist in the body (for PATCH)
+export function sanitizePropertyPartial(body: Record<string, unknown>): Record<string, unknown> {
+  const full = sanitizeProperty(body)
+  const result: Record<string, unknown> = {}
+  for (const key of Object.keys(body)) {
+    if (key in full) result[key] = (full as any)[key]
+  }
+  return result
+}
+
 export function sanitizeProperty(body: Record<string, unknown>) {
   return {
     title:       sanitizeText(body.title),
