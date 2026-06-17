@@ -157,15 +157,22 @@ function PropertiesInner() {
         </div>
       </div>
 
-      <div style={{ display:'flex', minHeight:'80vh', direction:'rtl' }}>
+      <style>{`
+        .props-layout { display:flex; min-height:80vh; direction:rtl; }
+        .props-sidebar { width:260px; background:rgba(30,58,52,0.95); backdrop-filter:blur(12px); border-left:1px solid rgba(211,226,220,0.08); padding:28px 18px; flex-shrink:0; position:sticky; top:0; height:100vh; overflow-y:auto; }
+        .props-grid-wrap { flex:1; padding:32px 28px 80px; min-width:0; background:#111d1a; }
+        @media(max-width:700px){
+          .props-layout   { flex-direction:column; }
+          .props-sidebar  { width:100% !important; height:auto !important; position:static !important; padding:16px !important; border-left:none !important; border-bottom:1px solid rgba(211,226,220,0.08); }
+          .props-sidebar .filter-fields { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+          .props-grid-wrap { padding:20px 14px 60px !important; }
+        }
+      `}</style>
+
+      <div className="props-layout">
 
         {/* ═══ SIDEBAR ═══ */}
-        <aside style={{
-          width:260, background:'rgba(30,58,52,0.95)', backdropFilter:'blur(12px)',
-          borderLeft:'1px solid rgba(211,226,220,0.08)',
-          padding:'28px 18px', flexShrink:0, position:'sticky', top:0,
-          height:'100vh', overflowY:'auto',
-        }}>
+        <aside className="props-sidebar">
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:24 }}>
             <h3 style={{ fontWeight:800, fontSize:'0.95rem', color:'#b8986a', margin:0 }}>🔍 فلترة</h3>
             {hasFilters && (
@@ -175,7 +182,7 @@ function PropertiesInner() {
             )}
           </div>
 
-          <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
+          <div className="filter-fields" style={{ display:'flex', flexDirection:'column', gap:16 }}>
             <div>
               <label style={lbl}>🔤 بحث</label>
               <input className="filter-inp" value={filters.search} onChange={e=>setF('search',e.target.value)}
@@ -229,7 +236,7 @@ function PropertiesInner() {
         </aside>
 
         {/* ═══ GRID ═══ */}
-        <div ref={gridRef} style={{ flex:1, padding:'32px 28px 80px', minWidth:0, background:'#111d1a' }}>
+        <div ref={gridRef} className="props-grid-wrap">
           {!loading && (
             <p style={{ fontSize:'0.8rem', color:'rgba(168,197,190,0.5)', marginBottom:24 }}>
               {properties.length === 0 ? 'لا توجد نتائج' : `${properties.length} عقار`}

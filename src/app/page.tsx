@@ -301,24 +301,35 @@ export default function Home() {
             <div onMouseEnter={pauseCarousel} onMouseLeave={() => setCarouselPaused(false)}>
 
               {/* ── 3D Coverflow ── */}
-              <div style={{ position:'relative', height:420, perspective:1100, perspectiveOrigin:'50% 40%', overflow:'hidden' }}>
+              <style>{`
+                .coverflow-wrap { position:relative; height:420px; perspective:1100px; perspective-origin:50% 40%; overflow:hidden; }
+                @media(max-width:600px){
+                  .coverflow-wrap { height:400px; }
+                  .coverflow-card { width:88vw !important; margin-left:calc(-44vw) !important; }
+                  .coverflow-card[data-abs="1"]  { opacity:0.4 !important; }
+                  .coverflow-card[data-abs="2"]  { opacity:0 !important; }
+                }
+              `}</style>
+              <div className="coverflow-wrap">
                 {properties.map((p, i) => {
-                  const d = i - carouselIdx
+                  const d   = i - carouselIdx
                   const abs = Math.abs(d)
                   if (abs > 2) return null
-                  const tx   = d * 340
-                  const ry   = d * -26
-                  const sc   = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68
-                  const tz   = abs === 0 ? 60 : abs === 1 ? -10 : -50
-                  const op   = abs === 0 ? 1 : abs === 1 ? 0.72 : 0.38
-                  const zi   = 10 - abs
+                  const tx  = d * 300
+                  const ry  = d * -26
+                  const sc  = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68
+                  const tz  = abs === 0 ? 60 : abs === 1 ? -10 : -50
+                  const op  = abs === 0 ? 1 : abs === 1 ? 0.72 : 0.38
+                  const zi  = 10 - abs
                   return (
                     <div
                       key={p.id}
+                      className="coverflow-card"
+                      data-abs={abs}
                       onClick={() => abs > 0 && (setCarouselIdx(i), pauseCarousel())}
                       style={{
                         position:'absolute', top:0, left:'50%',
-                        width:324, marginLeft:-162,
+                        width:300, marginLeft:-150,
                         transform:`translateX(${tx}px) rotateY(${ry}deg) scale(${sc}) translateZ(${tz}px)`,
                         opacity:op, zIndex:zi,
                         transition:'transform 0.55s cubic-bezier(0.25,0.8,0.25,1), opacity 0.55s ease',
