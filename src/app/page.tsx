@@ -383,6 +383,26 @@ export default function Home() {
             </div>
           )}
         </div>
+
+        {/* زر عرض جميع العقارات */}
+        <div style={{ textAlign:'center', marginTop: 48 }}>
+          <a href="/properties" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            background: 'linear-gradient(135deg, #1e3a34, #2d5a4e)',
+            color: '#fff', fontFamily: "'Tajawal','Cairo',sans-serif",
+            fontWeight: 800, fontSize: '1rem',
+            padding: '16px 44px', borderRadius: 50,
+            textDecoration: 'none',
+            boxShadow: '0 8px 32px rgba(30,58,52,0.25)',
+            transition: 'all 0.3s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.transform='translateY(-3px) scale(1.03)')}
+          onMouseLeave={e => (e.currentTarget.style.transform='translateY(0) scale(1)')}>
+            <span style={{ fontSize:'1.2rem' }}>🏠</span>
+            عرض جميع العقارات
+            <span style={{ fontSize:'0.85rem', background:'rgba(184,152,106,0.3)', padding:'3px 10px', borderRadius:20, color:'#b8986a' }}>3D</span>
+          </a>
+        </div>
       </section>
 
       {/* ── Why Sarh ── */}

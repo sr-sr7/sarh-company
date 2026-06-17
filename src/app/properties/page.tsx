@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState, Suspense } from 'react'
+import { useEffect, useState, Suspense, useRef } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Property, SB_URL, SB_HEADERS } from '@/lib/supabase'
 import Navbar from '@/components/Navbar'
@@ -10,10 +10,11 @@ const H = SB_HEADERS
 
 function PropertiesInner() {
   const searchParams = useSearchParams()
-  const router = useRouter()
+  const router       = useRouter()
 
   const [properties, setProperties] = useState<Property[]>([])
   const [loading, setLoading]       = useState(true)
+  const [visible,  setVisible]      = useState(false)
   const [filters, setFilters]       = useState({
     operation: searchParams.get('operation') || '',
     type:      searchParams.get('type')      || '',
@@ -23,11 +24,22 @@ function PropertiesInner() {
     maxPrice:  searchParams.get('maxPrice')  || '',
     bedrooms:  searchParams.get('bedrooms')  || '',
   })
+  const gridRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => { loadProperties() }, [filters])
 
+  // trigger 3D entrance after cards mount
+  useEffect(() => {
+    if (!loading && properties.length > 0) {
+      setVisible(false)
+      const t = setTimeout(() => setVisible(true), 60)
+      return () => clearTimeout(t)
+    }
+  }, [loading, properties])
+
   async function loadProperties() {
     setLoading(true)
+    setVisible(false)
     try {
       let url = `${SB_URL}/rest/v1/properties?select=*&status=eq.active&order=is_featured.desc,created_at.desc`
       if (filters.operation) url += `&operation=eq.${encodeURIComponent(filters.operation)}`
@@ -37,7 +49,7 @@ function PropertiesInner() {
       if (filters.minPrice)  url += `&price=gte.${filters.minPrice}`
       if (filters.maxPrice)  url += `&price=lte.${filters.maxPrice}`
       if (filters.bedrooms)  url += `&bedrooms=gte.${filters.bedrooms}`
-      const res = await fetch(url, { headers: H, cache: 'no-store' })
+      const res  = await fetch(url, { headers: H, cache: 'no-store' })
       const data = res.ok ? await res.json() : []
       setProperties(Array.isArray(data) ? data : [])
     } catch {
@@ -47,10 +59,7 @@ function PropertiesInner() {
     }
   }
 
-  function setF(k: string, v: string) {
-    setFilters(p => ({ ...p, [k]: v }))
-  }
-
+  function setF(k: string, v: string) { setFilters(p => ({ ...p, [k]: v })) }
   function resetFilters() {
     setFilters({ operation:'', type:'', city:'', search:'', minPrice:'', maxPrice:'', bedrooms:'' })
     router.replace('/properties')
@@ -58,151 +67,220 @@ function PropertiesInner() {
 
   const hasFilters = Object.values(filters).some(v => v !== '')
 
-  const inputCls: React.CSSProperties = { width:'100%', background:'#faf8f5', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:10, padding:'9px 12px', fontSize:'0.88rem', outline:'none', fontFamily:"'Tajawal','Cairo',sans-serif", boxSizing:'border-box' }
-  const selectCls: React.CSSProperties = { ...inputCls, cursor:'pointer' }
-  const labelCls: React.CSSProperties = { display:'block', fontSize:'0.72rem', color:'#526266', fontWeight:700, marginBottom:6, letterSpacing:0.5 }
+  const inp: React.CSSProperties = {
+    width:'100%', background:'rgba(255,255,255,0.07)', border:'1.5px solid rgba(211,226,220,0.2)',
+    borderRadius:10, padding:'9px 12px', fontSize:'0.88rem', outline:'none', color:'#d3e2dc',
+    fontFamily:"'Tajawal','Cairo',sans-serif", boxSizing:'border-box',
+  }
+  const lbl: React.CSSProperties = {
+    display:'block', fontSize:'0.72rem', color:'rgba(211,226,220,0.6)',
+    fontWeight:700, marginBottom:6, letterSpacing:0.5,
+  }
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#faf8f5' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#0d1f1b' }}>
       <Navbar />
 
-      {/* ── Page header ── */}
-      <div style={{ paddingTop:96, paddingBottom:40, padding:'96px 5% 40px', background:'linear-gradient(160deg,#27423e,#41646d)', direction:'rtl' }}>
-        <div style={{ marginBottom:16 }}>
-          <a href="/" style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.2)', color:'#d3e2dc', borderRadius:10, padding:'8px 16px', fontSize:'0.85rem', fontWeight:700, textDecoration:'none', fontFamily:"'Tajawal','Cairo',sans-serif", transition:'all 0.2s' }}>
-            &#8594; العودة للرئيسية
-          </a>
+      <style>{`
+        @keyframes floatIn {
+          0%   { opacity:0; transform: perspective(900px) rotateX(30deg) rotateY(-12deg) translateY(60px) scale(0.88); }
+          100% { opacity:1; transform: perspective(900px) rotateX(0deg)  rotateY(0deg)   translateY(0px)  scale(1); }
+        }
+        @keyframes heroSlideDown {
+          from { opacity:0; transform:translateY(-30px); }
+          to   { opacity:1; transform:translateY(0); }
+        }
+        @keyframes shimmer {
+          0%   { background-position: -400px 0; }
+          100% { background-position:  400px 0; }
+        }
+        @keyframes orbit {
+          from { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+          to   { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+        }
+        @keyframes orbit2 {
+          from { transform: rotate(90deg) translateX(180px) rotate(-90deg); }
+          to   { transform: rotate(450deg) translateX(180px) rotate(-450deg); }
+        }
+        .prop-card-wrap {
+          opacity: 0;
+          transform: perspective(900px) rotateX(28deg) rotateY(-10deg) translateY(50px) scale(0.9);
+          transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+        .prop-card-wrap.show {
+          opacity: 1;
+          transform: perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1);
+        }
+        .filter-inp::placeholder { color: rgba(211,226,220,0.35); }
+        .filter-inp:focus { border-color: rgba(184,152,106,0.5) !important; background: rgba(255,255,255,0.1) !important; }
+        select.filter-inp option { background: #1e3a34; color: #fff; }
+      `}</style>
+
+      {/* ═══ HERO ═══ */}
+      <div style={{
+        position:'relative', overflow:'hidden',
+        background:'linear-gradient(160deg, #0d1f1b 0%, #1e3a34 50%, #2d5a4e 100%)',
+        paddingTop:100, paddingBottom:60, paddingRight:'5%', paddingLeft:'5%',
+        textAlign:'center', animation:'heroSlideDown 0.7s ease',
+      }}>
+        {/* floating orbs */}
+        <div style={{ position:'absolute', inset:0, pointerEvents:'none', overflow:'hidden' }}>
+          {[...Array(6)].map((_,i) => (
+            <div key={i} style={{
+              position:'absolute',
+              width: 8 + (i%3)*6, height: 8 + (i%3)*6,
+              borderRadius:'50%',
+              background: i%2===0 ? 'rgba(184,152,106,0.18)' : 'rgba(211,226,220,0.08)',
+              top: `${10 + i*14}%`,
+              left: `${5 + i*16}%`,
+              animation: `orbit${i%2===0?'':'2'} ${12+i*4}s linear infinite`,
+            }} />
+          ))}
         </div>
-        <p style={{ fontSize:'0.78rem', color:'rgba(211,226,220,0.6)', marginBottom:8 }}>الرئيسية › جميع العقارات</p>
-        <h1 style={{ fontWeight:800, fontSize:'clamp(1.8rem,3vw,2.6rem)', color:'#fff', marginBottom:8, margin:'0 0 8px' }}>
-          تصفح <span style={{ color:'#b8986a' }}>العقارات</span>
+
+        <p style={{ fontSize:'0.75rem', color:'rgba(184,152,106,0.8)', fontWeight:700, letterSpacing:3, marginBottom:12, animation:'heroSlideDown 0.6s ease' }}>
+          ✦ صرح العقارية
+        </p>
+        <h1 style={{ fontSize:'clamp(2rem,5vw,3.2rem)', fontWeight:900, color:'#fff', margin:'0 0 12px', lineHeight:1.2 }}>
+          جميع <span style={{ color:'#b8986a', textShadow:'0 0 40px rgba(184,152,106,0.4)' }}>العقارات</span>
         </h1>
-        <p style={{ fontSize:'0.9rem', color:'rgba(211,226,220,0.75)', marginTop:8, marginBottom:16 }}>اعثر على العقار المناسب في منطقة القصيم</p>
-        <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(255,255,255,0.1)', border:'1px solid rgba(255,255,255,0.2)', padding:'6px 18px', borderRadius:50, fontSize:'0.8rem', color:'#d3e2dc', fontWeight:600 }}>
-          <span style={{ width:7, height:7, background:'#b8986a', borderRadius:'50%', display:'inline-block' }} />
-          {loading ? '...' : properties.length} عقار متاح
+        <p style={{ color:'rgba(211,226,220,0.65)', fontSize:'0.95rem', marginBottom:28 }}>
+          تصفح مجموعتنا الكاملة — اقلب أي كرت لترى التفاصيل
+        </p>
+        <div style={{
+          display:'inline-flex', alignItems:'center', gap:8,
+          background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.12)',
+          padding:'8px 22px', borderRadius:50, fontSize:'0.82rem', color:'#d3e2dc', fontWeight:700,
+        }}>
+          <span style={{ width:8, height:8, background:'#b8986a', borderRadius:'50%', display:'inline-block', boxShadow:'0 0 8px #b8986a' }} />
+          {loading ? '...' : `${properties.length} عقار متاح`}
         </div>
       </div>
 
       <div style={{ display:'flex', minHeight:'80vh', direction:'rtl' }}>
 
-        {/* ── Sidebar ── */}
-        <aside style={{ width:270, background:'#fff', borderLeft:'1px solid rgba(39,66,62,0.08)', padding:'28px 20px', flexShrink:0, position:'sticky', top:0, height:'100vh', overflowY:'auto' }}>
+        {/* ═══ SIDEBAR ═══ */}
+        <aside style={{
+          width:260, background:'rgba(30,58,52,0.95)', backdropFilter:'blur(12px)',
+          borderLeft:'1px solid rgba(211,226,220,0.08)',
+          padding:'28px 18px', flexShrink:0, position:'sticky', top:0,
+          height:'100vh', overflowY:'auto',
+        }}>
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:24 }}>
-            <h3 style={{ fontWeight:800, fontSize:'1rem', color:'#1e3a34', margin:0 }}>🔍 فلترة النتائج</h3>
+            <h3 style={{ fontWeight:800, fontSize:'0.95rem', color:'#b8986a', margin:0 }}>🔍 فلترة</h3>
             {hasFilters && (
-              <button onClick={resetFilters} style={{ background:'none', border:'none', color:'#b8986a', fontSize:'0.78rem', fontWeight:700, cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif" }}>
-                مسح الكل ✕
+              <button onClick={resetFilters} style={{ background:'none', border:'none', color:'rgba(211,226,220,0.5)', fontSize:'0.75rem', fontWeight:700, cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif" }}>
+                مسح ✕
               </button>
             )}
           </div>
 
-          <div style={{ display:'flex', flexDirection:'column', gap:18 }}>
-
-            {/* Search */}
+          <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
             <div>
-              <label style={labelCls}>🔤 بحث نصي</label>
-              <input value={filters.search} onChange={e=>setF('search',e.target.value)}
-                style={inputCls} placeholder="ابحث بالعنوان..." />
+              <label style={lbl}>🔤 بحث</label>
+              <input className="filter-inp" value={filters.search} onChange={e=>setF('search',e.target.value)}
+                style={inp} placeholder="ابحث بالعنوان..." />
             </div>
-
-            {/* Operation */}
             <div>
-              <label style={labelCls}>🔄 نوع العملية</label>
-              <select value={filters.operation} onChange={e=>setF('operation',e.target.value)} style={selectCls}>
+              <label style={lbl}>🔄 نوع العملية</label>
+              <select className="filter-inp" value={filters.operation} onChange={e=>setF('operation',e.target.value)} style={inp}>
                 <option value="">الكل</option>
                 {['للبيع','للإيجار','إيجار يومي','استثماري'].map(o=><option key={o}>{o}</option>)}
               </select>
             </div>
-
-            {/* Type */}
             <div>
-              <label style={labelCls}>🏠 نوع العقار</label>
-              <select value={filters.type} onChange={e=>setF('type',e.target.value)} style={selectCls}>
+              <label style={lbl}>🏠 نوع العقار</label>
+              <select className="filter-inp" value={filters.type} onChange={e=>setF('type',e.target.value)} style={inp}>
                 <option value="">الكل</option>
                 {['فيلا','أرض','شقة','استراحة','دبلكس','محل تجاري','مستودع','مزرعة','قصر'].map(t=><option key={t}>{t}</option>)}
               </select>
             </div>
-
-            {/* City */}
             <div>
-              <label style={labelCls}>📍 المدينة</label>
-              <select value={filters.city} onChange={e=>setF('city',e.target.value)} style={selectCls}>
+              <label style={lbl}>📍 المدينة</label>
+              <select className="filter-inp" value={filters.city} onChange={e=>setF('city',e.target.value)} style={inp}>
                 <option value="">كل المدن</option>
-                {['الرياض','جدة','مكة المكرمة','المدينة المنورة','الدمام','الخبر','الظهران','القطيف','الأحساء','الطائف','تبوك','أبها','خميس مشيط','بريدة','عنيزة','الرس','البكيرية','المذنب','حائل','ينبع','نجران','جازان','الباحة','عرعر','سكاكا','الخرج','الدوادمي'].map(c=><option key={c}>{c}</option>)}
+                {['بريدة','عنيزة','الرياض','جدة','الدمام','الخبر','تبوك','أبها','حائل','ينبع'].map(c=><option key={c}>{c}</option>)}
               </select>
             </div>
-
-            {/* Price range */}
             <div>
-              <label style={labelCls}>💰 نطاق السعر (ريال)</label>
+              <label style={lbl}>💰 السعر (ريال)</label>
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
-                <input type="number" value={filters.minPrice} onChange={e=>setF('minPrice',e.target.value)}
-                  style={inputCls} placeholder="من" />
-                <input type="number" value={filters.maxPrice} onChange={e=>setF('maxPrice',e.target.value)}
-                  style={inputCls} placeholder="إلى" />
+                <input className="filter-inp" type="number" value={filters.minPrice} onChange={e=>setF('minPrice',e.target.value)} style={inp} placeholder="من" />
+                <input className="filter-inp" type="number" value={filters.maxPrice} onChange={e=>setF('maxPrice',e.target.value)} style={inp} placeholder="إلى" />
               </div>
             </div>
-
-            {/* Bedrooms */}
             <div>
-              <label style={labelCls}>🛏️ عدد الغرف (الحد الأدنى)</label>
-              <select value={filters.bedrooms} onChange={e=>setF('bedrooms',e.target.value)} style={selectCls}>
+              <label style={lbl}>🛏️ الغرف (أدنى)</label>
+              <select className="filter-inp" value={filters.bedrooms} onChange={e=>setF('bedrooms',e.target.value)} style={inp}>
                 <option value="">الكل</option>
                 {['1','2','3','4','5','6'].map(n=><option key={n} value={n}>{n}+ غرف</option>)}
               </select>
             </div>
-
-            {/* Active filters chips */}
             {hasFilters && (
-              <div style={{ display:'flex', flexWrap:'wrap', gap:6, paddingTop:4 }}>
+              <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
                 {Object.entries(filters).filter(([,v])=>v).map(([k,v]) => (
-                  <span key={k} onClick={() => setF(k,'')} style={{ background:'#d3e2dc', color:'#27423e', fontSize:'0.72rem', fontWeight:700, padding:'4px 10px', borderRadius:50, cursor:'pointer', display:'flex', alignItems:'center', gap:4 }}>
-                    {v} <span style={{ fontWeight:900 }}>×</span>
+                  <span key={k} onClick={()=>setF(k,'')} style={{ background:'rgba(184,152,106,0.2)', color:'#b8986a', fontSize:'0.7rem', fontWeight:700, padding:'4px 10px', borderRadius:50, cursor:'pointer', display:'flex', alignItems:'center', gap:4 }}>
+                    {v} <span>×</span>
                   </span>
                 ))}
               </div>
             )}
-
           </div>
         </aside>
 
-        {/* ── Grid ── */}
-        <div style={{ flex:1, padding:'28px 24px 64px', minWidth:0 }}>
-
-          {/* Results count */}
+        {/* ═══ GRID ═══ */}
+        <div ref={gridRef} style={{ flex:1, padding:'32px 28px 80px', minWidth:0, background:'#111d1a' }}>
           {!loading && (
-            <p style={{ fontSize:'0.82rem', color:'#7a9188', marginBottom:20 }}>
+            <p style={{ fontSize:'0.8rem', color:'rgba(168,197,190,0.5)', marginBottom:24 }}>
               {properties.length === 0 ? 'لا توجد نتائج' : `${properties.length} عقار`}
-              {hasFilters && ' — حسب الفلاتر المحددة'}
+              {hasFilters && ' — حسب الفلاتر'}
             </p>
           )}
 
           {loading ? (
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))', gap:20 }}>
-              {[...Array(6)].map((_,i) => (
-                <div key={i} style={{ background:'#e8e0d8', height:288, borderRadius:20, animation:'pulse 1.5s infinite', border:'1px solid rgba(39,66,62,0.1)' }} />
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))', gap:24 }}>
+              {[...Array(8)].map((_,i) => (
+                <div key={i} style={{
+                  height:340, borderRadius:20, overflow:'hidden',
+                  background:'linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%)',
+                  backgroundSize:'800px 100%',
+                  animation:'shimmer 1.4s infinite linear',
+                  animationDelay:`${i*0.1}s`,
+                }} />
               ))}
             </div>
           ) : properties.length === 0 ? (
-            <div style={{ textAlign:'center', padding:'80px 0', color:'#7a9188' }}>
-              <div style={{ fontSize:'4rem', opacity:0.15, marginBottom:20 }}>🔍</div>
-              <p style={{ fontSize:'1.1rem', marginBottom:24 }}>لا توجد نتائج — جرّب تغيير الفلاتر</p>
-              <button onClick={resetFilters} style={{ background:'#27423e', color:'#fff', border:'none', borderRadius:10, padding:'12px 28px', fontSize:'0.9rem', fontWeight:700, cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif" }}>
-                عرض جميع العقارات
-              </button>
+            <div style={{ textAlign:'center', padding:'100px 0', color:'rgba(168,197,190,0.5)' }}>
+              <div style={{ fontSize:'5rem', opacity:0.1, marginBottom:20 }}>🔍</div>
+              <p style={{ fontSize:'1.1rem', marginBottom:28 }}>لا توجد نتائج — جرّب تغيير الفلاتر</p>
+              <button onClick={resetFilters} style={{
+                background:'#b8986a', color:'#1e3a34', border:'none', borderRadius:50,
+                padding:'12px 32px', fontSize:'0.9rem', fontWeight:800, cursor:'pointer',
+                fontFamily:"'Tajawal','Cairo',sans-serif",
+              }}>عرض الكل</button>
             </div>
           ) : (
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))', gap:20 }}>
-              {properties.map(p => <PropertyCard key={p.id} property={p} />)}
+            <div style={{
+              display:'grid',
+              gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))',
+              gap:28,
+              perspective: 1200,
+            }}>
+              {properties.map((p, i) => (
+                <div
+                  key={p.id}
+                  className={`prop-card-wrap${visible ? ' show' : ''}`}
+                  style={{ transitionDelay: `${Math.min(i * 60, 600)}ms` }}
+                >
+                  <PropertyCard property={p} />
+                </div>
+              ))}
             </div>
           )}
         </div>
       </div>
 
-      <Footer />
-
-      <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }`}</style>
+      <div style={{ background:'#0d1f1b' }}><Footer /></div>
     </main>
   )
 }
@@ -210,8 +288,8 @@ function PropertiesInner() {
 export default function PropertiesPage() {
   return (
     <Suspense fallback={
-      <div style={{ minHeight:'100vh', background:'#faf8f5', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
-        <span style={{ color:'#41646d' }}>جاري التحميل...</span>
+      <div style={{ minHeight:'100vh', background:'#0d1f1b', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
+        <span style={{ color:'#b8986a', fontSize:'1.1rem' }}>جاري التحميل...</span>
       </div>
     }>
       <PropertiesInner />
