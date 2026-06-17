@@ -27,7 +27,7 @@ export default function WaterDropIntro() {
       position:'fixed', inset:0, zIndex:99999,
       display:'flex', alignItems:'center', justifyContent:'center',
       background:'#faf8f5',
-      pointerEvents: phase === 'done' ? 'none' : 'all',
+      pointerEvents: 'all',
     }}>
       <style>{`
         @keyframes dropFall {
