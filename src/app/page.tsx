@@ -298,88 +298,59 @@ export default function Home() {
             </div>
           )}
           {viewMode === 'grid' && !loading && properties.length > 0 && (
-            <div>
-              {/* Carousel wrapper — direction ltr to normalize scrollLeft */}
-              <div style={{ direction:'ltr', position:'relative' }}
-                onMouseEnter={pauseCarousel}
-                onMouseLeave={() => setCarouselPaused(false)}
-                onTouchStart={pauseCarousel}
-              >
-                {/* Arrow — prev (right in RTL) */}
-                {carouselIdx > 0 && (
-                  <button
-                    onClick={() => { setCarouselIdx(i => Math.max(0, i - 1)); pauseCarousel() }}
-                    style={{
-                      position:'absolute', top:'50%', right:0,
-                      transform:'translateY(-50%)',
-                      zIndex:10, width:44, height:44,
-                      borderRadius:'50%', border:'2px solid rgba(30,58,52,0.18)',
-                      background:'#fff', color:'#1e3a34',
-                      fontSize:'1.2rem', cursor:'pointer',
-                      display:'flex', alignItems:'center', justifyContent:'center',
-                      boxShadow:'0 4px 16px rgba(30,58,52,0.15)',
-                      transition:'all 0.2s',
-                    }}
-                    aria-label="السابق"
-                  >›</button>
-                )}
+            <div onMouseEnter={pauseCarousel} onMouseLeave={() => setCarouselPaused(false)}>
 
-                {/* Arrow — next (left in RTL) */}
-                {carouselIdx < properties.length - 1 && (
-                  <button
-                    onClick={() => { setCarouselIdx(i => Math.min(properties.length - 1, i + 1)); pauseCarousel() }}
-                    style={{
-                      position:'absolute', top:'50%', left:0,
-                      transform:'translateY(-50%)',
-                      zIndex:10, width:44, height:44,
-                      borderRadius:'50%', border:'2px solid rgba(30,58,52,0.18)',
-                      background:'#fff', color:'#1e3a34',
-                      fontSize:'1.2rem', cursor:'pointer',
-                      display:'flex', alignItems:'center', justifyContent:'center',
-                      boxShadow:'0 4px 16px rgba(30,58,52,0.15)',
-                      transition:'all 0.2s',
-                    }}
-                    aria-label="التالي"
-                  >‹</button>
-                )}
-
-                <div ref={carouselRef} className="sarh-carousel"
-                  style={{ display:'flex', gap:24, overflowX:'auto', scrollSnapType:'x mandatory', paddingBottom:8 }}
-                  onScroll={pauseCarousel}
-                >
-                  {properties.map(p => (
-                    <div key={p.id} style={{ flexShrink:0, width:324, scrollSnapAlign:'start', direction:'rtl' }}>
+              {/* ── 3D Coverflow ── */}
+              <div style={{ position:'relative', height:420, perspective:1100, perspectiveOrigin:'50% 40%', overflow:'hidden' }}>
+                {properties.map((p, i) => {
+                  const d = i - carouselIdx
+                  const abs = Math.abs(d)
+                  if (abs > 2) return null
+                  const tx   = d * 340
+                  const ry   = d * -26
+                  const sc   = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68
+                  const tz   = abs === 0 ? 60 : abs === 1 ? -10 : -50
+                  const op   = abs === 0 ? 1 : abs === 1 ? 0.72 : 0.38
+                  const zi   = 10 - abs
+                  return (
+                    <div
+                      key={p.id}
+                      onClick={() => abs > 0 && (setCarouselIdx(i), pauseCarousel())}
+                      style={{
+                        position:'absolute', top:0, left:'50%',
+                        width:324, marginLeft:-162,
+                        transform:`translateX(${tx}px) rotateY(${ry}deg) scale(${sc}) translateZ(${tz}px)`,
+                        opacity:op, zIndex:zi,
+                        transition:'transform 0.55s cubic-bezier(0.25,0.8,0.25,1), opacity 0.55s ease',
+                        cursor: abs > 0 ? 'pointer' : 'default',
+                        transformOrigin:'center center',
+                      }}
+                    >
                       <PropertyCard property={p} />
                     </div>
-                  ))}
-                </div>
+                  )
+                })}
               </div>
 
-              {/* Dots + counter */}
-              <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:16, marginTop:20 }}>
-                <button
-                  onClick={() => { setCarouselIdx(i => Math.max(0, i - 1)); pauseCarousel() }}
-                  disabled={carouselIdx === 0}
-                  style={{ width:36, height:36, borderRadius:'50%', border:'2px solid rgba(30,58,52,0.18)', background: carouselIdx===0 ? '#f0f0f0' : '#fff', color:'#1e3a34', fontSize:'1.1rem', cursor: carouselIdx===0 ? 'default' : 'pointer', display:'flex', alignItems:'center', justifyContent:'center', opacity: carouselIdx===0 ? 0.35 : 1, transition:'all 0.2s', flexShrink:0 }}
-                  aria-label="السابق"
+              {/* Dots + arrows */}
+              <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:16, marginTop:16 }}>
+                <button onClick={() => { setCarouselIdx(i => Math.max(0, i-1)); pauseCarousel() }}
+                  disabled={carouselIdx===0}
+                  style={{ width:36, height:36, borderRadius:'50%', border:'2px solid rgba(30,58,52,0.18)', background: carouselIdx===0?'#f0f0f0':'#fff', color:'#1e3a34', fontSize:'1.2rem', cursor:carouselIdx===0?'default':'pointer', display:'flex', alignItems:'center', justifyContent:'center', opacity:carouselIdx===0?0.3:1, transition:'all 0.2s', flexShrink:0 }}
                 >›</button>
 
-                <div style={{ display:'flex', gap:6, flexWrap:'wrap', justifyContent:'center' }}>
+                <div style={{ display:'flex', gap:6 }}>
                   {properties.map((_, i) => (
                     <button key={i} onClick={() => { setCarouselIdx(i); pauseCarousel() }}
-                      style={{ width: i===carouselIdx ? 24 : 8, height:8, borderRadius:50, border:'none', cursor:'pointer', padding:0, background: i===carouselIdx ? '#b8986a' : 'rgba(30,58,52,0.2)', transition:'all 0.3s' }} />
+                      style={{ width:i===carouselIdx?24:8, height:8, borderRadius:50, border:'none', cursor:'pointer', padding:0, background:i===carouselIdx?'#b8986a':'rgba(30,58,52,0.2)', transition:'all 0.35s' }} />
                   ))}
                 </div>
 
-                <button
-                  onClick={() => { setCarouselIdx(i => Math.min(properties.length - 1, i + 1)); pauseCarousel() }}
-                  disabled={carouselIdx === properties.length - 1}
-                  style={{ width:36, height:36, borderRadius:'50%', border:'2px solid rgba(30,58,52,0.18)', background: carouselIdx===properties.length-1 ? '#f0f0f0' : '#fff', color:'#1e3a34', fontSize:'1.1rem', cursor: carouselIdx===properties.length-1 ? 'default' : 'pointer', display:'flex', alignItems:'center', justifyContent:'center', opacity: carouselIdx===properties.length-1 ? 0.35 : 1, transition:'all 0.2s', flexShrink:0 }}
-                  aria-label="التالي"
+                <button onClick={() => { setCarouselIdx(i => Math.min(properties.length-1, i+1)); pauseCarousel() }}
+                  disabled={carouselIdx===properties.length-1}
+                  style={{ width:36, height:36, borderRadius:'50%', border:'2px solid rgba(30,58,52,0.18)', background:carouselIdx===properties.length-1?'#f0f0f0':'#fff', color:'#1e3a34', fontSize:'1.2rem', cursor:carouselIdx===properties.length-1?'default':'pointer', display:'flex', alignItems:'center', justifyContent:'center', opacity:carouselIdx===properties.length-1?0.3:1, transition:'all 0.2s', flexShrink:0 }}
                 >‹</button>
               </div>
-
-              <style>{`.sarh-carousel::-webkit-scrollbar{display:none}.sarh-carousel{-ms-overflow-style:none;scrollbar-width:none}`}</style>
             </div>
           )}
         </div>
