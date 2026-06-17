@@ -221,14 +221,6 @@ export default function Home() {
             <a href="#about" style={S.btnOutline}>تعرّف علينا</a>
           </div>
 
-          <div style={S.heroStats}>
-            {[{num:'+200',label:'عقار منجز'},{num:'+15',label:'سنة خبرة'},{num:'+500',label:'عميل راضٍ'},{num:'5',label:'مناطق'}].map(s => (
-              <div key={s.label}>
-                <span style={S.statNum}>{s.num}</span>
-                <span style={S.statLabel}>{s.label}</span>
-              </div>
-            ))}
-          </div>
         </div>{/* heroInner */}
       </section>
 
