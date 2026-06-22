@@ -8,8 +8,11 @@ const ICONS: Record<string, string> = {
 }
 
 export default function PropertyCard({ property: p }: { property: Property }) {
-  const isNegotiable = p.price_unit === 'أعلى سوم'
-  const price   = isNegotiable ? 'أعلى سوم' : new Intl.NumberFormat('ar-SA').format(p.price)
+  const isNegotiable = p.price_unit === 'آخر سوم'
+  const priceNum = new Intl.NumberFormat('ar-SA').format(p.price)
+  const price = isNegotiable
+    ? (p.price > 0 ? `آخر سوم: ${priceNum} ريال` : 'آخر سوم')
+    : priceNum
   const img     = p.main_image || (p.images?.[0] ?? null)
   const favs    = useFavorites()
   const compare = useCompare()
@@ -106,7 +109,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
               <div className="flex items-center justify-between">
                 <div className="font-amiri text-xl text-[#1e3a34] font-bold">
                   {isNegotiable
-                    ? <span style={{ background:'#1e3a34', color:'#b8986a', fontSize:'0.82rem', fontWeight:800, padding:'4px 12px', borderRadius:20 }}>أعلى سوم</span>
+                    ? <span style={{ background:'#1e3a34', color:'#b8986a', fontSize:'0.82rem', fontWeight:800, padding:'4px 12px', borderRadius:20 }}>آخر سوم</span>
                     : <>{price} <span className="text-xs font-normal text-[#7a9188]">{p.price_unit}</span></>
                   }
                 </div>
@@ -168,7 +171,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
                 <div style={{ color:'#a8c5be', fontSize:'0.7rem', marginBottom:4 }}>السعر</div>
                 <div style={{ color:'#b8986a', fontSize:'1.5rem', fontWeight:900 }}>
                   {isNegotiable
-                    ? <span style={{ background:'rgba(184,152,106,0.2)', color:'#b8986a', fontSize:'1rem', padding:'4px 14px', borderRadius:20, border:'1px solid rgba(184,152,106,0.4)' }}>أعلى سوم</span>
+                    ? <span style={{ background:'rgba(184,152,106,0.2)', color:'#b8986a', fontSize:'1rem', padding:'4px 14px', borderRadius:20, border:'1px solid rgba(184,152,106,0.4)' }}>آخر سوم</span>
                     : <>{price} <span style={{ fontSize:'0.75rem', color:'#7a9e96', fontWeight:400 }}>{p.price_unit}</span></>
                   }
                 </div>
