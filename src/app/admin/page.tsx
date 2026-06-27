@@ -399,6 +399,22 @@ export default function AdminPage() {
 
         {/* ── PROPERTIES ── */}
         {tab==='properties' && (
+          <>
+          <div style={{ marginBottom:16, position:'relative' }}>
+            <span style={{ position:'absolute', right:14, top:'50%', transform:'translateY(-50%)', fontSize:'1rem', opacity:0.4 }}>🔍</span>
+            <input
+              type="text"
+              placeholder="ابحث بالعنوان أو الحي أو رقم العرض..."
+              onChange={e => {
+                const v = e.target.value.toLowerCase()
+                ;(window as any)._propSearch = v
+                document.querySelectorAll('tr[data-pid]').forEach((tr: any) => {
+                  tr.style.display = tr.dataset.search?.includes(v) ? '' : 'none'
+                })
+              }}
+              style={{ width:'100%', padding:'11px 40px 11px 14px', borderRadius:12, border:'1.5px solid rgba(39,66,62,0.18)', fontSize:'0.9rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', background:'#faf8f5', boxSizing:'border-box' as const, direction:'rtl' }}
+            />
+          </div>
           <div style={S.tableWrap}>
             <table style={S.table}>
               <thead><tr>{['#','الصورة','العنوان','النوع','العملية','المدينة','السعر','الحالة','إجراءات'].map(h=><th key={h} style={S.th}>{h}</th>)}</tr></thead>
@@ -406,7 +422,7 @@ export default function AdminPage() {
                 {loading ? <tr><td colSpan={9} style={S.emptyRow}>جاري التحميل...</td></tr>
                 : properties.length===0 ? <tr><td colSpan={9} style={S.emptyRow}>لا توجد عقارات</td></tr>
                 : properties.map(p=>(
-                  <tr key={p.id}>
+                  <tr key={p.id} data-pid={p.id} data-search={[p.title,p.district,p.city,p.type,String(p.listing_number||'')].join(' ').toLowerCase()}>
                     <td style={{...S.td,width:64}}>
                       {p.listing_number ? <span style={{background:'#d3e2dc',color:'#1e3a34',fontSize:'0.72rem',fontWeight:800,padding:'3px 8px',borderRadius:6,fontFamily:'monospace'}}>#{p.listing_number}</span> : <span style={{color:'#ccc',fontSize:'0.72rem'}}>—</span>}
                     </td>
@@ -436,6 +452,7 @@ export default function AdminPage() {
               </tbody>
             </table>
           </div>
+          </>
         )}
 
         {/* ── REVIEWS ── */}
