@@ -9,31 +9,22 @@ import MortgageCalc from '@/components/MortgageCalc'
 const H = SB_HEADERS
 
 function TikTokEmbed({ url }: { url: string }) {
-  const match = url.match(/video\/(\d+)/)
-  const videoId = match?.[1]
-  if (!videoId) return null
-
+  if (!url) return null
   return (
-    <div style={{ background:'#fff', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)' }}>
-      <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:16 }}>🎵 فيديو العقار</h2>
-      <div style={{ display:'flex', justifyContent:'center' }}>
-        <iframe
-          src={`https://www.tiktok.com/embed/v2/${videoId}`}
-          style={{ width:'100%', maxWidth:420, height:740, border:'none', borderRadius:12 }}
-          allow="encrypted-media"
-          allowFullScreen
-        />
+    <div style={{ background:'#fff', borderRadius:20, padding:'24px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
+      <div>
+        <div style={{ fontWeight:800, fontSize:'0.95rem', color:'#1e3a34', marginBottom:4 }}>🎵 فيديو العقار متاح على قناتنا</div>
+        <div style={{ fontSize:'0.8rem', color:'#9aada7' }}>اضغط لمشاهدة الفيديو كاملاً</div>
       </div>
-      <div style={{ textAlign:'center', marginTop:14 }}>
-        <a href={url} target="_blank" rel="noopener noreferrer" style={{
-          display:'inline-flex', alignItems:'center', gap:8,
-          background:'#000', color:'#fff', borderRadius:50,
-          padding:'10px 22px', fontSize:'0.85rem', fontWeight:700,
-          textDecoration:'none', fontFamily:"'Tajawal','Cairo',sans-serif",
-        }}>
-          <span>🎵</span> افتح على TikTok
-        </a>
-      </div>
+      <a href={url} target="_blank" rel="noopener noreferrer" style={{
+        display:'inline-flex', alignItems:'center', gap:8,
+        background:'#010101', color:'#fff', borderRadius:50,
+        padding:'12px 24px', fontSize:'0.88rem', fontWeight:800,
+        textDecoration:'none', fontFamily:"'Tajawal','Cairo',sans-serif",
+        flexShrink:0,
+      }}>
+        <span>🎵</span> شاهد الفيديو
+      </a>
     </div>
   )
 }
