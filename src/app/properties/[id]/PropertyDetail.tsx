@@ -9,19 +9,30 @@ import MortgageCalc from '@/components/MortgageCalc'
 const H = SB_HEADERS
 
 function TikTokEmbed({ url }: { url: string }) {
-  const [load, setLoad] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
   const match = url.match(/video\/(\d+)/)
   const videoId = match?.[1]
 
   useEffect(() => {
-    if (!videoId) return
-    // بعد تحميل الصفحة مباشرة ابدأ تحميل الفيديو
-    if (document.readyState === 'complete') {
-      setLoad(true)
-    } else {
-      window.addEventListener('load', () => setLoad(true), { once: true })
+    if (!videoId || !ref.current) return
+    // بعد تحميل الصفحة أضف الـ embed الرسمي من TikTok
+    const load = () => {
+      if (!ref.current) return
+      ref.current.innerHTML = `
+        <blockquote class="tiktok-embed"
+          cite="${url}"
+          data-video-id="${videoId}"
+          style="max-width:420px;min-width:300px;margin:0 auto;">
+          <section></section>
+        </blockquote>`
+      const s = document.createElement('script')
+      s.src = 'https://www.tiktok.com/embed.js'
+      s.async = true
+      document.body.appendChild(s)
     }
-  }, [videoId])
+    if (document.readyState === 'complete') load()
+    else window.addEventListener('load', load, { once: true })
+  }, [videoId, url])
 
   if (!videoId) return null
 
@@ -30,20 +41,21 @@ function TikTokEmbed({ url }: { url: string }) {
       <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>
         🎵 فيديو العقار
       </h2>
-      <div style={{ display:'flex', justifyContent:'center', minHeight:700, background:'#f4ede4', borderRadius:12, overflow:'hidden' }}>
-        {load ? (
-          <iframe
-            src={`https://www.tiktok.com/embed/v2/${videoId}?autoplay=1&muted=1`}
-            style={{ width:'100%', maxWidth:420, height:700, border:'none' }}
-            allow="encrypted-media; autoplay"
-            allowFullScreen
-          />
-        ) : (
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', width:'100%', flexDirection:'column', gap:12, color:'#9aada7' }}>
-            <span style={{ fontSize:'2.5rem', opacity:0.4 }}>🎵</span>
-            <span style={{ fontSize:'0.82rem' }}>جاري تحميل الفيديو...</span>
-          </div>
-        )}
+      <div ref={ref} style={{ display:'flex', justifyContent:'center', minHeight:200 }}>
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'center', width:'100%', flexDirection:'column', gap:12, color:'#9aada7' }}>
+          <span style={{ fontSize:'2.5rem', opacity:0.4 }}>🎵</span>
+          <span style={{ fontSize:'0.82rem' }}>جاري تحميل الفيديو...</span>
+        </div>
+      </div>
+      <div style={{ textAlign:'center', marginTop:12 }}>
+        <a href={url} target="_blank" rel="noopener noreferrer" style={{
+          display:'inline-flex', alignItems:'center', gap:8,
+          background:'#000', color:'#fff', borderRadius:50,
+          padding:'10px 22px', fontSize:'0.85rem', fontWeight:700,
+          textDecoration:'none', fontFamily:"'Tajawal','Cairo',sans-serif",
+        }}>
+          <span style={{ fontSize:'1rem' }}>🎵</span> فتح على تيك توك
+        </a>
       </div>
     </div>
   )
