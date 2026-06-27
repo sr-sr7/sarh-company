@@ -9,44 +9,31 @@ import MortgageCalc from '@/components/MortgageCalc'
 const H = SB_HEADERS
 
 function TikTokEmbed({ url }: { url: string }) {
-  if (!url) return null
-  const user = url.match(/@([^/]+)/)?.[1] || 'صرح العقارية'
+  const match = url.match(/video\/(\d+)/)
+  const videoId = match?.[1]
+  if (!videoId) return null
 
   return (
     <div style={{ background:'#fff', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)' }}>
       <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:16 }}>🎵 فيديو العقار</h2>
-      <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block' }}>
-        <div style={{
-          background:'linear-gradient(135deg,#010101,#1a1a2e)',
-          borderRadius:16, padding:'40px 24px', textAlign:'center',
-          cursor:'pointer', transition:'transform 0.2s',
-          border:'2px solid rgba(255,255,255,0.06)',
+      <div style={{ display:'flex', justifyContent:'center' }}>
+        <iframe
+          src={`https://www.tiktok.com/embed/v2/${videoId}`}
+          style={{ width:'100%', maxWidth:420, height:740, border:'none', borderRadius:12 }}
+          allow="encrypted-media"
+          allowFullScreen
+        />
+      </div>
+      <div style={{ textAlign:'center', marginTop:14 }}>
+        <a href={url} target="_blank" rel="noopener noreferrer" style={{
+          display:'inline-flex', alignItems:'center', gap:8,
+          background:'#000', color:'#fff', borderRadius:50,
+          padding:'10px 22px', fontSize:'0.85rem', fontWeight:700,
+          textDecoration:'none', fontFamily:"'Tajawal','Cairo',sans-serif",
         }}>
-          {/* زر تشغيل */}
-          <div style={{
-            width:72, height:72, borderRadius:'50%',
-            background:'linear-gradient(135deg,#ff0050,#ff4d80)',
-            display:'flex', alignItems:'center', justifyContent:'center',
-            margin:'0 auto 20px', boxShadow:'0 8px 32px rgba(255,0,80,0.4)',
-          }}>
-            <span style={{ fontSize:'2rem', marginRight:-4 }}>▶</span>
-          </div>
-          <div style={{ color:'#fff', fontSize:'1rem', fontWeight:800, marginBottom:8 }}>
-            شاهد فيديو العقار
-          </div>
-          <div style={{ color:'rgba(255,255,255,0.5)', fontSize:'0.8rem', marginBottom:20 }}>
-            @{user}
-          </div>
-          <div style={{
-            display:'inline-flex', alignItems:'center', gap:8,
-            background:'#fff', color:'#000',
-            borderRadius:50, padding:'10px 24px',
-            fontSize:'0.85rem', fontWeight:800,
-          }}>
-            <span>🎵</span> افتح على TikTok
-          </div>
-        </div>
-      </a>
+          <span>🎵</span> افتح على TikTok
+        </a>
+      </div>
     </div>
   )
 }
