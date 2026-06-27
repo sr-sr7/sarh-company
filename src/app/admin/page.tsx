@@ -596,18 +596,22 @@ export default function AdminPage() {
                 {uploadingImg && <><div style={S.progressBar}><div style={S.progressFill(imgProgress)}/></div><div style={S.uploadingText}>⬆️ {imgProgress}%</div></>}
                 {form.images.length>0 && <div style={S.thumbsRow}>{form.images.map((url,idx)=><div key={url+idx} style={S.thumb}><img src={url} alt="" style={S.thumbImg}/>{idx===0&&<span style={S.thumbMain}>رئيسية</span>}<button type="button" style={S.thumbDel} onClick={()=>removeImage(idx)}>✕</button></div>)}</div>}
               </div>
-              {/* Video */}
+              {/* Video — TikTok link */}
               <div style={S.fullCol}>
-                <label style={S.label}>🎥 فيديو العقار (اختياري)</label>
-                <input ref={vidInputRef} type="file" accept="video/*" style={{display:'none'}} onChange={e=>handleVideoSelected(e.target.files)} />
-                <div style={S.uploadZone} onClick={()=>vidInputRef.current?.click()}>
-                  <span style={S.uploadIcon}>🎬</span>
-                  <div style={S.uploadText}>اضغط لاختيار فيديو</div>
-                  <div style={S.uploadHint}>MP4، MOV — الحد الأقصى 50MB</div>
-                  <button type="button" style={S.uploadBtn}>اختر فيديو</button>
-                </div>
-                {uploadingVid && <><div style={S.progressBar}><div style={S.progressFill(vidProgress)}/></div><div style={S.uploadingText}>⬆️ {vidProgress}%</div></>}
-                {form.video_url && <div style={{marginTop:14,position:'relative',display:'inline-block'}}><video src={form.video_url} controls style={{height:140,borderRadius:12,maxWidth:'100%',background:'#1e3a34'}}/><button type="button" style={{...S.thumbDel,position:'absolute',top:8,right:8,width:28,height:28,fontSize:'0.85rem'}} onClick={()=>setForm(f=>({...f,video_url:''}))}>✕</button></div>}
+                <label style={S.label}>🎵 رابط فيديو تيك توك (اختياري)</label>
+                <input
+                  type="url"
+                  value={form.video_url}
+                  onChange={e => setForm(f => ({...f, video_url: e.target.value}))}
+                  style={{...S.input, fontFamily:'monospace', fontSize:'0.82rem'}}
+                  placeholder="https://www.tiktok.com/@username/video/123456..."
+                />
+                {form.video_url && (
+                  <div style={{marginTop:8, fontSize:'0.75rem', color:'#b8986a', display:'flex', alignItems:'center', gap:6}}>
+                    <span>✓</span> سيُعرض الفيديو في صفحة العقار بعد تحميل الصفحة
+                    <button type="button" onClick={()=>setForm(f=>({...f,video_url:''}))} style={{marginRight:'auto',background:'none',border:'none',color:'#e57373',cursor:'pointer',fontSize:'0.8rem',fontFamily:'Tajawal,sans-serif'}}>حذف الرابط ✕</button>
+                  </div>
+                )}
               </div>
               {/* Checkboxes */}
               <div style={S.fullCol}>

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Property, SB_URL, SB_HEADERS } from '@/lib/supabase'
 import Navbar from '@/components/Navbar'
@@ -7,6 +7,51 @@ import Footer from '@/components/Footer'
 import MortgageCalc from '@/components/MortgageCalc'
 
 const H = SB_HEADERS
+
+function TikTokEmbed({ url }: { url: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [load, setLoad] = useState(false)
+
+  // Extract video ID from TikTok URL
+  const match = url.match(/video\/(\d+)/)
+  const videoId = match?.[1]
+
+  useEffect(() => {
+    if (!videoId) return
+    // Load iframe after page is fully loaded using IntersectionObserver
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setLoad(true); obs.disconnect() } },
+      { rootMargin: '200px' }
+    )
+    if (ref.current) obs.observe(ref.current)
+    return () => obs.disconnect()
+  }, [videoId])
+
+  if (!videoId) return null
+
+  return (
+    <div ref={ref} style={{ background:'#fff', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)' }}>
+      <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>
+        🎵 فيديو العقار على تيك توك
+      </h2>
+      <div style={{ display:'flex', justifyContent:'center', minHeight:700, background:'#f4ede4', borderRadius:12, overflow:'hidden' }}>
+        {load ? (
+          <iframe
+            src={`https://www.tiktok.com/embed/v2/${videoId}`}
+            style={{ width:'100%', maxWidth:400, height:700, border:'none' }}
+            allow="encrypted-media"
+            allowFullScreen
+          />
+        ) : (
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', width:'100%', flexDirection:'column', gap:12, color:'#7a9188' }}>
+            <span style={{ fontSize:'3rem' }}>🎵</span>
+            <span style={{ fontSize:'0.85rem' }}>جاري تحضير الفيديو...</span>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
 
 const TYPE_ICONS: Record<string, string> = {
   'فيلا':'🏡','أرض':'🏗️','شقة':'🏢','استراحة':'🏖️',
@@ -219,19 +264,6 @@ export default function PropertyDetail({ id }: { id: string }) {
               <img src={img} alt="" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
             </div>
           ))}
-          {p.video_url && (
-            <div onClick={()=>setShowVideo(v=>!v)}
-              style={{ flexShrink:0, width:80, height:56, borderRadius:8, overflow:'hidden', cursor:'pointer', border:showVideo?'3px solid #b8986a':'3px solid transparent', background:'#1e3a34', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.5rem' }}>
-              🎬
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Video */}
-      {p.video_url && showVideo && (
-        <div style={{ background:'#1e3a34', padding:'0 24px 16px', display:'flex', justifyContent:'center' }}>
-          <video src={p.video_url} controls style={{ maxWidth:900, width:'100%', borderRadius:12, maxHeight:420 }} />
         </div>
       )}
 
@@ -288,13 +320,8 @@ export default function PropertyDetail({ id }: { id: string }) {
             </div>
           )}
 
-          {/* Video */}
-          {p.video_url && allImgs.length>0 && (
-            <div style={{ background:'#fff', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)' }}>
-              <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>🎬 فيديو العقار</h2>
-              <video src={p.video_url} controls style={{ width:'100%', borderRadius:12, maxHeight:360, background:'#1e3a34' }} />
-            </div>
-          )}
+          {/* TikTok Video — lazy loaded after page */}
+          {p.video_url && <TikTokEmbed url={p.video_url} />}
 
           {/* Map */}
           <div style={{ background:'#fff', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)' }}>
