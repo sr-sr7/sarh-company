@@ -9,47 +9,31 @@ import MortgageCalc from '@/components/MortgageCalc'
 const H = SB_HEADERS
 
 function TikTokEmbed({ url }: { url: string }) {
-  const [thumb, setThumb] = useState<string|null>(null)
-  const [author, setAuthor] = useState('')
-
-  useEffect(() => {
-    if (!url) return
-    fetch(`/api/tiktok-thumb?url=${encodeURIComponent(url)}`)
-      .then(r => r.json())
-      .then(d => { if (d.thumbnail) { setThumb(d.thumbnail); setAuthor(d.author||'') } })
-      .catch(() => {})
-  }, [url])
-
-  if (!url) return null
+  const match = url.match(/video\/(\d+)/)
+  const videoId = match?.[1]
+  if (!videoId) return null
 
   return (
     <div style={{ background:'#fff', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)' }}>
       <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:16 }}>🎵 فيديو العقار</h2>
-      <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', maxWidth:380, margin:'0 auto' }}>
-        <div style={{ position:'relative', borderRadius:16, overflow:'hidden', background:'#111', aspectRatio:'9/16' }}>
-          {thumb
-            ? <img src={thumb} alt="فيديو" style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
-            : <div style={{ width:'100%', height:'100%', minHeight:400, background:'linear-gradient(135deg,#1a1a2e,#010101)' }} />
-          }
-          {/* طبقة داكنة + زر تشغيل */}
-          <div style={{ position:'absolute', inset:0, background:'rgba(0,0,0,0.3)', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:16 }}>
-            <div style={{
-              width:70, height:70, borderRadius:'50%',
-              background:'linear-gradient(135deg,#ff0050,#ff4d80)',
-              display:'flex', alignItems:'center', justifyContent:'center',
-              boxShadow:'0 8px 32px rgba(255,0,80,0.5)',
-            }}>
-              <span style={{ fontSize:'1.8rem', marginRight:-4 }}>▶</span>
-            </div>
-            {author && <span style={{ color:'rgba(255,255,255,0.8)', fontSize:'0.82rem', fontFamily:'Tajawal,sans-serif' }}>@{author}</span>}
-            <span style={{
-              background:'#fff', color:'#000', borderRadius:50,
-              padding:'8px 20px', fontSize:'0.82rem', fontWeight:800,
-              fontFamily:'Tajawal,sans-serif',
-            }}>🎵 شاهد على TikTok</span>
-          </div>
-        </div>
-      </a>
+      <div style={{ display:'flex', justifyContent:'center' }}>
+        <iframe
+          src={`https://www.tiktok.com/embed/v2/${videoId}`}
+          style={{ width:'100%', maxWidth:420, height:740, border:'none', borderRadius:12 }}
+          allow="encrypted-media"
+          allowFullScreen
+        />
+      </div>
+      <div style={{ textAlign:'center', marginTop:14 }}>
+        <a href={url} target="_blank" rel="noopener noreferrer" style={{
+          display:'inline-flex', alignItems:'center', gap:8,
+          background:'#000', color:'#fff', borderRadius:50,
+          padding:'10px 22px', fontSize:'0.85rem', fontWeight:700,
+          textDecoration:'none', fontFamily:"'Tajawal','Cairo',sans-serif",
+        }}>
+          <span>🎵</span> افتح على TikTok
+        </a>
+      </div>
     </div>
   )
 }
