@@ -9,43 +9,39 @@ import MortgageCalc from '@/components/MortgageCalc'
 const H = SB_HEADERS
 
 function TikTokEmbed({ url }: { url: string }) {
-  const ref = useRef<HTMLDivElement>(null)
   const [load, setLoad] = useState(false)
-
-  // Extract video ID from TikTok URL
   const match = url.match(/video\/(\d+)/)
   const videoId = match?.[1]
 
   useEffect(() => {
     if (!videoId) return
-    // Load iframe after page is fully loaded using IntersectionObserver
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setLoad(true); obs.disconnect() } },
-      { rootMargin: '200px' }
-    )
-    if (ref.current) obs.observe(ref.current)
-    return () => obs.disconnect()
+    // بعد تحميل الصفحة مباشرة ابدأ تحميل الفيديو
+    if (document.readyState === 'complete') {
+      setLoad(true)
+    } else {
+      window.addEventListener('load', () => setLoad(true), { once: true })
+    }
   }, [videoId])
 
   if (!videoId) return null
 
   return (
-    <div ref={ref} style={{ background:'#fff', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)' }}>
+    <div style={{ background:'#fff', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)' }}>
       <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>
-        🎵 فيديو العقار على تيك توك
+        🎵 فيديو العقار
       </h2>
       <div style={{ display:'flex', justifyContent:'center', minHeight:700, background:'#f4ede4', borderRadius:12, overflow:'hidden' }}>
         {load ? (
           <iframe
-            src={`https://www.tiktok.com/embed/v2/${videoId}`}
-            style={{ width:'100%', maxWidth:400, height:700, border:'none' }}
-            allow="encrypted-media"
+            src={`https://www.tiktok.com/embed/v2/${videoId}?autoplay=1&muted=1`}
+            style={{ width:'100%', maxWidth:420, height:700, border:'none' }}
+            allow="encrypted-media; autoplay"
             allowFullScreen
           />
         ) : (
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', width:'100%', flexDirection:'column', gap:12, color:'#7a9188' }}>
-            <span style={{ fontSize:'3rem' }}>🎵</span>
-            <span style={{ fontSize:'0.85rem' }}>جاري تحضير الفيديو...</span>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', width:'100%', flexDirection:'column', gap:12, color:'#9aada7' }}>
+            <span style={{ fontSize:'2.5rem', opacity:0.4 }}>🎵</span>
+            <span style={{ fontSize:'0.82rem' }}>جاري تحميل الفيديو...</span>
           </div>
         )}
       </div>
