@@ -449,20 +449,13 @@ export default function PropertyDetail({ id }: { id: string }) {
           {/* Share */}
           <div style={{ background:'#fff', borderRadius:16, padding:'16px 20px', border:'1px solid rgba(39,66,62,0.08)', marginBottom:0 }}>
             <p style={{ fontSize:'0.75rem', color:'#9aada7', fontWeight:600, marginBottom:12, textAlign:'center' }}>مشاركة العقار</p>
-            <div style={{ display:'flex', gap:8, justifyContent:'center', flexWrap:'wrap' }}>
+            <div style={{ display:'flex', justifyContent:'center' }}>
               <a href={`https://wa.me/?text=${shareText}${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer"
-                style={{ background:'#25D366', color:'#fff', borderRadius:8, padding:'8px 14px', fontSize:'0.78rem', fontWeight:700, textDecoration:'none' }}>
-                واتساب
+                style={{ background:'#25D366', color:'#fff', borderRadius:50, width:48, height:48, display:'flex', alignItems:'center', justifyContent:'center', textDecoration:'none', boxShadow:'0 4px 12px rgba(37,211,102,0.35)' }}>
+                <svg width="26" height="26" viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 2C8.268 2 2 8.268 2 16c0 2.474.67 4.793 1.836 6.785L2 30l7.43-1.797A13.93 13.93 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.6a11.54 11.54 0 01-5.88-1.607l-.42-.25-4.41 1.067 1.1-4.295-.274-.44A11.56 11.56 0 014.4 16C4.4 9.59 9.59 4.4 16 4.4S27.6 9.59 27.6 16 22.41 27.6 16 27.6zm6.34-8.66c-.347-.174-2.055-1.014-2.374-1.13-.32-.115-.552-.173-.784.174-.232.347-.9 1.13-1.102 1.363-.203.232-.405.26-.752.087-.347-.174-1.465-.54-2.79-1.72-1.03-.92-1.726-2.057-1.928-2.404-.203-.347-.022-.535.152-.708.156-.155.347-.405.52-.608.174-.203.232-.347.348-.578.115-.232.058-.434-.029-.608-.087-.173-.784-1.89-1.073-2.588-.283-.68-.57-.587-.784-.598l-.667-.012c-.232 0-.608.087-.927.434-.318.347-1.217 1.189-1.217 2.9s1.246 3.363 1.42 3.595c.173.232 2.452 3.742 5.942 5.247.83.358 1.478.572 1.983.732.833.265 1.592.228 2.192.138.669-.1 2.055-.84 2.346-1.652.29-.812.29-1.508.203-1.652-.086-.145-.318-.232-.666-.405z"/>
+                </svg>
               </a>
-              <a href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer"
-                style={{ background:'#000', color:'#fff', borderRadius:8, padding:'8px 14px', fontSize:'0.78rem', fontWeight:700, textDecoration:'none' }}>
-                𝕏 تويتر
-              </a>
-              <button
-                onClick={() => { navigator.clipboard?.writeText(shareUrl); setCopied(true); setTimeout(()=>setCopied(false),2000) }}
-                style={{ background:copied?'#27423e':'rgba(39,66,62,0.08)', color:copied?'#b8986a':'#27423e', border:'1px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'8px 12px', fontSize:'0.78rem', fontWeight:700, cursor:'pointer', fontFamily:'Tajawal', transition:'all 0.2s' }}>
-                {copied ? '✓ تم النسخ' : '📋 نسخ'}
-              </button>
             </div>
           </div>
 
