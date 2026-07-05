@@ -630,12 +630,7 @@ export default function AdminPage() {
                 </select>
               </div>
               <div><label style={S.label}>عرض الشارع (م)</label><input type="number" value={form.street_width} onChange={e=>ff('street_width',e.target.value)} style={S.input} placeholder="20" /></div>
-              <div>
-                <label style={S.label}>عمر العقار</label>
-                <select value={form.property_age} onChange={e=>ff('property_age',e.target.value)} style={S.select}>
-                  {['','جديد','سنة','سنتان','3 سنوات','4 سنوا��','5 سنوات','6-10 سنوات','10-15 سنة','أكثر من 15 سنة'].map(a=><option key={a} value={a}>{a||'-- اختر --'}</option>)}
-                </select>
-              </div>
+              <div><label style={S.label}>عمر العقار (سنة)</label><input type="number" min="0" value={form.property_age} onChange={e=>ff('property_age',e.target.value)} style={S.input} placeholder="0 = جديد" /></div>
               <div>
                 <label style={S.label}>نوع الصك</label>
                 <select value={form.deed_type} onChange={e=>ff('deed_type',e.target.value)} style={S.select}>
@@ -646,7 +641,7 @@ export default function AdminPage() {
                 <input type="checkbox" id="bank_finance" checked={form.bank_finance} onChange={e=>ff('bank_finance',e.target.checked)} style={{ width:18, height:18, cursor:'pointer' }} />
                 <label htmlFor="bank_finance" style={{ ...S.label, marginBottom:0, cursor:'pointer' }}>يقبل التمويل البنكي</label>
               </div>
-              <div><label style={S.label}>ع��د الغرف</label><input type="number" min="0" value={form.bedrooms} onChange={e=>ff('bedrooms',e.target.value)} style={S.input} /></div>
+              <div><label style={S.label}>عدد الغرف</label><input type="number" min="0" value={form.bedrooms} onChange={e=>ff('bedrooms',e.target.value)} style={S.input} /></div>
               <div><label style={S.label}>عدد الحمامات</label><input type="number" min="0" value={form.bathrooms} onChange={e=>ff('bathrooms',e.target.value)} style={S.input} /></div>
               <div><label style={S.label}>غرف الخادمة</label><input type="number" min="0" value={form.maid_rooms} onChange={e=>ff('maid_rooms',e.target.value)} style={S.input} /></div>
               <div><label style={S.label}>عدد المطابخ</label><input type="number" min="0" value={form.kitchens} onChange={e=>ff('kitchens',e.target.value)} style={S.input} /></div>
