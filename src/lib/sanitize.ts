@@ -52,6 +52,11 @@ export function sanitizeProperty(body: Record<string, unknown>) {
     listing_number: body.listing_number != null ? sanitizeNumber(body.listing_number) : undefined,
     maid_rooms:  body.maid_rooms != null ? sanitizeNumber(body.maid_rooms) : null,
     kitchens:    body.kitchens != null ? sanitizeNumber(body.kitchens) : null,
-    bid_price:   body.bid_price != null && body.bid_price !== '' ? sanitizeNumber(body.bid_price) : null,
+    bid_price:   body.bid_price  != null && body.bid_price  !== '' ? sanitizeNumber(body.bid_price)  : null,
+    north_len:   body.north_len  != null && body.north_len  !== '' ? sanitizeNumber(body.north_len)  : null,
+    south_len:   body.south_len  != null && body.south_len  !== '' ? sanitizeNumber(body.south_len)  : null,
+    east_len:    body.east_len   != null && body.east_len   !== '' ? sanitizeNumber(body.east_len)   : null,
+    west_len:    body.west_len   != null && body.west_len   !== '' ? sanitizeNumber(body.west_len)   : null,
+    built_area:  body.built_area != null && body.built_area !== '' ? sanitizeNumber(body.built_area) : null,
   }
 }

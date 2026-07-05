@@ -47,6 +47,11 @@ export type Property = {
   kitchens: number | null
   has_annex: boolean
   bid_price: number | null
+  north_len: number | null
+  south_len: number | null
+  east_len: number | null
+  west_len: number | null
+  built_area: number | null
 }
 
 export type Inquiry = {

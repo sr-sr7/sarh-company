@@ -81,7 +81,8 @@ const S = {
 const emptyForm = {
   title:'', description:'', type:'فيلا', operation:'للبيع',
   city:'بريدة', district:'', price:'', price_unit:'ريال', bid_price:'',
-  area:'', bedrooms:'0', bathrooms:'0', maid_rooms:'0', kitchens:'1',
+  area:'', north_len:'', south_len:'', east_len:'', west_len:'', built_area:'',
+  bedrooms:'0', bathrooms:'0', maid_rooms:'0', kitchens:'1',
   has_pool:false, has_parking:false, has_garden:false, has_annex:false,
   is_featured:false, is_new:true, whatsapp:'966552226345',
   status:'active', main_image:'', images:[] as string[], video_url:'', map_url:'',
@@ -204,7 +205,12 @@ export default function AdminPage() {
         title: form.title, description: form.description || null,
         type: form.type, operation: form.operation, city: form.city,
         district: form.district || null, price: Number(form.price), price_unit: form.price_unit,
-        bid_price: form.bid_price ? Number(form.bid_price) : null,
+        bid_price:  form.bid_price  ? Number(form.bid_price)  : null,
+        north_len:  form.north_len  ? Number(form.north_len)  : null,
+        south_len:  form.south_len  ? Number(form.south_len)  : null,
+        east_len:   form.east_len   ? Number(form.east_len)   : null,
+        west_len:   form.west_len   ? Number(form.west_len)   : null,
+        built_area: form.built_area ? Number(form.built_area) : null,
         area: form.area ? Number(form.area) : null, bedrooms: Number(form.bedrooms),
         bathrooms: Number(form.bathrooms), maid_rooms: Number(form.maid_rooms), kitchens: Number(form.kitchens),
         has_pool: form.has_pool, has_parking: form.has_parking, has_garden: form.has_garden,
@@ -234,6 +240,9 @@ export default function AdminPage() {
     setForm({
       title:p.title, description:p.description||'', type:p.type, operation:p.operation,
       city:p.city, district:p.district||'', price:String(p.price), price_unit:p.price_unit, bid_price:p.bid_price?String(p.bid_price):'',
+      north_len:p.north_len?String(p.north_len):'', south_len:p.south_len?String(p.south_len):'',
+      east_len:p.east_len?String(p.east_len):'', west_len:p.west_len?String(p.west_len):'',
+      built_area:p.built_area?String(p.built_area):'',
       area:p.area?String(p.area):'', bedrooms:String(p.bedrooms), bathrooms:String(p.bathrooms),
       maid_rooms:String(p.maid_rooms??0), kitchens:String(p.kitchens??1),
       has_pool:p.has_pool, has_parking:p.has_parking, has_garden:p.has_garden, has_annex:p.has_annex??false,
@@ -596,6 +605,16 @@ export default function AdminPage() {
                 </div>
               )}
               <div><label style={S.label}>المساحة (م²)</label><input type="number" value={form.area} onChange={e=>ff('area',e.target.value)} style={S.input} placeholder="400" /></div>
+              <div><label style={S.label}>مسطح البناء (م²)</label><input type="number" value={form.built_area} onChange={e=>ff('built_area',e.target.value)} style={S.input} placeholder="اختياري — للعقارات المبنية" /></div>
+              <div style={S.fullCol}>
+                <label style={S.label}>أطوال الأضلاع (م) — اختياري</label>
+                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 1fr', gap:10 }}>
+                  <div><label style={{ fontSize:'0.75rem', color:'#7a9e96', marginBottom:4, display:'block' }}>شمال</label><input type="number" value={form.north_len} onChange={e=>ff('north_len',e.target.value)} style={S.input} placeholder="م" /></div>
+                  <div><label style={{ fontSize:'0.75rem', color:'#7a9e96', marginBottom:4, display:'block' }}>جنوب</label><input type="number" value={form.south_len} onChange={e=>ff('south_len',e.target.value)} style={S.input} placeholder="م" /></div>
+                  <div><label style={{ fontSize:'0.75rem', color:'#7a9e96', marginBottom:4, display:'block' }}>شرق</label><input type="number" value={form.east_len} onChange={e=>ff('east_len',e.target.value)} style={S.input} placeholder="م" /></div>
+                  <div><label style={{ fontSize:'0.75rem', color:'#7a9e96', marginBottom:4, display:'block' }}>غرب</label><input type="number" value={form.west_len} onChange={e=>ff('west_len',e.target.value)} style={S.input} placeholder="م" /></div>
+                </div>
+              </div>
               <div><label style={S.label}>عدد الغرف</label><input type="number" min="0" value={form.bedrooms} onChange={e=>ff('bedrooms',e.target.value)} style={S.input} /></div>
               <div><label style={S.label}>عدد الحمامات</label><input type="number" min="0" value={form.bathrooms} onChange={e=>ff('bathrooms',e.target.value)} style={S.input} /></div>
               <div><label style={S.label}>غرف الخادمة</label><input type="number" min="0" value={form.maid_rooms} onChange={e=>ff('maid_rooms',e.target.value)} style={S.input} /></div>
