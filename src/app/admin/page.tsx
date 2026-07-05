@@ -82,6 +82,7 @@ const emptyForm = {
   title:'', description:'', type:'فيلا', operation:'للبيع',
   city:'بريدة', district:'', price:'', price_unit:'ريال', bid_price:'',
   area:'', north_len:'', south_len:'', east_len:'', west_len:'', built_area:'',
+  facade:'', street_width:'', property_age:'', deed_type:'', bank_finance:false,
   bedrooms:'0', bathrooms:'0', maid_rooms:'0', kitchens:'1',
   has_pool:false, has_parking:false, has_garden:false, has_annex:false,
   is_featured:false, is_new:true, whatsapp:'966552226345',
@@ -206,11 +207,16 @@ export default function AdminPage() {
         type: form.type, operation: form.operation, city: form.city,
         district: form.district || null, price: Number(form.price), price_unit: form.price_unit,
         bid_price:  form.bid_price  ? Number(form.bid_price)  : null,
-        north_len:  form.north_len  ? Number(form.north_len)  : null,
-        south_len:  form.south_len  ? Number(form.south_len)  : null,
-        east_len:   form.east_len   ? Number(form.east_len)   : null,
-        west_len:   form.west_len   ? Number(form.west_len)   : null,
-        built_area: form.built_area ? Number(form.built_area) : null,
+        north_len:    form.north_len    ? Number(form.north_len)    : null,
+        south_len:    form.south_len    ? Number(form.south_len)    : null,
+        east_len:     form.east_len     ? Number(form.east_len)     : null,
+        west_len:     form.west_len     ? Number(form.west_len)     : null,
+        built_area:   form.built_area   ? Number(form.built_area)   : null,
+        facade:       form.facade       || null,
+        street_width: form.street_width ? Number(form.street_width) : null,
+        property_age: form.property_age || null,
+        deed_type:    form.deed_type    || null,
+        bank_finance: form.bank_finance,
         area: form.area ? Number(form.area) : null, bedrooms: Number(form.bedrooms),
         bathrooms: Number(form.bathrooms), maid_rooms: Number(form.maid_rooms), kitchens: Number(form.kitchens),
         has_pool: form.has_pool, has_parking: form.has_parking, has_garden: form.has_garden,
@@ -243,6 +249,8 @@ export default function AdminPage() {
       north_len:p.north_len?String(p.north_len):'', south_len:p.south_len?String(p.south_len):'',
       east_len:p.east_len?String(p.east_len):'', west_len:p.west_len?String(p.west_len):'',
       built_area:p.built_area?String(p.built_area):'',
+      facade:p.facade||'', street_width:p.street_width?String(p.street_width):'',
+      property_age:p.property_age||'', deed_type:p.deed_type||'', bank_finance:p.bank_finance??false,
       area:p.area?String(p.area):'', bedrooms:String(p.bedrooms), bathrooms:String(p.bathrooms),
       maid_rooms:String(p.maid_rooms??0), kitchens:String(p.kitchens??1),
       has_pool:p.has_pool, has_parking:p.has_parking, has_garden:p.has_garden, has_annex:p.has_annex??false,
@@ -615,7 +623,30 @@ export default function AdminPage() {
                   <div><label style={{ fontSize:'0.75rem', color:'#7a9e96', marginBottom:4, display:'block' }}>غرب</label><input type="number" value={form.west_len} onChange={e=>ff('west_len',e.target.value)} style={S.input} placeholder="م" /></div>
                 </div>
               </div>
-              <div><label style={S.label}>عدد الغرف</label><input type="number" min="0" value={form.bedrooms} onChange={e=>ff('bedrooms',e.target.value)} style={S.input} /></div>
+              <div>
+                <label style={S.label}>الواجهة</label>
+                <select value={form.facade} onChange={e=>ff('facade',e.target.value)} style={S.select}>
+                  {['','شمالية','��نوبية','شرقية','غربية','شمالية شرقية','شمالية غربية','جنوبية شرقية','جنوبية غربية'].map(f=><option key={f} value={f}>{f||'-- اختر --'}</option>)}
+                </select>
+              </div>
+              <div><label style={S.label}>عرض الشارع (م)</label><input type="number" value={form.street_width} onChange={e=>ff('street_width',e.target.value)} style={S.input} placeholder="20" /></div>
+              <div>
+                <label style={S.label}>عمر العقار</label>
+                <select value={form.property_age} onChange={e=>ff('property_age',e.target.value)} style={S.select}>
+                  {['','جديد','سنة','سنتان','3 سنوات','4 سنوا��','5 سنوات','6-10 سنوات','10-15 سنة','أكثر من 15 سنة'].map(a=><option key={a} value={a}>{a||'-- اختر --'}</option>)}
+                </select>
+              </div>
+              <div>
+                <label style={S.label}>نوع الصك</label>
+                <select value={form.deed_type} onChange={e=>ff('deed_type',e.target.value)} style={S.select}>
+                  {['','صك إلكتروني','صك ورقي','صك مشاع','وثيقة'].map(d=><option key={d} value={d}>{d||'-- اختر --'}</option>)}
+                </select>
+              </div>
+              <div style={{ display:'flex', alignItems:'center', gap:10, paddingTop:24 }}>
+                <input type="checkbox" id="bank_finance" checked={form.bank_finance} onChange={e=>ff('bank_finance',e.target.checked)} style={{ width:18, height:18, cursor:'pointer' }} />
+                <label htmlFor="bank_finance" style={{ ...S.label, marginBottom:0, cursor:'pointer' }}>يقبل التمويل البنكي</label>
+              </div>
+              <div><label style={S.label}>ع��د الغرف</label><input type="number" min="0" value={form.bedrooms} onChange={e=>ff('bedrooms',e.target.value)} style={S.input} /></div>
               <div><label style={S.label}>عدد الحمامات</label><input type="number" min="0" value={form.bathrooms} onChange={e=>ff('bathrooms',e.target.value)} style={S.input} /></div>
               <div><label style={S.label}>غرف الخادمة</label><input type="number" min="0" value={form.maid_rooms} onChange={e=>ff('maid_rooms',e.target.value)} style={S.input} /></div>
               <div><label style={S.label}>عدد المطابخ</label><input type="number" min="0" value={form.kitchens} onChange={e=>ff('kitchens',e.target.value)} style={S.input} /></div>

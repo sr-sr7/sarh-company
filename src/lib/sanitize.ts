@@ -57,6 +57,11 @@ export function sanitizeProperty(body: Record<string, unknown>) {
     south_len:   body.south_len  != null && body.south_len  !== '' ? sanitizeNumber(body.south_len)  : null,
     east_len:    body.east_len   != null && body.east_len   !== '' ? sanitizeNumber(body.east_len)   : null,
     west_len:    body.west_len   != null && body.west_len   !== '' ? sanitizeNumber(body.west_len)   : null,
-    built_area:  body.built_area != null && body.built_area !== '' ? sanitizeNumber(body.built_area) : null,
+    built_area:   body.built_area   != null && body.built_area   !== '' ? sanitizeNumber(body.built_area)  : null,
+    facade:       body.facade       ? sanitizeText(body.facade)       : null,
+    street_width: body.street_width != null && body.street_width !== '' ? sanitizeNumber(body.street_width) : null,
+    property_age: body.property_age ? sanitizeText(body.property_age) : null,
+    deed_type:    body.deed_type    ? sanitizeText(body.deed_type)    : null,
+    bank_finance: Boolean(body.bank_finance),
   }
 }

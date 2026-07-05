@@ -52,6 +52,11 @@ export type Property = {
   east_len: number | null
   west_len: number | null
   built_area: number | null
+  facade: string | null
+  street_width: number | null
+  property_age: string | null
+  deed_type: string | null
+  bank_finance: boolean
 }
 
 export type Inquiry = {
