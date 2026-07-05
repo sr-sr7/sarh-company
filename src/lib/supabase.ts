@@ -46,6 +46,7 @@ export type Property = {
   maid_rooms: number | null
   kitchens: number | null
   has_annex: boolean
+  bid_price: number | null
 }
 
 export type Inquiry = {

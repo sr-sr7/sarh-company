@@ -80,7 +80,7 @@ const S = {
 
 const emptyForm = {
   title:'', description:'', type:'فيلا', operation:'للبيع',
-  city:'بريدة', district:'', price:'', price_unit:'ريال',
+  city:'بريدة', district:'', price:'', price_unit:'ريال', bid_price:'',
   area:'', bedrooms:'0', bathrooms:'0', maid_rooms:'0', kitchens:'1',
   has_pool:false, has_parking:false, has_garden:false, has_annex:false,
   is_featured:false, is_new:true, whatsapp:'966552226345',
@@ -204,6 +204,7 @@ export default function AdminPage() {
         title: form.title, description: form.description || null,
         type: form.type, operation: form.operation, city: form.city,
         district: form.district || null, price: Number(form.price), price_unit: form.price_unit,
+        bid_price: form.bid_price ? Number(form.bid_price) : null,
         area: form.area ? Number(form.area) : null, bedrooms: Number(form.bedrooms),
         bathrooms: Number(form.bathrooms), maid_rooms: Number(form.maid_rooms), kitchens: Number(form.kitchens),
         has_pool: form.has_pool, has_parking: form.has_parking, has_garden: form.has_garden,
@@ -232,7 +233,7 @@ export default function AdminPage() {
   function editProperty(p: Property) {
     setForm({
       title:p.title, description:p.description||'', type:p.type, operation:p.operation,
-      city:p.city, district:p.district||'', price:String(p.price), price_unit:p.price_unit,
+      city:p.city, district:p.district||'', price:String(p.price), price_unit:p.price_unit, bid_price:p.bid_price?String(p.bid_price):'',
       area:p.area?String(p.area):'', bedrooms:String(p.bedrooms), bathrooms:String(p.bathrooms),
       maid_rooms:String(p.maid_rooms??0), kitchens:String(p.kitchens??1),
       has_pool:p.has_pool, has_parking:p.has_parking, has_garden:p.has_garden, has_annex:p.has_annex??false,
@@ -540,30 +541,60 @@ export default function AdminPage() {
               <div style={S.fullCol}><label style={S.label}>عنوان العقار *</label><input required value={form.title} onChange={e=>ff('title',e.target.value)} style={S.input} placeholder="مثال: فيلا فاخرة بحي النزهة" /></div>
               <div style={S.fullCol}><label style={S.label}>الوصف</label><textarea value={form.description} onChange={e=>ff('description',e.target.value)} rows={3} style={S.textarea} placeholder="وصف مفصّل..." /></div>
               <div><label style={S.label}>نوع العقار *</label><select required value={form.type} onChange={e=>ff('type',e.target.value)} style={S.select}>{['فيلا','أرض','شقة','استراحة','دبلكس','محل تجاري','مستودع','مزرعة','قصر'].map(t=><option key={t}>{t}</option>)}</select></div>
-              <div><label style={S.label}>نوع العملية *</label><select required value={form.operation} onChange={e=>ff('operation',e.target.value)} style={S.select}>{['للبيع','للإيجار','إيجار يومي','استثماري'].map(o=><option key={o}>{o}</option>)}</select></div>
+              <div><label style={S.label}>نوع العملية *</label><select required value={form.operation} onChange={e=>ff('operation',e.target.value)} style={S.select}>{['للبيع','للإيجار','إيجار يومي','استثماري','على السوم'].map(o=><option key={o}>{o}</option>)}</select></div>
               <div><label style={S.label}>المدينة *</label><select required value={form.city} onChange={e=>ff('city',e.target.value)} style={S.select}>{['الرياض','جدة','مكة المكرمة','المدينة المنورة','الدمام','الخبر','الظهران','القطيف','الأحساء','الطائف','تبوك','أبها','خميس مشيط','بريدة','عنيزة','الرس','البكيرية','المذنب','حائل','ينبع','نجران','جازان','الباحة','عرعر','سكاكا','الخرج','الدوادمي'].map(c=><option key={c}>{c}</option>)}</select></div>
               <div><label style={S.label}>الحي / المنطقة</label><input value={form.district} onChange={e=>ff('district',e.target.value)} style={S.input} placeholder="حي النزهة" /></div>
-              <div style={{ gridColumn: 'span 2' }}>
-                <label style={S.label}>السعر *</label>
-                <div style={{ display:'flex', gap:10, alignItems:'center' }}>
-                  <input
-                    type="number"
-                    value={form.price}
-                    onChange={e => ff('price', e.target.value)}
-                    style={{ ...S.input, flex:1 }}
-                    placeholder={form.price_unit === 'آخر سوم' ? 'آخر سومة (اختياري)' : 'مثال: 850000'}
-                    required={form.price_unit !== 'آخر سوم'}
-                  />
-                  <select value={form.price_unit} onChange={e => { ff('price_unit', e.target.value); if(e.target.value === 'آخر سوم') ff('price','') }} style={{ ...S.select, width:140, flexShrink:0 }}>
-                    {['ريال','ريال / سنة','ريال / شهر','ريال / يوم','آخر سوم'].map(u => <option key={u}>{u}</option>)}
-                  </select>
-                </div>
-                {form.price_unit === 'آخر سوم' && (
-                  <p style={{ fontSize:'0.75rem', color:'#b8986a', marginTop:6, margin:'6px 0 0' }}>
-                    اخترت "آخر سوم" — حقل السعر اختياري، اتركه فارغاً أو أدخل آخر سومة
+              {form.operation === 'على السوم' ? (
+                <div style={{ gridColumn: 'span 2' }}>
+                  <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
+                    <div>
+                      <label style={S.label}>وصل السوم الآن (ريال)</label>
+                      <input
+                        type="number"
+                        value={form.price}
+                        onChange={e => ff('price', e.target.value)}
+                        style={S.input}
+                        placeholder="اختياري — آخر سوم وصل إليه"
+                      />
+                    </div>
+                    <div>
+                      <label style={S.label}>سعر الحد (ريال)</label>
+                      <input
+                        type="number"
+                        value={form.bid_price}
+                        onChange={e => ff('bid_price', e.target.value)}
+                        style={S.input}
+                        placeholder="اختياري — السعر المطلوب للبيع"
+                      />
+                    </div>
+                  </div>
+                  <p style={{ fontSize:'0.75rem', color:'#b8986a', margin:'8px 0 0' }}>
+                    العقار على السوم — أدخل آخر سوم وصل إليه وسعر الحد إن وُجد
                   </p>
-                )}
-              </div>
+                </div>
+              ) : (
+                <div style={{ gridColumn: 'span 2' }}>
+                  <label style={S.label}>السعر *</label>
+                  <div style={{ display:'flex', gap:10, alignItems:'center' }}>
+                    <input
+                      type="number"
+                      value={form.price}
+                      onChange={e => ff('price', e.target.value)}
+                      style={{ ...S.input, flex:1 }}
+                      placeholder={form.price_unit === 'آخر سوم' ? 'آخر سومة (اختياري)' : 'مثال: 850000'}
+                      required={form.price_unit !== 'آخر سوم'}
+                    />
+                    <select value={form.price_unit} onChange={e => { ff('price_unit', e.target.value); if(e.target.value === 'آخر سوم') ff('price','') }} style={{ ...S.select, width:140, flexShrink:0 }}>
+                      {['ريال','ريال / سنة','ريال / شهر','ريال / يوم','آخر سوم'].map(u => <option key={u}>{u}</option>)}
+                    </select>
+                  </div>
+                  {form.price_unit === 'آخر سوم' && (
+                    <p style={{ fontSize:'0.75rem', color:'#b8986a', marginTop:6, margin:'6px 0 0' }}>
+                      اخترت "آخر سوم" — حقل السعر اختياري، اتركه فارغاً أو أدخل آخر سومة
+                    </p>
+                  )}
+                </div>
+              )}
               <div><label style={S.label}>المساحة (م²)</label><input type="number" value={form.area} onChange={e=>ff('area',e.target.value)} style={S.input} placeholder="400" /></div>
               <div><label style={S.label}>عدد الغرف</label><input type="number" min="0" value={form.bedrooms} onChange={e=>ff('bedrooms',e.target.value)} style={S.input} /></div>
               <div><label style={S.label}>عدد الحمامات</label><input type="number" min="0" value={form.bathrooms} onChange={e=>ff('bathrooms',e.target.value)} style={S.input} /></div>

@@ -52,5 +52,6 @@ export function sanitizeProperty(body: Record<string, unknown>) {
     listing_number: body.listing_number != null ? sanitizeNumber(body.listing_number) : undefined,
     maid_rooms:  body.maid_rooms != null ? sanitizeNumber(body.maid_rooms) : null,
     kitchens:    body.kitchens != null ? sanitizeNumber(body.kitchens) : null,
+    bid_price:   body.bid_price != null && body.bid_price !== '' ? sanitizeNumber(body.bid_price) : null,
   }
 }
