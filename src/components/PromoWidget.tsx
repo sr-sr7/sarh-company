@@ -53,6 +53,8 @@ export default function PromoWidget() {
     outline: 'none', boxSizing: 'border-box', background: '#f8fbfa',
   }
 
+  if (pathname === '/maintenance') return null
+
   return (
     <>
       {open && (
