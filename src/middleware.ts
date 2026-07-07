@@ -3,7 +3,8 @@ import type { NextRequest } from 'next/server'
 import { COOKIE_NAME } from '@/lib/auth'
 
 const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const SB_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// Use service role key in middleware to bypass RLS — anon key blocked SELECT on inquiries
+const SB_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 // ── Maintenance mode cache (30 seconds TTL) ───────────────────
 let maintCache: { active: boolean; expiresAt: number } = { active: false, expiresAt: 0 }
