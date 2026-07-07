@@ -1,11 +1,22 @@
 import { LOGO_GIF } from '@/lib/logo'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 
 export const metadata = {
-  title: 'صرح العقارية — تحت الصيانة',
+  title: 'صرح العقارية — تحت الإنشاء',
   robots: { index: false },
 }
 
-export default function MaintenancePage() {
+async function getReason(): Promise<string> {
+  try {
+    const { data } = await supabaseAdmin
+      .from('inquiries').select('message')
+      .eq('type', '__maintenance__').eq('status', 'on').limit(1).single()
+    return data?.message || ''
+  } catch { return '' }
+}
+
+export default async function MaintenancePage() {
+  const reason = await getReason()
   return (
     <html lang="ar" dir="rtl">
       <head>
@@ -81,7 +92,7 @@ export default function MaintenancePage() {
             الموقع تحت الإنشاء
           </h1>
           <p style={{ color:'rgba(211,226,220,0.75)', fontSize:'0.95rem', lineHeight:1.8, marginBottom:32 }}>
-            جاري استكمال جميع المتطلبات النظامية للموقع.<br/>
+            {reason || 'جاري استكمال جميع المتطلبات النظامية للموقع.'}<br/>
             سنعود قريباً إن شاء الله ✨
           </p>
 

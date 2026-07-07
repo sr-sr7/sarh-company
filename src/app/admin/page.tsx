@@ -117,6 +117,8 @@ export default function AdminPage() {
   const [editId, setEditId]           = useState<string | null>(null)
   const [maintenance, setMaintenance] = useState(false)
   const [togglingMaint, setTogglingMaint] = useState(false)
+  const [maintReason, setMaintReason] = useState('')
+  const [showMaintModal, setShowMaintModal] = useState(false)
   const [form, setForm]               = useState(emptyForm)
 
   // Upload state
@@ -180,16 +182,25 @@ export default function AdminPage() {
 
   async function toggleMaintenance() {
     if (!can('maintenance')) return
+    if (!maintenance) { setShowMaintModal(true); return }
     setTogglingMaint(true)
     const res = await fetch('/api/admin/maintenance', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ enable: !maintenance }),
+      body: JSON.stringify({ enable: false }),
     })
-    if (res.ok) {
-      setMaintenance(!maintenance)
-      if (!maintenance) document.cookie = 'sarh_admin_bypass=1; path=/; max-age=86400'
-    }
+    if (res.ok) setMaintenance(false)
+    setTogglingMaint(false)
+  }
+
+  async function enableMaintenance() {
+    setTogglingMaint(true); setShowMaintModal(false)
+    const res = await fetch('/api/admin/maintenance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ enable: true, reason: maintReason.trim() }),
+    })
+    if (res.ok) { setMaintenance(true); document.cookie = 'sarh_admin_bypass=1; path=/; max-age=86400' }
     setTogglingMaint(false)
   }
 
@@ -359,6 +370,32 @@ export default function AdminPage() {
 
   return (
     <div style={S.page}>
+
+      {/* Maintenance reason modal */}
+      {showMaintModal && (
+        <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', zIndex:9999, display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
+          <div style={{ background:'#fff', borderRadius:18, padding:'36px 32px', maxWidth:460, width:'100%', boxShadow:'0 20px 60px rgba(0,0,0,0.3)', direction:'rtl' }}>
+            <h2 style={{ fontSize:'1.2rem', fontWeight:900, color:'#1e3a34', marginBottom:8 }}>🔴 تعطيل الموقع</h2>
+            <p style={{ color:'#526266', fontSize:'0.88rem', marginBottom:20, lineHeight:1.7 }}>اكتب سبب التعطيل — سيظهر للزوار على صفحة الإنشاء</p>
+            <textarea
+              autoFocus
+              value={maintReason}
+              onChange={e => setMaintReason(e.target.value)}
+              rows={3}
+              placeholder="مثال: جاري استكمال المتطلبات النظامية للموقع"
+              style={{ width:'100%', border:'1.5px solid rgba(39,66,62,0.2)', borderRadius:10, padding:'12px 14px', fontSize:'0.95rem', fontFamily:"'Tajawal','Cairo',sans-serif", resize:'vertical', outline:'none', boxSizing:'border-box' as const, direction:'rtl' }}
+            />
+            <div style={{ display:'flex', gap:10, marginTop:20 }}>
+              <button onClick={enableMaintenance} style={{ flex:1, background:'#dc2626', color:'#fff', border:'none', borderRadius:10, padding:'12px', fontWeight:800, fontSize:'0.95rem', cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif" }}>
+                تعطيل الموقع
+              </button>
+              <button onClick={() => { setShowMaintModal(false); setMaintReason('') }} style={{ flex:1, background:'#f0f0f0', color:'#333', border:'none', borderRadius:10, padding:'12px', fontWeight:700, fontSize:'0.95rem', cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif" }}>
+                إلغاء
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Header */}
       <div style={S.header}>

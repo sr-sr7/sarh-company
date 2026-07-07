@@ -8,21 +8,22 @@ export async function GET() {
   if (!isAuthenticated()) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
   const { data } = await supabaseAdmin
     .from('inquiries')
-    .select('id')
+    .select('id, message')
     .eq('type', '__maintenance__')
     .eq('status', 'on')
     .limit(1)
-  return NextResponse.json({ active: Array.isArray(data) && data.length > 0 })
+  const active = Array.isArray(data) && data.length > 0
+  return NextResponse.json({ active, reason: active ? data[0].message : '' })
 }
 
 export async function POST(req: NextRequest) {
   if (!isAuthenticated()) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
-  const { enable } = await req.json()
+  const { enable, reason } = await req.json()
   if (enable) {
     await supabaseAdmin.from('inquiries').insert({
       client_name: '__SYSTEM__',
       client_phone: 'maintenance',
-      message: 'maintenance_mode_active',
+      message: reason || '',
       type: '__maintenance__',
       status: 'on',
     })
