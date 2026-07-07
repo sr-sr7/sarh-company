@@ -73,19 +73,16 @@ export default function MaintenancePage() {
             <div style={{ fontSize:'0.7rem', color:'rgba(211,226,220,0.45)', letterSpacing:4 }}>SARH REAL ESTATE</div>
           </div>
 
-          {/* Gears icon */}
-          <div style={{ fontSize:'2.8rem', marginBottom:24, display:'flex', alignItems:'center', justifyContent:'center', gap:4 }}>
-            <span className="gear">⚙️</span>
-            <span className="gear2" style={{ fontSize:'1.8rem', marginTop:8 }}>⚙️</span>
-          </div>
+          {/* Icon */}
+          <div style={{ fontSize:'2.8rem', marginBottom:24 }}>🏗️</div>
 
           {/* Title */}
           <h1 style={{ fontSize:'1.6rem', fontWeight:900, color:'#fff', marginBottom:12, lineHeight:1.4 }}>
-            الموقع تحت الصيانة
+            الموقع تحت الإنشاء
           </h1>
           <p style={{ color:'rgba(211,226,220,0.75)', fontSize:'0.95rem', lineHeight:1.8, marginBottom:32 }}>
-            نعمل على تحسين تجربتك وتطوير خدماتنا.<br/>
-            سنعود قريباً بشكل أفضل إن شاء الله ✨
+            جاري استكمال جميع المتطلبات النظامية للموقع.<br/>
+            سنعود قريباً إن شاء الله ✨
           </p>
 
           {/* Progress bar */}
@@ -96,8 +93,8 @@ export default function MaintenancePage() {
           {/* Info cards */}
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:32 }}>
             {[
-              { icon:'🔧', label:'جاري التحديث', desc:'نحسّن الموقع لك' },
-              { icon:'⏱️', label:'وقت قصير', desc:'سنعود قريباً' },
+              { icon:'📋', label:'استكمال المتطلبات', desc:'نظامية ورقية' },
+              { icon:'⏱️', label:'قريباً', desc:'سنعود بإذن الله' },
             ].map(card => (
               <div key={card.label} style={{ background:'rgba(255,255,255,0.06)', border:'1px solid rgba(211,226,220,0.1)', borderRadius:14, padding:'14px 12px' }}>
                 <div style={{ fontSize:'1.5rem', marginBottom:6 }}>{card.icon}</div>
