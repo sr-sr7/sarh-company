@@ -343,25 +343,62 @@ export default function Home() {
                 })}
               </div>
 
-              {/* Dots + arrows */}
-              <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:16, marginTop:16 }}>
-                <button onClick={() => { setCarouselIdx(i => Math.max(0, i-1)); pauseCarousel() }}
-                  disabled={carouselIdx===0}
-                  style={{ width:36, height:36, borderRadius:'50%', border:'2px solid rgba(30,58,52,0.18)', background: carouselIdx===0?'#f0f0f0':'#fff', color:'#1e3a34', fontSize:'1.2rem', cursor:carouselIdx===0?'default':'pointer', display:'flex', alignItems:'center', justifyContent:'center', opacity:carouselIdx===0?0.3:1, transition:'all 0.2s', flexShrink:0 }}
-                >›</button>
+              {/* Numbered pagination */}
+              {(() => {
+                const total = properties.length
+                const PAGE  = 5
+                // window start: keep active visible, clamp to valid range
+                const winStart = Math.min(Math.max(carouselIdx - 2, 0), Math.max(total - PAGE, 0))
+                const winEnd   = Math.min(winStart + PAGE, total)
+                const indices  = Array.from({ length: winEnd - winStart }, (_, i) => winStart + i)
+                const showPrev = winStart > 0
+                const showNext = winEnd < total
+                const btnBase: React.CSSProperties = {
+                  width:32, height:32, borderRadius:8, border:'1.5px solid rgba(30,58,52,0.18)',
+                  cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif",
+                  fontSize:'0.82rem', fontWeight:700, display:'flex', alignItems:'center',
+                  justifyContent:'center', transition:'all 0.2s', flexShrink:0,
+                }
+                return (
+                  <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:6, marginTop:16, flexWrap:'wrap' }}>
+                    {/* right arrow */}
+                    <button onClick={() => { setCarouselIdx(i => Math.max(0, i-1)); pauseCarousel() }}
+                      disabled={carouselIdx===0}
+                      style={{ ...btnBase, background:carouselIdx===0?'#f0f0f0':'#fff', color:'#1e3a34', opacity:carouselIdx===0?0.3:1, cursor:carouselIdx===0?'default':'pointer' }}
+                    >›</button>
 
-                <div style={{ display:'flex', gap:6 }}>
-                  {properties.map((_, i) => (
-                    <button key={i} onClick={() => { setCarouselIdx(i); pauseCarousel() }}
-                      style={{ width:i===carouselIdx?24:8, height:8, borderRadius:50, border:'none', cursor:'pointer', padding:0, background:i===carouselIdx?'#b8986a':'rgba(30,58,52,0.2)', transition:'all 0.35s' }} />
-                  ))}
-                </div>
+                    {showPrev && (
+                      <button onClick={() => { setCarouselIdx(winStart-1); pauseCarousel() }}
+                        style={{ ...btnBase, background:'#fff', color:'#7a9188' }}>‹‹</button>
+                    )}
 
-                <button onClick={() => { setCarouselIdx(i => Math.min(properties.length-1, i+1)); pauseCarousel() }}
-                  disabled={carouselIdx===properties.length-1}
-                  style={{ width:36, height:36, borderRadius:'50%', border:'2px solid rgba(30,58,52,0.18)', background:carouselIdx===properties.length-1?'#f0f0f0':'#fff', color:'#1e3a34', fontSize:'1.2rem', cursor:carouselIdx===properties.length-1?'default':'pointer', display:'flex', alignItems:'center', justifyContent:'center', opacity:carouselIdx===properties.length-1?0.3:1, transition:'all 0.2s', flexShrink:0 }}
-                >‹</button>
-              </div>
+                    {indices.map(i => (
+                      <button key={i} onClick={() => { setCarouselIdx(i); pauseCarousel() }}
+                        style={{ ...btnBase, minWidth:32,
+                          background: i===carouselIdx ? '#27423e' : '#fff',
+                          color:      i===carouselIdx ? '#fff'    : '#1e3a34',
+                          border:     i===carouselIdx ? '1.5px solid #27423e' : '1.5px solid rgba(30,58,52,0.18)',
+                          transform:  i===carouselIdx ? 'scale(1.1)' : 'scale(1)',
+                        }}>{i+1}</button>
+                    ))}
+
+                    {showNext && (
+                      <button onClick={() => { setCarouselIdx(winEnd); pauseCarousel() }}
+                        style={{ ...btnBase, background:'#fff', color:'#7a9188' }}>››</button>
+                    )}
+
+                    {/* left arrow */}
+                    <button onClick={() => { setCarouselIdx(i => Math.min(total-1, i+1)); pauseCarousel() }}
+                      disabled={carouselIdx===total-1}
+                      style={{ ...btnBase, background:carouselIdx===total-1?'#f0f0f0':'#fff', color:'#1e3a34', opacity:carouselIdx===total-1?0.3:1, cursor:carouselIdx===total-1?'default':'pointer' }}
+                    >‹</button>
+
+                    <span style={{ fontSize:'0.72rem', color:'#7a9188', marginRight:4, fontFamily:"'Tajawal','Cairo',sans-serif" }}>
+                      من {total}
+                    </span>
+                  </div>
+                )
+              })()}
             </div>
           )}
         </div>
