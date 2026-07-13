@@ -70,13 +70,7 @@ export function HeroSlider() {
         </div>
       </div>
 
-      {/* Dots */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-        {SLIDES.map((_,i)=>(
-          <button key={i} onClick={()=>goTo(i)}
-            className={`h-2 rounded-full transition-all duration-300 border-0 cursor-pointer ${i===cur?'w-7 bg-[#d3e2dc]':'w-2 bg-white/30 hover:bg-white/55'}`}/>
-        ))}
-      </div>
+      {/* Dots — hidden */}
 
       {/* Arrows */}
       <div className="absolute bottom-8 right-16 z-10 flex gap-2">
