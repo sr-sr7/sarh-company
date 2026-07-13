@@ -50,7 +50,7 @@ const S = {
   emptyRow:{ textAlign:'center' as const, padding:'48px 0', color:'#7a9188' },
   card:{ background:'#fff', borderRadius:16, border:'1px solid rgba(39,66,62,0.1)', padding:28, marginBottom:24 },
   cardTitle:{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:20 },
-  form:{ background:'#fff', borderRadius:16, border:'1px solid rgba(39,66,62,0.1)', padding:32, maxWidth:900 },
+  form:{ background:'#fff', borderRadius:16, border:'1px solid rgba(39,66,62,0.1)', padding:'24px clamp(12px,4vw,32px)', maxWidth:900 },
   formTitle:{ fontSize:'1.4rem', fontWeight:800, color:'#1e3a34', marginBottom:32 },
   formGrid:{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:20 },
   fullCol:{ gridColumn:'1 / -1' as const },
@@ -599,8 +599,8 @@ export default function AdminPage() {
               <div><label style={S.label}>المدينة *</label><select required value={form.city} onChange={e=>ff('city',e.target.value)} style={S.select}>{['الرياض','جدة','مكة المكرمة','المدينة المنورة','الدمام','الخبر','الظهران','القطيف','الأحساء','الطائف','تبوك','أبها','خميس مشيط','بريدة','عنيزة','الرس','البكيرية','المذنب','حائل','ينبع','نجران','جازان','الباحة','عرعر','سكاكا','الخرج','الدوادمي'].map(c=><option key={c}>{c}</option>)}</select></div>
               <div><label style={S.label}>الحي / المنطقة</label><input value={form.district} onChange={e=>ff('district',e.target.value)} style={S.input} placeholder="حي النزهة" /></div>
               {form.operation === 'على السوم' ? (
-                <div style={{ gridColumn: 'span 2' }}>
-                  <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
+                <div style={{ gridColumn:'1 / -1' }}>
+                  <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))', gap:12 }}>
                     <div>
                       <label style={S.label}>وصل السوم الآن (ريال)</label>
                       <input
@@ -627,7 +627,7 @@ export default function AdminPage() {
                   </p>
                 </div>
               ) : (
-                <div style={{ gridColumn: 'span 2' }}>
+                <div style={{ gridColumn:'1 / -1' }}>
                   <label style={S.label}>السعر *</label>
                   <div style={{ display:'flex', gap:10, alignItems:'center' }}>
                     <input
@@ -670,7 +670,7 @@ export default function AdminPage() {
               <div><label style={S.label}>مسطح البناء (م²)</label><input type="number" value={form.built_area} onChange={e=>ff('built_area',e.target.value)} style={S.input} placeholder="اختياري — للعقارات المبنية" /></div>
               <div style={S.fullCol}>
                 <label style={S.label}>أطوال الأضلاع (م) — اختياري</label>
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 1fr', gap:10 }}>
+                <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(120px,1fr))', gap:10 }}>
                   <div><label style={{ fontSize:'0.75rem', color:'#7a9e96', marginBottom:4, display:'block' }}>شمال</label><input type="number" value={form.north_len} onChange={e=>ff('north_len',e.target.value)} style={S.input} placeholder="م" /></div>
                   <div><label style={{ fontSize:'0.75rem', color:'#7a9e96', marginBottom:4, display:'block' }}>جنوب</label><input type="number" value={form.south_len} onChange={e=>ff('south_len',e.target.value)} style={S.input} placeholder="م" /></div>
                   <div><label style={{ fontSize:'0.75rem', color:'#7a9e96', marginBottom:4, display:'block' }}>شرق</label><input type="number" value={form.east_len} onChange={e=>ff('east_len',e.target.value)} style={S.input} placeholder="م" /></div>
