@@ -95,6 +95,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<TabKey>('الكل')
   const [properties, setProperties] = useState<Property[]>([])
   const [loading, setLoading] = useState(true)
+  const [soldProperties, setSoldProperties] = useState<Property[]>([])
   const [heroImages, setHeroImages] = useState<string[]>([])
   const [heroIdx, setHeroIdx] = useState(0)
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid')
@@ -146,6 +147,12 @@ export default function Home() {
   }, [heroImages])
 
   useEffect(() => { loadProperties(activeTab) }, [activeTab])
+
+  useEffect(() => {
+    sbFetch('properties?select=*&status=eq.sold&order=created_at.desc', { cache: 'no-store' })
+      .then((data: any) => setSoldProperties(Array.isArray(data) ? data : []))
+      .catch(() => setSoldProperties([]))
+  }, [])
 
   async function loadProperties(tab: TabKey) {
     setLoading(true)
@@ -422,6 +429,22 @@ export default function Home() {
           </a>
         </div>
       </section>
+
+      {/* ── صفقات تمت ── */}
+      {soldProperties.length > 0 && (
+        <section style={{ padding:'80px 24px', background:'#1e3a34' }}>
+          <div style={{ maxWidth:1200, margin:'0 auto' }}>
+            <div style={{ textAlign:'center', marginBottom:48 }}>
+              <span style={{ color:'#b8986a', fontSize:'0.72rem', fontWeight:700, letterSpacing:3 }}>✦ أعمالنا المنجزة</span>
+              <h2 style={{ fontSize:'clamp(1.6rem,3vw,2.4rem)', fontWeight:800, color:'#fff', margin:'16px 0 12px' }}>صفقات تمت</h2>
+              <p style={{ color:'#7a9e96', fontSize:'0.95rem' }}>عقارات أتممنا بيعها بنجاح لعملائنا الكرام</p>
+            </div>
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))', gap:24 }}>
+              {soldProperties.map(p => <PropertyCard key={p.id} property={p} />)}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Why Sarh ── */}
       <section id="services" style={S.features}>
