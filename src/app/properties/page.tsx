@@ -16,13 +16,14 @@ function PropertiesInner() {
   const [loading, setLoading]       = useState(true)
   const [visible,  setVisible]      = useState(false)
   const [filters, setFilters]       = useState({
-    operation: searchParams.get('operation') || '',
-    type:      searchParams.get('type')      || '',
-    city:      searchParams.get('city')      || '',
-    search:    searchParams.get('search')    || '',
-    minPrice:  searchParams.get('minPrice')  || '',
-    maxPrice:  searchParams.get('maxPrice')  || '',
-    bedrooms:  searchParams.get('bedrooms')  || '',
+    operation:     searchParams.get('operation')     || '',
+    type:          searchParams.get('type')          || '',
+    city:          searchParams.get('city')          || '',
+    search:        searchParams.get('search')        || '',
+    minPrice:      searchParams.get('minPrice')      || '',
+    maxPrice:      searchParams.get('maxPrice')      || '',
+    bedrooms:      searchParams.get('bedrooms')      || '',
+    listingNumber: searchParams.get('listingNumber') || '',
   })
   const gridRef = useRef<HTMLDivElement>(null)
 
@@ -45,10 +46,11 @@ function PropertiesInner() {
       if (filters.operation) url += `&operation=eq.${encodeURIComponent(filters.operation)}`
       if (filters.type)      url += `&type=eq.${encodeURIComponent(filters.type)}`
       if (filters.city)      url += `&city=eq.${encodeURIComponent(filters.city)}`
-      if (filters.search)    url += `&title=ilike.${encodeURIComponent('%' + filters.search + '%')}`
-      if (filters.minPrice)  url += `&price=gte.${filters.minPrice}`
-      if (filters.maxPrice)  url += `&price=lte.${filters.maxPrice}`
-      if (filters.bedrooms)  url += `&bedrooms=gte.${filters.bedrooms}`
+      if (filters.search)        url += `&title=ilike.${encodeURIComponent('%' + filters.search + '%')}`
+      if (filters.minPrice)      url += `&price=gte.${filters.minPrice}`
+      if (filters.maxPrice)      url += `&price=lte.${filters.maxPrice}`
+      if (filters.bedrooms)      url += `&bedrooms=gte.${filters.bedrooms}`
+      if (filters.listingNumber) url += `&listing_number=eq.${filters.listingNumber}`
       const res  = await fetch(url, { headers: H, cache: 'no-store' })
       const data = res.ok ? await res.json() : []
       setProperties(Array.isArray(data) ? data : [])
@@ -61,7 +63,7 @@ function PropertiesInner() {
 
   function setF(k: string, v: string) { setFilters(p => ({ ...p, [k]: v })) }
   function resetFilters() {
-    setFilters({ operation:'', type:'', city:'', search:'', minPrice:'', maxPrice:'', bedrooms:'' })
+    setFilters({ operation:'', type:'', city:'', search:'', minPrice:'', maxPrice:'', bedrooms:'', listingNumber:'' })
     router.replace('/properties')
   }
 
@@ -183,6 +185,11 @@ function PropertiesInner() {
           </div>
 
           <div className="filter-fields" style={{ display:'flex', flexDirection:'column', gap:16 }}>
+            <div>
+              <label style={lbl}># رقم الكود</label>
+              <input className="filter-inp" type="number" value={filters.listingNumber} onChange={e=>setF('listingNumber',e.target.value)}
+                style={inp} placeholder="أدخل رقم الكود..." />
+            </div>
             <div>
               <label style={lbl}>🔤 بحث</label>
               <input className="filter-inp" value={filters.search} onChange={e=>setF('search',e.target.value)}
