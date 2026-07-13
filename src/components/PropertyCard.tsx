@@ -190,6 +190,11 @@ export default function PropertyCard({ property: p }: { property: Property }) {
                       ? <span style={{ background:'rgba(184,152,106,0.2)', color:'#b8986a', fontSize:'1rem', padding:'4px 14px', borderRadius:20, border:'1px solid rgba(184,152,106,0.4)' }}>آخر سوم</span>
                       : <>{price} <span style={{ fontSize:'0.75rem', color:'#7a9e96', fontWeight:400 }}>{p.price_unit}</span></>
                   }
+                  {p.type === 'أرض' && p.price_per_meter && (
+                    <div style={{ fontSize:'0.72rem', color:'#7a9e96', marginTop:4 }}>
+                      سعر المتر: <span style={{ color:'#b8986a', fontWeight:700 }}>{new Intl.NumberFormat('ar-SA').format(p.price_per_meter)} ريال/م²</span>
+                    </div>
+                  )}
                 </div>
               </div>
 

@@ -415,6 +415,14 @@ export default function PropertyDetail({ id }: { id: string }) {
             <p style={{ color:'#4a7a72', fontSize:'0.78rem', fontWeight:600, marginBottom:8, letterSpacing:1 }}>السعر</p>
             <div style={{ fontSize:'clamp(1.6rem,3vw,2.2rem)', fontWeight:800, color:'#b8986a', lineHeight:1.2 }}>{price}</div>
             <p style={{ color:'#4a7a72', fontSize:'0.82rem', marginTop:6 }}>{p.price_unit}</p>
+            {p.type === 'أرض' && p.price_per_meter && (
+              <div style={{ marginTop:10, display:'flex', gap:10, flexWrap:'wrap' }}>
+                <div style={{ background:'rgba(184,152,106,0.1)', border:'1px solid rgba(184,152,106,0.25)', borderRadius:8, padding:'6px 12px', fontSize:'0.8rem', color:'#1e3a34' }}>
+                  <span style={{ color:'#4a7a72' }}>سعر المتر: </span>
+                  <span style={{ fontWeight:800, color:'#b8986a' }}>{new Intl.NumberFormat('ar-SA').format(p.price_per_meter)} ريال/م²</span>
+                </div>
+              </div>
+            )}
             <div style={{ height:1, background:'rgba(30,58,52,0.12)', margin:'20px 0' }} />
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
               {[

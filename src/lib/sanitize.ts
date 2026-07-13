@@ -62,6 +62,7 @@ export function sanitizeProperty(body: Record<string, unknown>) {
     street_width: body.street_width != null && body.street_width !== '' ? sanitizeNumber(body.street_width) : null,
     property_age: body.property_age ? sanitizeText(body.property_age) : null,
     deed_type:    body.deed_type    ? sanitizeText(body.deed_type)    : null,
-    bank_finance: Boolean(body.bank_finance),
+    bank_finance:    Boolean(body.bank_finance),
+    price_per_meter: body.price_per_meter != null && body.price_per_meter !== '' ? sanitizeNumber(body.price_per_meter) : null,
   }
 }

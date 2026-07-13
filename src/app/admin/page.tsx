@@ -80,7 +80,7 @@ const S = {
 
 const emptyForm = {
   title:'', description:'', type:'فيلا', operation:'للبيع',
-  city:'بريدة', district:'', price:'', price_unit:'ريال', bid_price:'',
+  city:'بريدة', district:'', price:'', price_unit:'ريال', bid_price:'', price_per_meter:'',
   area:'', north_len:'', south_len:'', east_len:'', west_len:'', built_area:'',
   facade:'', street_width:'', property_age:'', deed_type:'', bank_finance:false,
   bedrooms:'0', bathrooms:'0', maid_rooms:'0', kitchens:'1',
@@ -261,7 +261,7 @@ export default function AdminPage() {
       east_len:p.east_len?String(p.east_len):'', west_len:p.west_len?String(p.west_len):'',
       built_area:p.built_area?String(p.built_area):'',
       facade:p.facade||'', street_width:p.street_width?String(p.street_width):'',
-      property_age:p.property_age||'', deed_type:p.deed_type||'', bank_finance:p.bank_finance??false,
+      property_age:p.property_age||'', deed_type:p.deed_type||'', bank_finance:p.bank_finance??false, price_per_meter:p.price_per_meter?String(p.price_per_meter):'',
       area:p.area?String(p.area):'', bedrooms:String(p.bedrooms), bathrooms:String(p.bathrooms),
       maid_rooms:String(p.maid_rooms??0), kitchens:String(p.kitchens??1),
       has_pool:p.has_pool, has_parking:p.has_parking, has_garden:p.has_garden, has_annex:p.has_annex??false,
@@ -633,7 +633,12 @@ export default function AdminPage() {
                     <input
                       type="number"
                       value={form.price}
-                      onChange={e => ff('price', e.target.value)}
+                      onChange={e => {
+                        const price = e.target.value
+                        ff('price', price)
+                        if (form.type === 'أرض' && price && form.area)
+                          ff('price_per_meter', String(Math.round(Number(price) / Number(form.area))))
+                      }}
                       style={{ ...S.input, flex:1 }}
                       placeholder={form.price_unit === 'آخر سوم' ? 'آخر سومة (اختياري)' : 'مثال: 850000'}
                       required={form.price_unit !== 'آخر سوم'}
@@ -649,7 +654,19 @@ export default function AdminPage() {
                   )}
                 </div>
               )}
-              <div><label style={S.label}>المساحة (م²)</label><input type="number" value={form.area} onChange={e=>ff('area',e.target.value)} style={S.input} placeholder="400" /></div>
+              <div><label style={S.label}>المساحة (م²)</label><input type="number" value={form.area} onChange={e=>{
+                const area = e.target.value
+                ff('area', area)
+                if (area && form.price_per_meter) ff('price', String(Math.round(Number(area) * Number(form.price_per_meter))))
+                if (area && form.price && !form.price_per_meter) ff('price_per_meter', String(Math.round(Number(form.price) / Number(area))))
+              }} style={S.input} placeholder="400" /></div>
+              {form.type === 'أرض' && (
+                <div><label style={S.label}>سعر المتر (ريال/م²)</label><input type="number" value={form.price_per_meter} onChange={e=>{
+                  const ppm = e.target.value
+                  ff('price_per_meter', ppm)
+                  if (ppm && form.area) ff('price', String(Math.round(Number(ppm) * Number(form.area))))
+                }} style={S.input} placeholder="مثال: 2000" /></div>
+              )}
               <div><label style={S.label}>مسطح البناء (م²)</label><input type="number" value={form.built_area} onChange={e=>ff('built_area',e.target.value)} style={S.input} placeholder="اختياري — للعقارات المبنية" /></div>
               <div style={S.fullCol}>
                 <label style={S.label}>أطوال الأضلاع (م) — اختياري</label>
