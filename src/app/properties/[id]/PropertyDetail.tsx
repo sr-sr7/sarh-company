@@ -217,9 +217,7 @@ export default function PropertyDetail({ id }: { id: string }) {
         <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top,rgba(20,42,38,0.6) 0%,transparent 60%)', pointerEvents:'none' }} />
         {isSold && (
           <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', zIndex:6, pointerEvents:'none' }}>
-            <div style={{ background:'#dc2626', color:'#fff', fontWeight:900, fontSize:'1.6rem', padding:'14px 40px', borderRadius:16, border:'4px solid #fff', boxShadow:'0 8px 32px rgba(0,0,0,0.5)', transform:'rotate(-8deg)', letterSpacing:3, fontFamily:"'Tajawal','Cairo',sans-serif" }}>
-              ✅ تم البيع
-            </div>
+            <img src="/sold-stamp.png" alt="تم البيع" style={{ width:200, height:200, objectFit:'contain', filter:'drop-shadow(0 4px 16px rgba(0,0,0,0.5))' }} />
           </div>
         )}
         {allImgs.length>0 && (

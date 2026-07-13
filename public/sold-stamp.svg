@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <path id="topArc" d="M 30,100 A 70,70 0 0,1 170,100" />
+    <path id="bottomArc" d="M 45,120 A 60,60 0 0,0 155,120" />
+  </defs>
+
+  <!-- Outer double circle -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#c0392b" stroke-width="4" opacity="0.85"/>
+  <circle cx="100" cy="100" r="88" fill="none" stroke="#c0392b" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Dashed inner ring -->
+  <circle cx="100" cy="100" r="82" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"/>
+
+  <!-- Stars top -->
+  <text x="72" y="42" text-anchor="middle" font-size="10" fill="#c0392b" opacity="0.9">★</text>
+  <text x="100" y="34" text-anchor="middle" font-size="10" fill="#c0392b" opacity="0.9">★</text>
+  <text x="128" y="42" text-anchor="middle" font-size="10" fill="#c0392b" opacity="0.9">★</text>
+
+  <!-- Stars bottom -->
+  <text x="72" y="170" text-anchor="middle" font-size="10" fill="#c0392b" opacity="0.9">★</text>
+  <text x="100" y="176" text-anchor="middle" font-size="10" fill="#c0392b" opacity="0.9">★</text>
+  <text x="128" y="170" text-anchor="middle" font-size="10" fill="#c0392b" opacity="0.9">★</text>
+
+  <!-- Top curved text -->
+  <text font-size="13" fill="#c0392b" font-family="'Tajawal','Cairo',Arial" font-weight="700" opacity="0.9">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">الله يبارك للمشتري</textPath>
+  </text>
+
+  <!-- Main text تم البيع -->
+  <text x="100" y="115" text-anchor="middle" font-size="36" fill="#c0392b"
+    font-family="'Tajawal','Cairo',Arial" font-weight="900" opacity="0.95"
+    letter-spacing="2">تم البيع</text>
+
+  <!-- Decorative lines left & right -->
+  <line x1="22" y1="100" x2="38" y2="100" stroke="#c0392b" stroke-width="2" opacity="0.6"/>
+  <line x1="162" y1="100" x2="178" y2="100" stroke="#c0392b" stroke-width="2" opacity="0.6"/>
+</svg>

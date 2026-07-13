@@ -86,10 +86,8 @@ export default function PropertyCard({ property: p }: { property: Property }) {
 
               {/* ستيكر تم البيع */}
               {isSold && (
-                <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(0,0,0,0.45)', zIndex:2 }}>
-                  <div style={{ background:'#dc2626', color:'#fff', fontWeight:900, fontSize:'1.1rem', padding:'10px 28px', borderRadius:12, border:'3px solid #fff', boxShadow:'0 4px 20px rgba(0,0,0,0.4)', transform:'rotate(-8deg)', letterSpacing:2, fontFamily:"'Tajawal','Cairo',sans-serif" }}>
-                    ✅ تم البيع
-                  </div>
+                <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', zIndex:2 }}>
+                  <img src="/sold-stamp.png" alt="تم البيع" style={{ width:140, height:140, objectFit:'contain', filter:'drop-shadow(0 2px 8px rgba(0,0,0,0.4))' }} />
                 </div>
               )}
 
