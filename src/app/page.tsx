@@ -200,19 +200,7 @@ export default function Home() {
           background: 'linear-gradient(150deg, rgba(211,226,220,0.55) 0%, rgba(232,240,237,0.40) 50%, rgba(244,237,228,0.55) 100%)',
         }} />
 
-        {/* Dots indicator */}
-        {heroImages.length > 1 && (
-          <div style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8, zIndex: 10 }}>
-            {heroImages.map((_, i) => (
-              <button key={i} onClick={() => setHeroIdx(i)} style={{
-                width: i === heroIdx ? 24 : 8, height: 8,
-                borderRadius: 50, border: 'none', cursor: 'pointer',
-                background: i === heroIdx ? '#b8986a' : 'rgba(30,58,52,0.25)',
-                transition: 'all 0.3s', padding: 0,
-              }} />
-            ))}
-          </div>
-        )}
+        {/* Dots — hidden */}
 
         <div style={{ ...S.heroInner, zIndex: 10 }}>
           <span style={S.heroBadge}>✦ نحن نعيد تعريف التجربة العقارية</span>
