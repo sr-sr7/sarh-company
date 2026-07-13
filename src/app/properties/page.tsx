@@ -42,7 +42,7 @@ function PropertiesInner() {
     setLoading(true)
     setVisible(false)
     try {
-      let url = `${SB_URL}/rest/v1/properties?select=*&status=eq.active&order=is_featured.desc,created_at.desc`
+      let url = `${SB_URL}/rest/v1/properties?select=*&status=in.(active,sold)&order=is_featured.desc,created_at.desc`
       if (filters.operation) url += `&operation=eq.${encodeURIComponent(filters.operation)}`
       if (filters.type)      url += `&type=eq.${encodeURIComponent(filters.type)}`
       if (filters.city)      url += `&city=eq.${encodeURIComponent(filters.city)}`

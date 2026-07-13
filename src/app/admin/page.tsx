@@ -492,7 +492,9 @@ export default function AdminPage() {
                     <td style={{...S.td,fontWeight:700,color:'#27423e'}}>{new Intl.NumberFormat('ar-SA').format(p.price)}</td>
                     <td style={S.td}>
                       <select value={p.status} style={S.statusSel} onChange={e=>changeStatus(p.id,e.target.value)}>
-                        <option value="active">نشط</option><option value="sold">مباع</option>
+                        <option value="active">نشط</option>
+                        <option value="sold">تم البيع</option>
+                        <option value="inactive">غير نشط</option>
                         <option value="rented">مؤجر</option><option value="hidden">مخفي</option>
                       </select>
                     </td>
@@ -761,10 +763,18 @@ export default function AdminPage() {
                 )}
               </div>
               {/* Checkboxes */}
+              <div>
+                <label style={S.label}>حالة العقار</label>
+                <select value={form.status} onChange={e=>ff('status',e.target.value)} style={S.select}>
+                  <option value="active">نشط</option>
+                  <option value="sold">تم البيع</option>
+                  <option value="inactive">غير نشط</option>
+                </select>
+              </div>
               <div style={S.fullCol}>
                 <label style={{...S.label,marginBottom:12}}>المميزات</label>
                 <div style={S.checkRow}>
-                  {[['has_pool','🏊 مسبح'],['has_parking','🚗 مواقف'],['has_garden','🌿 حديقة'],['has_annex','🏠 ملحق'],['is_featured','⭐ مميز'],['is_new','🆕 جديد']].map(([k,l])=>(
+                  {[['has_pool','🏊 مسبح'],['has_parking','🚗 مواقف'],['has_garden','🌿 حديقة'],['has_annex','🏠 ملحق'],['is_featured','⭐ مميز'],['is_new','🆕 جديد']].map(([k,l]) =>(
                     <label key={k} style={S.checkLabel}><input type="checkbox" checked={(form as any)[k]} onChange={e=>ff(k,e.target.checked)} style={{width:18,height:18,accentColor:'#27423e',cursor:'pointer'}}/>{l}</label>
                   ))}
                 </div>

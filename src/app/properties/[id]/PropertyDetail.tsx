@@ -152,6 +152,7 @@ export default function PropertyDetail({ id }: { id: string }) {
 
   const p       = property
   const allImgs = p.images?.length ? p.images : (p.main_image ? [p.main_image] : [])
+  const isSold  = p.status === 'sold'
   const price   = new Intl.NumberFormat('ar-SA').format(p.price)
   const mapQ    = encodeURIComponent(`${p.city}${p.district?' '+p.district:''} المملكة العربية السعودية`)
   const coords  = p.map_url ? extractCoords(p.map_url) : (CITY_COORDS[p.city] ?? null)
@@ -214,6 +215,13 @@ export default function PropertyDetail({ id }: { id: string }) {
           </div>
         )}
         <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top,rgba(20,42,38,0.6) 0%,transparent 60%)', pointerEvents:'none' }} />
+        {isSold && (
+          <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', zIndex:6, pointerEvents:'none' }}>
+            <div style={{ background:'#dc2626', color:'#fff', fontWeight:900, fontSize:'1.6rem', padding:'14px 40px', borderRadius:16, border:'4px solid #fff', boxShadow:'0 8px 32px rgba(0,0,0,0.5)', transform:'rotate(-8deg)', letterSpacing:3, fontFamily:"'Tajawal','Cairo',sans-serif" }}>
+              ✅ تم البيع
+            </div>
+          </div>
+        )}
         {allImgs.length>0 && (
           <div onClick={()=>setLightbox(allImgs[activeImg])} style={{ position:'absolute', top:16, left:16, background:'rgba(0,0,0,0.45)', color:'#fff', borderRadius:8, padding:'6px 12px', fontSize:'0.8rem', cursor:'zoom-in', backdropFilter:'blur(4px)', display:'flex', alignItems:'center', gap:6, zIndex:5 }}>
             🔍 اضغط لعرض الصورة كاملة
@@ -404,7 +412,7 @@ export default function PropertyDetail({ id }: { id: string }) {
         {/* Sidebar */}
         <div className="prop-sidebar" style={{ position:'sticky', top:90 }}>
 
-          {/* Price */}
+          {/* Price / Sold */}
           <div style={{ background:'#d3e2dc', borderRadius:20, padding:'28px 24px', marginBottom:16, color:'#1e3a34', border:'1px solid rgba(30,58,52,0.12)' }}>
             {p.listing_number && (
               <div style={{ background:'rgba(184,152,106,0.15)', border:'1px solid rgba(184,152,106,0.3)', borderRadius:10, padding:'8px 14px', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>
@@ -412,33 +420,42 @@ export default function PropertyDetail({ id }: { id: string }) {
                 <span style={{ color:'#b8986a', fontSize:'1rem', fontWeight:800, fontFamily:'monospace', letterSpacing:2 }}>#{p.listing_number}</span>
               </div>
             )}
-            <p style={{ color:'#4a7a72', fontSize:'0.78rem', fontWeight:600, marginBottom:8, letterSpacing:1 }}>السعر</p>
-            <div style={{ fontSize:'clamp(1.6rem,3vw,2.2rem)', fontWeight:800, color:'#b8986a', lineHeight:1.2 }}>{price}</div>
-            <p style={{ color:'#4a7a72', fontSize:'0.82rem', marginTop:6 }}>{p.price_unit}</p>
-            {p.type === 'أرض' && p.price_per_meter && (
-              <div style={{ marginTop:10, display:'flex', gap:10, flexWrap:'wrap' }}>
-                <div style={{ background:'rgba(184,152,106,0.1)', border:'1px solid rgba(184,152,106,0.25)', borderRadius:8, padding:'6px 12px', fontSize:'0.8rem', color:'#1e3a34' }}>
-                  <span style={{ color:'#4a7a72' }}>سعر المتر: </span>
-                  <span style={{ fontWeight:800, color:'#b8986a' }}>{new Intl.NumberFormat('ar-SA').format(p.price_per_meter)} ريال/م²</span>
-                </div>
+            {isSold ? (
+              <div style={{ textAlign:'center', padding:'12px 0' }}>
+                <div style={{ background:'#dc2626', color:'#fff', fontWeight:900, fontSize:'1.2rem', padding:'10px 28px', borderRadius:12, display:'inline-block', marginBottom:12 }}>✅ تم البيع</div>
+                <p style={{ color:'#4a7a72', fontSize:'0.82rem' }}>هذا العقار غير متاح حالياً</p>
               </div>
-            )}
-            <div style={{ height:1, background:'rgba(30,58,52,0.12)', margin:'20px 0' }} />
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
-              {[
-                { icon:'🏠', label:'النوع',   val:p.type },
-                { icon:'🔄', label:'العملية', val:p.operation },
-                { icon:'📍', label:'المدينة', val:p.city },
-                p.district && { icon:'🏘️', label:'الحي', val:p.district },
-                p.area     && { icon:'📐', label:'المساحة', val:`${p.area} م²` },
-                p.bedrooms>0 && { icon:'🛏️', label:'الغرف', val:`${p.bedrooms}` },
-              ].filter(Boolean).map((s:any) => (
-                <div key={s.label} style={{ background:'rgba(30,58,52,0.06)', borderRadius:10, padding:'10px 12px' }}>
-                  <div style={{ fontSize:'0.68rem', color:'#4a7a72', marginBottom:3 }}>{s.icon} {s.label}</div>
-                  <div style={{ fontSize:'0.88rem', fontWeight:700, color:'#1e3a34' }}>{s.val}</div>
+            ) : (
+              <>
+                <p style={{ color:'#4a7a72', fontSize:'0.78rem', fontWeight:600, marginBottom:8, letterSpacing:1 }}>السعر</p>
+                <div style={{ fontSize:'clamp(1.6rem,3vw,2.2rem)', fontWeight:800, color:'#b8986a', lineHeight:1.2 }}>{price}</div>
+                <p style={{ color:'#4a7a72', fontSize:'0.82rem', marginTop:6 }}>{p.price_unit}</p>
+                {p.type === 'أرض' && p.price_per_meter && (
+                  <div style={{ marginTop:10, display:'flex', gap:10, flexWrap:'wrap' }}>
+                    <div style={{ background:'rgba(184,152,106,0.1)', border:'1px solid rgba(184,152,106,0.25)', borderRadius:8, padding:'6px 12px', fontSize:'0.8rem', color:'#1e3a34' }}>
+                      <span style={{ color:'#4a7a72' }}>سعر المتر: </span>
+                      <span style={{ fontWeight:800, color:'#b8986a' }}>{new Intl.NumberFormat('ar-SA').format(p.price_per_meter)} ريال/م²</span>
+                    </div>
+                  </div>
+                )}
+                <div style={{ height:1, background:'rgba(30,58,52,0.12)', margin:'20px 0' }} />
+                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
+                  {[
+                    { icon:'🏠', label:'النوع',   val:p.type },
+                    { icon:'🔄', label:'العملية', val:p.operation },
+                    { icon:'📍', label:'المدينة', val:p.city },
+                    p.district && { icon:'🏘️', label:'الحي', val:p.district },
+                    p.area     && { icon:'📐', label:'المساحة', val:`${p.area} م²` },
+                    p.bedrooms>0 && { icon:'🛏️', label:'الغرف', val:`${p.bedrooms}` },
+                  ].filter(Boolean).map((s:any) => (
+                    <div key={s.label} style={{ background:'rgba(30,58,52,0.06)', borderRadius:10, padding:'10px 12px' }}>
+                      <div style={{ fontSize:'0.68rem', color:'#4a7a72', marginBottom:3 }}>{s.icon} {s.label}</div>
+                      <div style={{ fontSize:'0.88rem', fontWeight:700, color:'#1e3a34' }}>{s.val}</div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+            )}
           </div>
 
           {/* WhatsApp */}

@@ -8,6 +8,7 @@ const ICONS: Record<string, string> = {
 }
 
 export default function PropertyCard({ property: p }: { property: Property }) {
+  const isSold      = p.status === 'sold'
   const isNegotiable = p.price_unit === 'آخر سوم'
   const isAuction = p.operation === 'على السوم'
   const priceNum = new Intl.NumberFormat('ar-SA').format(p.price)
@@ -78,10 +79,19 @@ export default function PropertyCard({ property: p }: { property: Property }) {
 
               {/* شارات */}
               <div className="absolute top-3 right-3 flex gap-2">
-                <span className="text-xs font-bold px-3 py-1 rounded-md bg-[#d3e2dc] text-[#1e3a34]">{p.operation}</span>
-                {p.is_featured && <span className="text-xs font-bold px-3 py-1 rounded-md bg-[#b8986a] text-[#1e3a34]">مميز</span>}
-                {p.is_new      && <span className="text-xs font-bold px-3 py-1 rounded-md bg-[#d3e2dc] text-[#1e3a34]">جديد</span>}
+                {!isSold && <span className="text-xs font-bold px-3 py-1 rounded-md bg-[#d3e2dc] text-[#1e3a34]">{p.operation}</span>}
+                {!isSold && p.is_featured && <span className="text-xs font-bold px-3 py-1 rounded-md bg-[#b8986a] text-[#1e3a34]">مميز</span>}
+                {!isSold && p.is_new      && <span className="text-xs font-bold px-3 py-1 rounded-md bg-[#d3e2dc] text-[#1e3a34]">جديد</span>}
               </div>
+
+              {/* ستيكر تم البيع */}
+              {isSold && (
+                <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(0,0,0,0.45)', zIndex:2 }}>
+                  <div style={{ background:'#dc2626', color:'#fff', fontWeight:900, fontSize:'1.1rem', padding:'10px 28px', borderRadius:12, border:'3px solid #fff', boxShadow:'0 4px 20px rgba(0,0,0,0.4)', transform:'rotate(-8deg)', letterSpacing:2, fontFamily:"'Tajawal','Cairo',sans-serif" }}>
+                    ✅ تم البيع
+                  </div>
+                </div>
+              )}
 
 
               {/* رقم القائمة */}
@@ -100,44 +110,51 @@ export default function PropertyCard({ property: p }: { property: Property }) {
               <h3 className="font-amiri text-lg text-[#1e3a34] leading-snug mb-2 line-clamp-2">{p.title}</h3>
               <p className="text-xs text-[#7a9188] mb-4">📍 {p.city}{p.district ? ` — ${p.district}` : ''}</p>
 
-              <div className="flex flex-wrap gap-3 py-3 border-t border-b border-[#27423e]/08 mb-4 text-xs text-[#7a9188]">
-                {p.area        ? <span>📐 {p.area} م²</span>    : null}
-                {p.bedrooms >0 ? <span>🛏️ {p.bedrooms} غرف</span> : null}
-                {p.bathrooms>0 ? <span>🚿 {p.bathrooms} حمام</span>: null}
-                {p.has_pool    && <span>🏊 مسبح</span>}
-                {p.has_parking && <span>🚗 مواقف</span>}
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="font-amiri text-xl text-[#1e3a34] font-bold">
-                  {isAuction
-                    ? <div style={{ display:'flex', flexDirection:'column', gap:3 }}>
-                        <span style={{ background:'#1e3a34', color:'#f0c060', fontSize:'0.78rem', fontWeight:800, padding:'3px 10px', borderRadius:20 }}>
-                          {p.price > 0 ? `وصل السوم: ${priceNum} ر` : 'على السوم'}
-                        </span>
-                        {bidPriceNum && <span style={{ fontSize:'0.72rem', color:'#b8986a' }}>الحد: {bidPriceNum} ر</span>}
-                      </div>
-                    : isNegotiable
-                      ? <span style={{ background:'#1e3a34', color:'#b8986a', fontSize:'0.82rem', fontWeight:800, padding:'4px 12px', borderRadius:20 }}>آخر سوم</span>
-                      : <>{price} <span className="text-xs font-normal text-[#7a9188]">{p.price_unit}</span></>
-                  }
+              {isSold ? (
+                <div style={{ padding:'12px 0', borderTop:'1px solid rgba(39,66,62,0.08)', textAlign:'center' }}>
+                  <span style={{ background:'#fee2e2', color:'#dc2626', fontSize:'0.82rem', fontWeight:800, padding:'6px 18px', borderRadius:20 }}>تم البيع</span>
+                  <div style={{ marginTop:10 }}>
+                    <a href={`/properties/${p.id}`} onClick={e=>e.stopPropagation()}
+                      className="bg-[#1e3a34]/08 border border-[#1e3a34]/15 text-[#1e3a34] text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#d3e2dc] transition">
+                      عرض الصور
+                    </a>
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  <a
-                    href={`https://wa.me/${p.whatsapp}?text=${encodeURIComponent('مرحبا انا استفسر عن عقار رقم ' + (p.listing_number ?? p.id))}`}
-                    target="_blank"
-                    onClick={e => e.stopPropagation()}
-                    className="bg-[#25D366] text-white text-sm px-3 py-2 rounded-lg hover:opacity-85 transition">
-                    💬
-                  </a>
-                  <a
-                    href={`/properties/${p.id}`}
-                    onClick={e => e.stopPropagation()}
-                    className="bg-[#1e3a34]/08 border border-[#1e3a34]/15 text-[#1e3a34] text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#d3e2dc] transition">
-                    التفاصيل
-                  </a>
-                </div>
-              </div>
+              ) : (
+                <>
+                  <div className="flex flex-wrap gap-3 py-3 border-t border-b border-[#27423e]/08 mb-4 text-xs text-[#7a9188]">
+                    {p.area        ? <span>📐 {p.area} م²</span>    : null}
+                    {p.bedrooms >0 ? <span>🛏️ {p.bedrooms} غرف</span> : null}
+                    {p.bathrooms>0 ? <span>🚿 {p.bathrooms} حمام</span>: null}
+                    {p.has_pool    && <span>🏊 مسبح</span>}
+                    {p.has_parking && <span>🚗 مواقف</span>}
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="font-amiri text-xl text-[#1e3a34] font-bold">
+                      {isAuction
+                        ? <div style={{ display:'flex', flexDirection:'column', gap:3 }}>
+                            <span style={{ background:'#1e3a34', color:'#f0c060', fontSize:'0.78rem', fontWeight:800, padding:'3px 10px', borderRadius:20 }}>
+                              {p.price > 0 ? `وصل السوم: ${priceNum} ر` : 'على السوم'}
+                            </span>
+                            {bidPriceNum && <span style={{ fontSize:'0.72rem', color:'#b8986a' }}>الحد: {bidPriceNum} ر</span>}
+                          </div>
+                        : isNegotiable
+                          ? <span style={{ background:'#1e3a34', color:'#b8986a', fontSize:'0.82rem', fontWeight:800, padding:'4px 12px', borderRadius:20 }}>آخر سوم</span>
+                          : <>{price} <span className="text-xs font-normal text-[#7a9188]">{p.price_unit}</span></>
+                      }
+                    </div>
+                    <div className="flex gap-2">
+                      <a href={`https://wa.me/${p.whatsapp}?text=${encodeURIComponent('مرحبا انا استفسر عن عقار رقم ' + (p.listing_number ?? p.id))}`}
+                        target="_blank" onClick={e=>e.stopPropagation()}
+                        className="bg-[#25D366] text-white text-sm px-3 py-2 rounded-lg hover:opacity-85 transition">💬</a>
+                      <a href={`/properties/${p.id}`} onClick={e=>e.stopPropagation()}
+                        className="bg-[#1e3a34]/08 border border-[#1e3a34]/15 text-[#1e3a34] text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#d3e2dc] transition">
+                        التفاصيل
+                      </a>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 

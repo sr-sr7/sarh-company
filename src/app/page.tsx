@@ -156,7 +156,7 @@ export default function Home() {
       else if (tab === 'تجاري')  filter = `&type=in.(${encodeURIComponent('محل تجاري')},${encodeURIComponent('مستودع')})`
       else                        filter = `&type=eq.${encodeURIComponent(tab)}`
       const data = await sbFetch(
-        `properties?select=*&status=eq.active${filter}&order=is_featured.desc,created_at.desc`,
+        `properties?select=*&status=in.(active,sold)${filter}&order=is_featured.desc,created_at.desc`,
         { cache: 'no-store' }
       )
       setProperties(Array.isArray(data) ? data : [])
