@@ -680,7 +680,7 @@ export default function AdminPage() {
               <div>
                 <label style={S.label}>الواجهة</label>
                 <select value={form.facade} onChange={e=>ff('facade',e.target.value)} style={S.select}>
-                  {['','شمالية','��نوبية','شرقية','غربية','شمالية شرقية','شمالية غربية','جنوبية شرقية','جنوبية غربية'].map(f=><option key={f} value={f}>{f||'-- اختر --'}</option>)}
+                  {['','شمالية','جنوبية','شرقية','غربية','شمالية شرقية','شمالية غربية','جنوبية شرقية','جنوبية غربية'].map(f=><option key={f} value={f}>{f||'-- اختر --'}</option>)}
                 </select>
               </div>
               <div><label style={S.label}>عرض الشارع (م)</label><input type="number" value={form.street_width} onChange={e=>ff('street_width',e.target.value)} style={S.input} placeholder="20" /></div>
