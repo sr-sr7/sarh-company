@@ -47,8 +47,57 @@ export async function generateMetadata(
   }
 }
 
-export default function PropertyPage({ params }: { params: { id: string } }) {
-  return <PropertyDetail id={params.id} />
+async function getProperty(id: string): Promise<Partial<Property> | null> {
+  try {
+    const res = await fetch(
+      `${SB_URL}/rest/v1/properties?id=eq.${id}&select=*`,
+      { headers: SB_HEADERS, cache: 'no-store' }
+    )
+    const data: Partial<Property>[] = res.ok ? await res.json() : []
+    return data[0] ?? null
+  } catch { return null }
+}
+
+export default async function PropertyPage({ params }: { params: { id: string } }) {
+  const p = await getProperty(params.id)
+  const price = p?.price ? new Intl.NumberFormat('ar-SA').format(p.price) : null
+
+  const schema = p ? {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateListing',
+    name: p.title,
+    description: p.description || `${p.type} ${p.operation} في ${p.city}`,
+    url: `${BASE}/properties/${params.id}`,
+    image: p.main_image ? [p.main_image] : undefined,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: p.city,
+      addressRegion: p.district ?? undefined,
+      addressCountry: 'SA',
+    },
+    offers: price ? {
+      '@type': 'Offer',
+      price: p.price,
+      priceCurrency: 'SAR',
+      availability: p.status === 'sold'
+        ? 'https://schema.org/SoldOut'
+        : 'https://schema.org/InStock',
+    } : undefined,
+    floorSize: p.area ? { '@type': 'QuantitativeValue', value: p.area, unitCode: 'MTK' } : undefined,
+    numberOfRooms: p.bedrooms || undefined,
+  } : null
+
+  return (
+    <>
+      {schema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      )}
+      <PropertyDetail id={params.id} />
+    </>
+  )
 }
 
 export async function generateStaticParams() {
