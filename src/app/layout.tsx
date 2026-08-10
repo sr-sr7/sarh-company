@@ -27,6 +27,7 @@ export const metadata: Metadata = {
   keywords:    ['عقارات القصيم', 'عقارات بريدة', 'شقق للبيع القصيم', 'فلل للبيع بريدة', 'صرح العقارية', 'عقارات للإيجار القصيم'],
   manifest:    '/manifest.json',
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
+  verification: { google: 'f4c7a2a6b5663f39' },
   alternates:  { canonical: 'https://sarh-company.com' },
   icons: {
     icon:  [{ url: '/icon-512.png', type: 'image/png' }],
