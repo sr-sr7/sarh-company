@@ -560,14 +560,14 @@ export default function AdminPage() {
           <div>
             <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16}}>
               <div style={{fontSize:'0.85rem',color:'#526266'}}>إجمالي المسجلين: <strong style={{color:'#27423e'}}>{promoLeads.length}</strong></div>
-              <a href={`data:text/csv;charset=utf-8,﻿الاسم,رقم الهاتف,تاريخ التسجيل\n${promoLeads.map(l=>`${l.name},${l.phone},${new Date(l.created_at).toLocaleDateString('ar-SA')}`).join('\n')}`} download="promo_leads.csv"
+              <a href={`data:text/csv;charset=utf-8,﻿الاسم,رقم الهاتف,نوع العقار,تاريخ التسجيل\n${promoLeads.map(l=>`${l.name},${l.phone},${l.property_type||''},${new Date(l.created_at).toLocaleDateString('ar-SA')}`).join('\n')}`} download="promo_leads.csv"
                 style={{background:'#d3e2dc',color:'#1e3a34',padding:'8px 18px',borderRadius:10,fontSize:'0.8rem',fontWeight:700,textDecoration:'none'}}>⬇️ تصدير CSV</a>
             </div>
             <div style={S.tableWrap}>
               <table style={S.table}>
-                <thead><tr>{['#','الاسم','رقم الهاتف','التاريخ','إجراء'].map(h=><th key={h} style={S.th}>{h}</th>)}</tr></thead>
+                <thead><tr>{['#','الاسم','رقم الهاتف','نوع العقار','التاريخ','إجراء'].map(h=><th key={h} style={S.th}>{h}</th>)}</tr></thead>
                 <tbody>
-                  {promoLeads.length===0 ? <tr><td colSpan={5} style={S.emptyRow}>لا يوجد مسجلون بعد</td></tr>
+                  {promoLeads.length===0 ? <tr><td colSpan={6} style={S.emptyRow}>لا يوجد مسجلون بعد</td></tr>
                   : promoLeads.map((l,idx)=>(
                     <tr key={l.id}>
                       <td style={{...S.td,color:'#9aada7',fontSize:'0.78rem',width:40}}>{idx+1}</td>
@@ -579,6 +579,7 @@ export default function AdminPage() {
                             style={{background:'#25D366',color:'#fff',fontSize:'0.72rem',fontWeight:700,padding:'3px 10px',borderRadius:50,textDecoration:'none'}}>واتساب</a>
                         </div>
                       </td>
+                      <td style={{...S.td,color:'#1e3a34',fontSize:'0.82rem'}}>{l.property_type || '—'}</td>
                       <td style={{...S.td,color:'#9aada7',fontSize:'0.8rem'}}>{new Date(l.created_at).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'})}</td>
                       <td style={S.td}>{can('manage_promo') && <button style={S.delBtn} onClick={()=>deletePromo(l.id,l.name)}>حذف</button>}</td>
                     </tr>
