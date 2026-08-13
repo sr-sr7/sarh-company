@@ -129,7 +129,7 @@ export default function PropertyDetail({ id }: { id: string }) {
   }
 
   if (loading) return (
-    <div style={{ minHeight:'100vh', background:'#f4ede4', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
+    <div style={{ minHeight:'100vh', background:'#d3e2dc', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
       <div style={{ textAlign:'center' }}>
         <div style={{ fontSize:'2rem', marginBottom:12 }}>⏳</div>
         <p style={{ color:'#41646d' }}>جاري تحميل بيانات العقار...</p>
@@ -138,7 +138,7 @@ export default function PropertyDetail({ id }: { id: string }) {
   )
 
   if (!property) return (
-    <div style={{ minHeight:'100vh', background:'#f4ede4', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
+    <div style={{ minHeight:'100vh', background:'#d3e2dc', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
       <div style={{ textAlign:'center' }}>
         <div style={{ fontSize:'3rem', marginBottom:12 }}>🔍</div>
         <p style={{ color:'#526266', fontSize:'1.1rem', marginBottom:20 }}>العقار غير موجود</p>
@@ -176,7 +176,7 @@ export default function PropertyDetail({ id }: { id: string }) {
     : 0
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", background:'#f4ede4', minHeight:'100vh', direction:'rtl' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", background:'#d3e2dc', minHeight:'100vh', direction:'rtl' }}>
       <Navbar />
 
       {/* Breadcrumb */}
@@ -292,7 +292,7 @@ export default function PropertyDetail({ id }: { id: string }) {
               <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:20, display:'flex', alignItems:'center', gap:8 }}>🏗️ المواصفات والمميزات</h2>
               <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(150px,1fr))', gap:12 }}>
                 {specs.map(s => (
-                  <div key={s.label} style={{ background:'#f4ede4', borderRadius:12, padding:'14px 16px', textAlign:'center' }}>
+                  <div key={s.label} style={{ background:'#d3e2dc', borderRadius:12, padding:'14px 16px', textAlign:'center' }}>
                     <div style={{ fontSize:'1.5rem', marginBottom:6 }}>{s.icon}</div>
                     <div style={{ fontSize:'0.72rem', color:'#9aada7', fontWeight:600, marginBottom:4 }}>{s.label}</div>
                     <div style={{ fontSize:'0.95rem', fontWeight:800, color:'#27423e' }}>{s.val}</div>
@@ -340,7 +340,7 @@ export default function PropertyDetail({ id }: { id: string }) {
             {reviews.length>0 ? (
               <div style={{ display:'flex', flexDirection:'column', gap:16, marginBottom:28 }}>
                 {reviews.map(r => (
-                  <div key={r.id} style={{ background:'#faf8f5', borderRadius:14, padding:'16px 20px', border:'1px solid rgba(39,66,62,0.07)' }}>
+                  <div key={r.id} style={{ background:'#e8f0ed', borderRadius:14, padding:'16px 20px', border:'1px solid rgba(39,66,62,0.07)' }}>
                     <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:8, flexWrap:'wrap', gap:8 }}>
                       <div style={{ display:'flex', alignItems:'center', gap:10 }}>
                         <div style={{ width:36, height:36, borderRadius:'50%', background:'linear-gradient(135deg,#27423e,#41646d)', display:'flex', alignItems:'center', justifyContent:'center', color:'#d3e2dc', fontWeight:800, fontSize:'0.9rem' }}>
@@ -382,7 +382,7 @@ export default function PropertyDetail({ id }: { id: string }) {
                   <div>
                     <label style={{ fontSize:'0.72rem', color:'#526266', fontWeight:700, display:'block', marginBottom:4 }}>الاسم *</label>
                     <input value={revName} onChange={e=>setRevName(e.target.value)} placeholder="اسمك الكريم" required
-                      style={{ width:'100%', background:'#faf8f5', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'9px 12px', fontSize:'0.88rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', boxSizing:'border-box' }} />
+                      style={{ width:'100%', background:'#e8f0ed', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'9px 12px', fontSize:'0.88rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', boxSizing:'border-box' }} />
                   </div>
                   <div>
                     <label style={{ fontSize:'0.72rem', color:'#526266', fontWeight:700, display:'block', marginBottom:8 }}>تقييمك</label>
@@ -391,7 +391,7 @@ export default function PropertyDetail({ id }: { id: string }) {
                   <div>
                     <label style={{ fontSize:'0.72rem', color:'#526266', fontWeight:700, display:'block', marginBottom:4 }}>تعليقك *</label>
                     <textarea value={revMsg} onChange={e=>setRevMsg(e.target.value)} rows={3} placeholder="شاركنا تجربتك مع هذا العقار..." required
-                      style={{ width:'100%', background:'#faf8f5', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'9px 12px', fontSize:'0.85rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', resize:'vertical', boxSizing:'border-box' }} />
+                      style={{ width:'100%', background:'#e8f0ed', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'9px 12px', fontSize:'0.85rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', resize:'vertical', boxSizing:'border-box' }} />
                   </div>
                   <button type="submit" disabled={sending}
                     style={{ background:sending?'#9aada7':'linear-gradient(135deg,#27423e,#1e3a34)', color:'#fff', border:'none', borderRadius:10, padding:'11px', fontWeight:800, cursor:sending?'not-allowed':'pointer', fontFamily:"'Tajawal','Cairo',sans-serif", fontSize:'0.88rem' }}>

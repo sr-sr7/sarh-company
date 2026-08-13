@@ -48,11 +48,11 @@ function CompareInner() {
   }
   const head: React.CSSProperties = {
     padding:'14px 16px', textAlign:'center', fontWeight:800, fontSize:'0.82rem',
-    color:'#526266', borderBottom:'2px solid rgba(39,66,62,0.12)', background:'#faf8f5',
+    color:'#526266', borderBottom:'2px solid rgba(39,66,62,0.12)', background:'#e8f0ed',
   }
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#faf8f5' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#e8f0ed' }}>
       <Navbar />
 
       {/* Header */}

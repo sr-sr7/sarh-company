@@ -107,7 +107,7 @@ export function SearchBar() {
     window.location.href = `/properties?${params.toString()}`
   }
 
-  const selectCls = "flex-1 min-w-[150px] bg-[#faf8f5] border border-[#27423e]/12 rounded-lg px-3 py-2.5 text-sm font-tajawal outline-none focus:border-[#41646d] appearance-none"
+  const selectCls = "flex-1 min-w-[150px] bg-[#e8f0ed] border border-[#27423e]/12 rounded-lg px-3 py-2.5 text-sm font-tajawal outline-none focus:border-[#41646d] appearance-none"
 
   return (
     <div className="px-16 -mt-9 relative z-10">
@@ -138,7 +138,7 @@ export function SearchBar() {
           <input value={form.search} onChange={e=>setForm(p=>({...p,search:e.target.value}))}
             placeholder="مثال: حي النزهة" className={selectCls + ' w-full'} />
         </div>
-        <button type="submit" className="bg-[#27423e] text-[#f4ede4] px-7 py-2.5 rounded-lg text-sm font-bold hover:bg-[#1e3a34] transition whitespace-nowrap">
+        <button type="submit" className="bg-[#27423e] text-[#d3e2dc] px-7 py-2.5 rounded-lg text-sm font-bold hover:bg-[#1e3a34] transition whitespace-nowrap">
           🔍 بحث
         </button>
       </form>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head><meta charset="UTF-8"><title>Icons Preview</title>
+<style>
+body { font-family: sans-serif; background: #f5f5f0; padding: 20px; }
+.grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 12px; }
+.item { background: white; border-radius: 8px; padding: 12px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.item img { width: 60px; height: 60px; object-fit: contain; }
+.item p { font-size: 10px; color: #666; margin: 6px 0 0; word-break: break-all; }
+</style>
+</head>
+<body>
+<h2>أيقونات الهوية</h2>
+<div class="grid">
+</div>
+<script>
+const icons = ["icon_r1_c1","icon_r1_c2","icon_r1_c3","icon_r1_c4","icon_r1_c5","icon_r1_c6","icon_r1_c7","icon_r1_c8","icon_r1_c9","icon_r1_c10","icon_r1_c11","icon_r1_c12","icon_r1_c13","icon_r1_c14","icon_r1_c15","icon_r1_c16","icon_r1_c17","icon_r1_c18","icon_r2_c1","icon_r2_c2","icon_r2_c3","icon_r2_c4","icon_r2_c5","icon_r2_c6","icon_r2_c7","icon_r2_c8","icon_r2_c9","icon_r2_c10","icon_r2_c11","icon_r2_c12","icon_r2_c13","icon_r2_c14","icon_r2_c15","icon_r2_c16","icon_r2_c17","icon_r2_c18","icon_r3_c1","icon_r3_c2","icon_r3_c3","icon_r3_c4","icon_r3_c5","icon_r3_c6","icon_r3_c7","icon_r3_c8","icon_r3_c9","icon_r3_c10","icon_r3_c11","icon_r3_c12","icon_r3_c13","icon_r3_c14","icon_r3_c15","icon_r3_c16","icon_r3_c17","icon_r3_c18","icon_r4_c1","icon_r4_c2","icon_r4_c3","icon_r4_c4","icon_r4_c5","icon_r4_c6","icon_r4_c7","icon_r4_c8","icon_r4_c9","icon_r4_c10","icon_r4_c11","icon_r4_c12","icon_r4_c13","icon_r4_c14","icon_r4_c15","icon_r4_c16","icon_r4_c17","icon_r4_c18","icon_r5_c1","icon_r5_c2","icon_r5_c3","icon_r5_c4","icon_r5_c5","icon_r5_c6","icon_r5_c7","icon_r5_c8","icon_r5_c9","icon_r5_c10","icon_r5_c11","icon_r5_c12","icon_r5_c13","icon_r5_c14","icon_r5_c15","icon_r5_c16","icon_r5_c17","icon_r5_c18","icon_r6_c1","icon_r6_c2","icon_r6_c3","icon_r6_c4","icon_r6_c5","icon_r6_c6","icon_r6_c7","icon_r6_c8","icon_r6_c9","icon_r6_c10","icon_r6_c11","icon_r6_c12","icon_r6_c13","icon_r6_c14","icon_r6_c15","icon_r6_c16","icon_r6_c17","icon_r6_c18"];
+const grid = document.querySelector('.grid');
+icons.forEach(name => {
+  const div = document.createElement('div');
+  div.className = 'item';
+  div.innerHTML = `<img src="${name}.png" onerror="this.style.opacity=0.1"><p>${name}</p>`;
+  grid.appendChild(div);
+});
+</script>
+</body>
+</html>

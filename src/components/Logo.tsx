@@ -1,4 +1,4 @@
-export default function Logo({ size = 28, color = '#f4ede4', bg = '#27423e' }: { size?: number; color?: string; bg?: string }) {
+export default function Logo({ size = 28, color = '#d3e2dc', bg = '#27423e' }: { size?: number; color?: string; bg?: string }) {
   return (
     <div
       className="rounded-lg flex items-center justify-center shrink-0"

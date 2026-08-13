@@ -58,7 +58,7 @@ export default function MortgageCalc({ price }: { price: number }) {
             { label:'قيمة القرض',        val: fmt(loan) },
             { label:'إجمالي المدفوعات', val: fmt(monthly * n) },
           ].map(({ label, val }) => (
-            <div key={label} style={{ background:'#f4ede4', borderRadius:8, padding:'8px', textAlign:'center' }}>
+            <div key={label} style={{ background:'#d3e2dc', borderRadius:8, padding:'8px', textAlign:'center' }}>
               <div style={{ fontWeight:800, color:'#27423e', fontSize:'0.78rem' }}>{val}</div>
               <div style={{ fontSize:'0.62rem', color:'#7a9188', marginTop:2 }}>{label}</div>
             </div>

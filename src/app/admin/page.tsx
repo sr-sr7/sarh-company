@@ -23,7 +23,7 @@ const PERMS: [string, string][] = [
 
 // ─── Styles ───────────────────────────────────────────────────
 const S = {
-  page:  { minHeight:'100vh', background:'#faf8f5', fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl' as const },
+  page:  { minHeight:'100vh', background:'#e8f0ed', fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl' as const },
   header:{ background:'#d3e2dc', color:'#1e3a34', padding:'16px 32px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(30,58,52,0.12)', flexWrap:'wrap' as const, gap:12 },
   headerBrand:{ display:'flex', alignItems:'center', gap:12 },
   headerTitle:{ fontWeight:700, fontSize:'1.1rem', color:'#1e3a34' },
@@ -55,12 +55,12 @@ const S = {
   formGrid:{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:20 },
   fullCol:{ gridColumn:'1 / -1' as const },
   label:{ display:'block', fontSize:'0.72rem', color:'#526266', fontWeight:700, marginBottom:6 },
-  input:{ width:'100%', background:'#faf8f5', border:'1px solid rgba(39,66,62,0.15)', borderRadius:10, padding:'10px 14px', fontSize:'0.9rem', outline:'none', fontFamily:"'Tajawal','Cairo',sans-serif", boxSizing:'border-box' as const },
-  textarea:{ width:'100%', background:'#faf8f5', border:'1px solid rgba(39,66,62,0.15)', borderRadius:10, padding:'10px 14px', fontSize:'0.9rem', outline:'none', fontFamily:"'Tajawal','Cairo',sans-serif", resize:'vertical' as const, boxSizing:'border-box' as const },
-  select:{ width:'100%', background:'#faf8f5', border:'1px solid rgba(39,66,62,0.15)', borderRadius:10, padding:'10px 14px', fontSize:'0.9rem', outline:'none', fontFamily:"'Tajawal','Cairo',sans-serif", boxSizing:'border-box' as const },
+  input:{ width:'100%', background:'#e8f0ed', border:'1px solid rgba(39,66,62,0.15)', borderRadius:10, padding:'10px 14px', fontSize:'0.9rem', outline:'none', fontFamily:"'Tajawal','Cairo',sans-serif", boxSizing:'border-box' as const },
+  textarea:{ width:'100%', background:'#e8f0ed', border:'1px solid rgba(39,66,62,0.15)', borderRadius:10, padding:'10px 14px', fontSize:'0.9rem', outline:'none', fontFamily:"'Tajawal','Cairo',sans-serif", resize:'vertical' as const, boxSizing:'border-box' as const },
+  select:{ width:'100%', background:'#e8f0ed', border:'1px solid rgba(39,66,62,0.15)', borderRadius:10, padding:'10px 14px', fontSize:'0.9rem', outline:'none', fontFamily:"'Tajawal','Cairo',sans-serif", boxSizing:'border-box' as const },
   checkRow:{ display:'flex', flexWrap:'wrap' as const, gap:16, marginTop:4 },
   checkLabel:{ display:'flex', alignItems:'center', gap:8, cursor:'pointer', fontSize:'0.9rem', color:'#526266' },
-  uploadZone:{ border:'2px dashed rgba(39,66,62,0.25)', borderRadius:14, padding:24, textAlign:'center' as const, cursor:'pointer', background:'#faf8f5' },
+  uploadZone:{ border:'2px dashed rgba(39,66,62,0.25)', borderRadius:14, padding:24, textAlign:'center' as const, cursor:'pointer', background:'#e8f0ed' },
   uploadIcon:{ fontSize:'2.5rem', display:'block', marginBottom:8 },
   uploadText:{ color:'#526266', fontSize:'0.85rem', lineHeight:1.6 },
   uploadHint:{ color:'#9aada7', fontSize:'0.75rem', marginTop:6 },
@@ -467,7 +467,7 @@ export default function AdminPage() {
                   tr.style.display = tr.dataset.search?.includes(v) ? '' : 'none'
                 })
               }}
-              style={{ width:'100%', padding:'11px 40px 11px 14px', borderRadius:12, border:'1.5px solid rgba(39,66,62,0.18)', fontSize:'0.9rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', background:'#faf8f5', boxSizing:'border-box' as const, direction:'rtl' }}
+              style={{ width:'100%', padding:'11px 40px 11px 14px', borderRadius:12, border:'1.5px solid rgba(39,66,62,0.18)', fontSize:'0.9rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', background:'#e8f0ed', boxSizing:'border-box' as const, direction:'rtl' }}
             />
           </div>
           <div style={S.tableWrap}>
@@ -726,7 +726,7 @@ export default function AdminPage() {
                   return <div style={{marginTop:12,borderRadius:12,overflow:'hidden',border:'2px solid rgba(39,66,62,0.15)'}}>
                     <div style={{background:'#27423e',padding:'8px 14px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
                       <span style={{color:'#d3e2dc',fontSize:'0.75rem',fontWeight:700}}>📍 {lat.toFixed(5)}, {lng.toFixed(5)}</span>
-                      <button type="button" onClick={()=>ff('map_url','')} style={{background:'rgba(255,255,255,0.1)',border:'none',color:'#f4ede4',borderRadius:6,padding:'3px 10px',fontSize:'0.72rem',cursor:'pointer',fontFamily:"'Tajawal','Cairo',sans-serif"}}>✕ مسح</button>
+                      <button type="button" onClick={()=>ff('map_url','')} style={{background:'rgba(255,255,255,0.1)',border:'none',color:'#d3e2dc',borderRadius:6,padding:'3px 10px',fontSize:'0.72rem',cursor:'pointer',fontFamily:"'Tajawal','Cairo',sans-serif"}}>✕ مسح</button>
                     </div>
                     <iframe src={`https://www.openstreetmap.org/export/embed.html?bbox=${lng-d},${lat-d},${lng+d},${lat+d}&layer=mapnik&marker=${lat},${lng}`} width="100%" height="260" style={{border:'none',display:'block'}} loading="lazy" title="معاينة الموقع" />
                   </div>
@@ -841,7 +841,7 @@ export default function AdminPage() {
                       <label style={{...S.label,marginBottom:12}}>الصلاحيات</label>
                       <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:10}}>
                         {PERMS.map(([key,label])=>(
-                          <label key={key} style={{display:'flex',alignItems:'center',gap:10,padding:'10px 14px',borderRadius:10,border:`1px solid ${editingUser.permissions?.[key]?'#27423e':'rgba(39,66,62,0.15)'}`,background:editingUser.permissions?.[key]?'rgba(39,66,62,0.06)':'#faf8f5',cursor:'pointer',transition:'all 0.2s'}}>
+                          <label key={key} style={{display:'flex',alignItems:'center',gap:10,padding:'10px 14px',borderRadius:10,border:`1px solid ${editingUser.permissions?.[key]?'#27423e':'rgba(39,66,62,0.15)'}`,background:editingUser.permissions?.[key]?'rgba(39,66,62,0.06)':'#e8f0ed',cursor:'pointer',transition:'all 0.2s'}}>
                             <input type="checkbox" checked={!!editingUser.permissions?.[key]}
                               onChange={e=>setEditingUser(u=>u?{...u,permissions:{...u.permissions,[key]:e.target.checked}}:u)}
                               style={{width:18,height:18,accentColor:'#27423e',cursor:'pointer'}}/>
@@ -878,7 +878,7 @@ export default function AdminPage() {
                     <label style={{...S.label,marginBottom:12}}>الصلاحيات</label>
                     <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:10}}>
                       {PERMS.map(([key,label])=>(
-                        <label key={key} style={{display:'flex',alignItems:'center',gap:10,padding:'10px 14px',borderRadius:10,border:`1px solid ${newUser.permissions[key]?'#27423e':'rgba(39,66,62,0.15)'}`,background:newUser.permissions[key]?'rgba(39,66,62,0.06)':'#faf8f5',cursor:'pointer',transition:'all 0.2s'}}>
+                        <label key={key} style={{display:'flex',alignItems:'center',gap:10,padding:'10px 14px',borderRadius:10,border:`1px solid ${newUser.permissions[key]?'#27423e':'rgba(39,66,62,0.15)'}`,background:newUser.permissions[key]?'rgba(39,66,62,0.06)':'#e8f0ed',cursor:'pointer',transition:'all 0.2s'}}>
                           <input type="checkbox" checked={!!newUser.permissions[key]}
                             onChange={e=>setNewUser(u=>({...u,permissions:{...u.permissions,[key]:e.target.checked}}))}
                             style={{width:18,height:18,accentColor:'#27423e',cursor:'pointer'}}/>

@@ -46,7 +46,7 @@ export default function MapPage() {
   }
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#faf8f5' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#e8f0ed' }}>
       <Navbar />
 
       {/* Header */}

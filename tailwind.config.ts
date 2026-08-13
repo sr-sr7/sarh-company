@@ -18,9 +18,9 @@ const config: Config = {
           400: '#7a9188',
         },
         sand: {
-          DEFAULT: '#f4ede4',
-          200: '#f4ede4',
-          100: '#faf8f5',
+          DEFAULT: '#d3e2dc',
+          200: '#d3e2dc',
+          100: '#e8f0ed',
         },
         accent: '#d3e2dc',
       },

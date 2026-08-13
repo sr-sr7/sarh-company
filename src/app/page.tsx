@@ -25,10 +25,10 @@ const TABS: { key: TabKey; label: string; icon: string }[] = [
 ]
 
 const S = {
-  main: { fontFamily: "'Tajawal','Cairo',sans-serif", background: '#f4ede4', minHeight: '100vh', direction: 'rtl' as const },
+  main: { fontFamily: "'Tajawal','Cairo',sans-serif", background: '#d3e2dc', minHeight: '100vh', direction: 'rtl' as const },
 
   // Hero
-  hero: { position: 'relative' as const, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' as const, background: 'linear-gradient(150deg,#d3e2dc 0%,#e8f0ed 50%,#f4ede4 100%)', overflow: 'hidden' },
+  hero: { position: 'relative' as const, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' as const, background: 'linear-gradient(150deg,#d3e2dc 0%,#e8f0ed 50%,#d3e2dc 100%)', overflow: 'hidden' },
   heroInner: { position: 'relative' as const, zIndex: 10, padding: '100px 24px 60px', maxWidth: 800, margin: '0 auto' },
   heroBadge: { display: 'inline-block', background: 'rgba(30,58,52,0.08)', border: '1px solid rgba(30,58,52,0.15)', color: '#2d5750', fontSize: '0.75rem', padding: '8px 20px', borderRadius: 50, marginBottom: 32, letterSpacing: 3 },
   heroH1: { fontSize: 'clamp(2rem,5vw,3.5rem)', fontWeight: 800, color: '#1e3a34', lineHeight: 1.3, marginBottom: 24 },
@@ -48,13 +48,13 @@ const S = {
   aboutH2: { fontSize: 'clamp(1.6rem,3vw,2.4rem)', fontWeight: 800, color: '#1e3a34', margin: '16px 0 20px', lineHeight: 1.35 },
   aboutP: { color: '#3a5a54', lineHeight: 1.9, marginBottom: 16, fontSize: '1rem', fontWeight: 500 },
   tagRow: { display: 'flex', gap: 10, marginTop: 24, flexWrap: 'wrap' as const },
-  tag: { background: '#f4ede4', color: '#1e3a34', padding: '8px 16px', borderRadius: 50, fontSize: '0.85rem', fontWeight: 600 },
-  quoteBox: { background: '#f4ede4', borderRadius: 20, padding: 40, color: '#1e3a34', position: 'relative' as const, overflow: 'hidden', border: '1px solid rgba(30,58,52,0.1)' },
+  tag: { background: '#d3e2dc', color: '#1e3a34', padding: '8px 16px', borderRadius: 50, fontSize: '0.85rem', fontWeight: 600 },
+  quoteBox: { background: '#d3e2dc', borderRadius: 20, padding: 40, color: '#1e3a34', position: 'relative' as const, overflow: 'hidden', border: '1px solid rgba(30,58,52,0.1)' },
   quoteText: { color: '#1e3a34', fontSize: '1.05rem', lineHeight: 1.9, fontWeight: 500, position: 'relative' as const, zIndex: 1 },
   quoteBy: { color: '#b8986a', fontWeight: 700, marginTop: 24, position: 'relative' as const, zIndex: 1 },
 
   // Properties
-  props: { padding: '80px 24px', background: '#f4ede4' },
+  props: { padding: '80px 24px', background: '#d3e2dc' },
   propsInner: { maxWidth: 1200, margin: '0 auto' },
   sectionTitle: { textAlign: 'center' as const, marginBottom: 48 },
   propsH2: { fontSize: 'clamp(1.6rem,3vw,2.4rem)', fontWeight: 800, color: '#1e3a34', margin: '16px 0 12px' },
