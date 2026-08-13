@@ -300,7 +300,7 @@ export default function Home() {
               WebkitOverflowScrolling: 'touch',
               paddingBottom: 24,
             }}>
-              {properties.slice(0, 3).map(p => (
+              {properties.map(p => (
                 <div key={p.id} style={{
                   height: '88vh',
                   scrollSnapAlign: 'start',
