@@ -293,8 +293,22 @@ export default function Home() {
             </div>
           )}
           {viewMode === 'grid' && !loading && properties.length > 0 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {properties.map(p => <PropertyCard key={p.id} property={p} />)}
+            <div style={{
+              height: '100vh',
+              overflowY: 'scroll',
+              scrollSnapType: 'y mandatory',
+              WebkitOverflowScrolling: 'touch',
+              paddingBottom: 24,
+            }}>
+              {properties.slice(0, 3).map(p => (
+                <div key={p.id} style={{
+                  height: '88vh',
+                  scrollSnapAlign: 'start',
+                  padding: '0 0 16px',
+                }}>
+                  <PropertyCard property={p} />
+                </div>
+              ))}
             </div>
           )}
         </div>
