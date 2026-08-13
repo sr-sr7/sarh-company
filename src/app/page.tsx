@@ -62,7 +62,7 @@ const S = {
   tabsRow: { display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' as const, marginBottom: 40 },
   tabActive: { display: 'flex', alignItems: 'center', gap: 8, padding: '10px 28px', borderRadius: 50, border: '2px solid rgba(30,58,52,0.25)', fontWeight: 700, fontSize: '0.9rem', background: '#d3e2dc', color: '#1e3a34', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 14px rgba(30,58,52,0.12)', fontFamily: "'Tajawal','Cairo',sans-serif" },
   tabInactive: { display: 'flex', alignItems: 'center', gap: 8, padding: '10px 28px', borderRadius: 50, border: '2px solid rgba(30,58,52,0.18)', fontWeight: 600, fontSize: '0.9rem', background: '#fff', color: '#526266', cursor: 'pointer', transition: 'all 0.2s', fontFamily: "'Tajawal','Cairo',sans-serif" },
-  grid3: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr))', gap: 24 },
+  grid3: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(420px,1fr))', gap: 24 },
   skeleton: { background: '#e4ede8', borderRadius: 20, height: 288, border: '1px solid rgba(30,58,52,0.1)' },
   empty: { textAlign: 'center' as const, padding: '80px 0' },
   emptyIcon: { fontSize: '4rem', opacity: 0.2, display: 'block', marginBottom: 16 },

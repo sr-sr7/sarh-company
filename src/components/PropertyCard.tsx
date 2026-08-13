@@ -60,7 +60,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
 
       <div
         className="flip-card slide-in"
-        style={{ height: 380, cursor: 'pointer', direction: 'rtl' }}
+        style={{ height: 460, cursor: 'pointer', direction: 'rtl' }}
         onClick={goToProperty}
       >
         <div className="flip-inner">
@@ -69,7 +69,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
           <div className="flip-front bg-white border border-[#27423e]/10 shadow-sm">
 
             {/* صورة */}
-            <div style={{ position:'relative', height:192, background:'#d3e2dc', overflow:'hidden', flexShrink:0 }}>
+            <div style={{ position:'relative', height:260, background:'#d3e2dc', overflow:'hidden', flexShrink:0 }}>
               {img ? (
                 <img src={img} alt={p.title} loading="eager" style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
               ) : (
