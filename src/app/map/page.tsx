@@ -9,7 +9,7 @@ import Footer from '@/components/Footer'
 const PropertyMap = dynamic(() => import('@/components/PropertyMap'), {
   ssr: false,
   loading: () => (
-    <div style={{ height:500, background:'#d3e2dc', display:'flex', alignItems:'center', justifyContent:'center', borderRadius:16 }}>
+    <div style={{ height:500, background:'#f0f4f2', display:'flex', alignItems:'center', justifyContent:'center', borderRadius:16 }}>
       <span style={{ color:'#41646d', fontFamily:'Tajawal' }}>جاري تحميل الخريطة...</span>
     </div>
   ),
@@ -46,7 +46,7 @@ export default function MapPage() {
   }
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#e8f0ed' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#f7faf8' }}>
       <Navbar />
 
       {/* Header */}
@@ -85,7 +85,7 @@ export default function MapPage() {
       {/* Map */}
       <div style={{ maxWidth:1400, margin:'0 auto', padding:'24px 24px 60px' }}>
         {loading ? (
-          <div style={{ height:560, background:'#d3e2dc', borderRadius:16, display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <div style={{ height:560, background:'#f0f4f2', borderRadius:16, display:'flex', alignItems:'center', justifyContent:'center' }}>
             <span style={{ color:'#41646d' }}>⏳ جاري التحميل...</span>
           </div>
         ) : (
@@ -107,7 +107,7 @@ export default function MapPage() {
                 >
                   {p.main_image
                     ? <img src={p.main_image} alt="" style={{ width:52, height:52, borderRadius:8, objectFit:'cover', flexShrink:0 }} />
-                    : <div style={{ width:52, height:52, background:'#d3e2dc', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.5rem', flexShrink:0 }}>🏠</div>
+                    : <div style={{ width:52, height:52, background:'#f0f4f2', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.5rem', flexShrink:0 }}>🏠</div>
                   }
                   <div style={{ minWidth:0 }}>
                     <p style={{ fontSize:'0.8rem', fontWeight:700, color:'#1e3a34', margin:'0 0 2px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.title}</p>

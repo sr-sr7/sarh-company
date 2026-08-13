@@ -11,7 +11,7 @@
 
 body {
   font-family: 'Tajawal', 'Cairo', sans-serif;
-  background: #d3e2dc;
+  background: #f0f4f2;
   color: #2a2a2a;
   direction: rtl;
   /* iOS safe area */
@@ -24,7 +24,7 @@ body {
 }
 
 ::-webkit-scrollbar       { width: 5px; }
-::-webkit-scrollbar-track { background: #d3e2dc; }
+::-webkit-scrollbar-track { background: #f0f4f2; }
 ::-webkit-scrollbar-thumb { background: #41646d; border-radius: 4px; }
 
 /* Lazy-loaded images fade in */

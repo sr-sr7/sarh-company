@@ -71,7 +71,7 @@ function PropertiesInner() {
 
   const inp: React.CSSProperties = {
     width:'100%', background:'rgba(255,255,255,0.07)', border:'1.5px solid rgba(211,226,220,0.2)',
-    borderRadius:10, padding:'9px 12px', fontSize:'0.88rem', outline:'none', color:'#d3e2dc',
+    borderRadius:10, padding:'9px 12px', fontSize:'0.88rem', outline:'none', color:'#f0f4f2',
     fontFamily:"'Tajawal','Cairo',sans-serif", boxSizing:'border-box',
   }
   const lbl: React.CSSProperties = {
@@ -152,7 +152,7 @@ function PropertiesInner() {
         <div style={{
           display:'inline-flex', alignItems:'center', gap:8,
           background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.12)',
-          padding:'8px 22px', borderRadius:50, fontSize:'0.82rem', color:'#d3e2dc', fontWeight:700,
+          padding:'8px 22px', borderRadius:50, fontSize:'0.82rem', color:'#f0f4f2', fontWeight:700,
         }}>
           <span style={{ width:8, height:8, background:'#b8986a', borderRadius:'50%', display:'inline-block', boxShadow:'0 0 8px #b8986a' }} />
           {loading ? '...' : `${properties.length} عقار متاح`}

@@ -9,7 +9,7 @@ export default function CompareBar() {
     <div style={{
       position:'fixed', bottom:0, right:0, left:0, zIndex:9998,
       background:'linear-gradient(135deg,#1e3a34,#27423e)',
-      color:'#d3e2dc', padding:'14px 24px',
+      color:'#f0f4f2', padding:'14px 24px',
       display:'flex', alignItems:'center', justifyContent:'center', gap:16,
       flexWrap:'wrap',
       boxShadow:'0 -4px 24px rgba(30,58,52,0.35)',
@@ -39,7 +39,7 @@ export default function CompareBar() {
         )}
         <button
           onClick={clear}
-          style={{ background:'rgba(255,255,255,0.1)', border:'1px solid rgba(255,255,255,0.2)', color:'#d3e2dc', borderRadius:10, padding:'10px 16px', fontWeight:700, cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif", fontSize:'0.85rem' }}>
+          style={{ background:'rgba(255,255,255,0.1)', border:'1px solid rgba(255,255,255,0.2)', color:'#f0f4f2', borderRadius:10, padding:'10px 16px', fontWeight:700, cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif", fontSize:'0.85rem' }}>
           إلغاء ✕
         </button>
       </div>
