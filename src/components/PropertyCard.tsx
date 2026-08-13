@@ -45,10 +45,10 @@ export default function PropertyCard({ property: p }: { property: Property }) {
       }}
     >
       {/* الصورة */}
-      <div style={{ position: 'relative', width: 220, minWidth: 220, background: '#f0f4f2', flexShrink: 0 }}>
+      <div style={{ position: 'relative', width: 220, minWidth: 220, alignSelf: 'stretch', background: '#f0f4f2', flexShrink: 0 }}>
         {img ? (
-          <img src={img} alt={p.title} loading="lazy"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          <img src={img} alt={p.title} loading="eager"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', position: 'absolute', inset: 0 }} />
         ) : (
           <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', opacity: 0.15 }}>
             🏠

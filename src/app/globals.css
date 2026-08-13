@@ -27,16 +27,8 @@ body {
 ::-webkit-scrollbar-track { background: #f0f4f2; }
 ::-webkit-scrollbar-thumb { background: #41646d; border-radius: 4px; }
 
-/* Lazy-loaded images fade in */
 img {
   content-visibility: auto;
-}
-img[loading="lazy"] {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-img[loading="lazy"].loaded {
-  opacity: 1;
 }
 
 /* Prevent CLS on cards with fixed-ratio images */
