@@ -463,10 +463,6 @@ export default function PropertyDetail({ id }: { id: string }) {
             تواصل عبر واتساب
           </a>
 
-          <a href={`tel:+${p.whatsapp}`}
-            style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, width:'100%', background:'#fff', color:'#27423e', border:'2px solid rgba(39,66,62,0.2)', borderRadius:14, padding:'13px 0', fontSize:'0.95rem', fontWeight:700, textDecoration:'none', marginBottom:16, boxSizing:'border-box' }}>
-            📞 اتصال مباشر
-          </a>
 
           {/* Share */}
           <div style={{ background:'#fff', borderRadius:16, padding:'16px 20px', border:'1px solid rgba(39,66,62,0.08)', marginBottom:0 }}>
