@@ -2,6 +2,20 @@
 import { Property } from '@/lib/supabase'
 import { useFavorites, useCompare } from '@/lib/favorites'
 
+const TYPE_ICON: Record<string, string> = {
+  'فيلا':    'icon_r3_c1',
+  'شقة':     'icon_r2_c7',
+  'عمارة':   'icon_r2_c7',
+  'دبلكس':   'icon_r2_c7',
+  'أرض':     'icon_r2_c3',
+  'استراحة': 'icon_r6_c9',
+  'شاليه':   'icon_r6_c9',
+  'مزرعة':   'icon_r4_c4',
+  'تجاري':   'icon_r6_c2',
+  'محل':     'icon_r6_c2',
+  'مستودع':  'icon_r6_c15',
+}
+
 export default function PropertyCard({ property: p }: { property: Property }) {
   const isSold       = p.status === 'sold'
   const isNegotiable = p.price_unit === 'آخر سوم'
@@ -89,8 +103,10 @@ export default function PropertyCard({ property: p }: { property: Property }) {
         {/* الرأس */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#b8986a', background: 'rgba(184,152,106,0.1)', padding: '3px 10px', borderRadius: 20 }}>{p.type}</span>
-            {p.is_featured && <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#1e3a34', background: '#f0f4f2', padding: '3px 10px', borderRadius: 20, border: '1px solid rgba(30,58,52,0.15)' }}>⭐ مميز</span>}
+            <span style={{ display:'inline-flex', alignItems:'center', gap:4, fontSize: '0.72rem', fontWeight: 700, color: '#b8986a', background: 'rgba(184,152,106,0.1)', padding: '3px 10px', borderRadius: 20 }}>
+              {TYPE_ICON[p.type] && <BIcon name={TYPE_ICON[p.type]} size={14} />}{p.type}
+            </span>
+            {p.is_featured && <span style={{ display:'inline-flex', alignItems:'center', gap:4, fontSize: '0.7rem', fontWeight: 700, color: '#1e3a34', background: '#f0f4f2', padding: '3px 10px', borderRadius: 20, border: '1px solid rgba(30,58,52,0.15)' }}><BIcon name="icon_r3_c6" size={14} /> مميز</span>}
             {p.is_new      && <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#0d6832', background: '#e8f5e9', padding: '3px 10px', borderRadius: 20 }}>جديد</span>}
           </div>
 
@@ -99,17 +115,17 @@ export default function PropertyCard({ property: p }: { property: Property }) {
           </h3>
 
           <p style={{ fontSize: '0.82rem', color: '#7a9188', margin: '0 0 14px', display: 'flex', alignItems: 'center', gap: 4 }}>
-            <span>📍</span> {p.city}{p.district ? ` — ${p.district}` : ''}
+            <BIcon name="icon_r1_c16" /> {p.city}{p.district ? ` — ${p.district}` : ''}
           </p>
 
           {/* المواصفات */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
-            {p.area        ? <Spec label={`${p.area} م²`} icon="📐" /> : null}
-            {p.bedrooms >0 ? <Spec label={`${p.bedrooms} غرف`} icon="🛏️" /> : null}
-            {p.bathrooms>0 ? <Spec label={`${p.bathrooms} حمام`} icon="🚿" /> : null}
-            {p.has_pool    ? <Spec label="مسبح" icon="🏊" /> : null}
-            {p.has_parking ? <Spec label="مواقف" icon="🚗" /> : null}
-            {p.has_garden  ? <Spec label="حديقة" icon="🌿" /> : null}
+            {p.area        ? <Spec label={`${p.area} م²`} icon="icon_r1_c5" /> : null}
+            {p.bedrooms >0 ? <Spec label={`${p.bedrooms} غرف`} icon="icon_r1_c3" /> : null}
+            {p.bathrooms>0 ? <Spec label={`${p.bathrooms} حمام`} icon="icon_r1_c2" /> : null}
+            {p.has_pool    ? <Spec label="مسبح" icon="icon_r6_c8" /> : null}
+            {p.has_parking ? <Spec label="مواقف" icon="icon_r1_c7" /> : null}
+            {p.has_garden  ? <Spec label="حديقة" icon="icon_r4_c4" /> : null}
           </div>
         </div>
 
@@ -146,7 +162,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
               href={`https://wa.me/${p.whatsapp}?text=${encodeURIComponent('مرحبا، استفسر عن: ' + p.title)}`}
               target="_blank"
               style={{ background: '#25D366', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '8px 16px', borderRadius: 10, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
-              💬 واتساب
+              <BIcon name="icon_r3_c6" size={18} /> واتساب
             </a>
             <span style={{ background: '#1e3a34', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '8px 16px', borderRadius: 10, cursor: 'pointer' }}>
               التفاصيل
@@ -158,10 +174,14 @@ export default function PropertyCard({ property: p }: { property: Property }) {
   )
 }
 
+function BIcon({ name, size = 18 }: { name: string; size?: number }) {
+  return <img src={`/icons/${name}.png`} alt="" width={size} height={size} style={{ display:'inline-block', verticalAlign:'middle', flexShrink:0 }} />
+}
+
 function Spec({ icon, label }: { icon: string; label: string }) {
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: '#f0f4f2', color: '#3a5a54', fontSize: '0.78rem', fontWeight: 600, padding: '4px 10px', borderRadius: 20 }}>
-      {icon} {label}
+      <BIcon name={icon} size={16} /> {label}
     </span>
   )
 }

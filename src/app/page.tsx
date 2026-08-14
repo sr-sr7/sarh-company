@@ -13,15 +13,15 @@ const PropertyMap = dynamic(() => import('@/components/PropertyMap'), { ssr: fal
 type TabKey = 'الكل' | 'فيلا' | 'أرض' | 'استراحة' | 'مزرعة' | 'إيجار' | 'شقة' | 'دبلكس' | 'تجاري'
 
 const TABS: { key: TabKey; label: string; icon: string }[] = [
-  { key: 'الكل',    label: 'الكل',      icon: '🏘️' },
-  { key: 'فيلا',   label: 'فلل',       icon: '🏠' },
-  { key: 'أرض',   label: 'أراضي',     icon: '🌍' },
-  { key: 'شقة',   label: 'شقق',       icon: '🏢' },
-  { key: 'استراحة',label: 'استراحات',  icon: '🌴' },
-  { key: 'مزرعة', label: 'مزارع',     icon: '🌾' },
-  { key: 'دبلكس', label: 'دبلكس',     icon: '🏗️' },
-  { key: 'تجاري', label: 'تجاري',     icon: '🏪' },
-  { key: 'إيجار', label: 'إيجار',     icon: '🔑' },
+  { key: 'الكل',    label: 'الكل',      icon: '/icons/icon_r3_c1.png' },
+  { key: 'فيلا',   label: 'فلل',       icon: '/icons/icon_r3_c1.png' },
+  { key: 'أرض',   label: 'أراضي',     icon: '/icons/icon_r2_c3.png' },
+  { key: 'شقة',   label: 'شقق',       icon: '/icons/icon_r2_c7.png' },
+  { key: 'استراحة',label: 'استراحات',  icon: '/icons/icon_r6_c9.png' },
+  { key: 'مزرعة', label: 'مزارع',     icon: '/icons/icon_r4_c4.png' },
+  { key: 'دبلكس', label: 'دبلكس',     icon: '/icons/icon_r2_c7.png' },
+  { key: 'تجاري', label: 'تجاري',     icon: '/icons/icon_r6_c2.png' },
+  { key: 'إيجار', label: 'إيجار',     icon: '/icons/icon_r5_c8.png' },
 ]
 
 const S = {
@@ -236,7 +236,7 @@ export default function Home() {
               {TABS.map(tab => (
                 <button key={tab.key} onClick={() => setActiveTab(tab.key)}
                   style={activeTab === tab.key ? S.tabActive : S.tabInactive}>
-                  <span>{tab.icon}</span> {tab.label}
+                  <img src={tab.icon} alt="" width={20} height={20} style={{ display:'inline-block', verticalAlign:'middle', marginLeft:4 }} /> {tab.label}
                 </button>
               ))}
             </div>
