@@ -106,7 +106,6 @@ export default function PropertyCard({ property: p }: { property: Property }) {
             <span style={{ display:'inline-flex', alignItems:'center', gap:4, fontSize: '0.72rem', fontWeight: 700, color: '#b8986a', background: 'rgba(184,152,106,0.1)', padding: '3px 10px', borderRadius: 20 }}>
               {TYPE_ICON[p.type] && <BIcon name={TYPE_ICON[p.type]} size={14} />}{p.type}
             </span>
-            {p.is_featured && <span style={{ display:'inline-flex', alignItems:'center', gap:4, fontSize: '0.7rem', fontWeight: 700, color: '#1e3a34', background: '#f0f4f2', padding: '3px 10px', borderRadius: 20, border: '1px solid rgba(30,58,52,0.15)' }}><BIcon name="icon_r3_c6" size={14} /> مميز</span>}
             {p.is_new      && <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#0d6832', background: '#e8f5e9', padding: '3px 10px', borderRadius: 20 }}>جديد</span>}
           </div>
 

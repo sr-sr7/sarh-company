@@ -104,7 +104,7 @@ export default function PropertyMap({ properties }: { properties: Property[] }) 
         className: '',
         html: `<div style="
           width:36px;height:36px;
-          background:${p.is_featured ? '#b8986a' : '#27423e'};
+          background:#27423e;
           border-radius:50% 50% 50% 0;
           transform:rotate(-45deg);
           border:3px solid #fff;
@@ -124,7 +124,6 @@ export default function PropertyMap({ properties }: { properties: Property[] }) 
       const popup = L.popup({ maxWidth: 220, className: 'sarh-popup' }).setContent(`
         <div style="font-family:'Tajawal',sans-serif;direction:rtl;width:200px">
           ${imgHtml}
-          ${p.is_featured ? '<span style="background:#b8986a;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:50px;margin-bottom:6px;display:inline-block">مميز ⭐</span>' : ''}
           <div style="font-weight:700;font-size:13px;color:#1e3a34;margin-bottom:4px;line-height:1.4">${p.title}</div>
           <div style="font-size:11px;color:#41646d;margin-bottom:6px">📍 ${p.district ? p.district + '، ' : ''}${p.city}</div>
           <div style="font-weight:800;font-size:15px;color:#27423e;margin-bottom:10px">
@@ -154,16 +153,6 @@ export default function PropertyMap({ properties }: { properties: Property[] }) 
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
       <div ref={divRef} style={{ height: 500, width: '100%' }} />
       {/* Legend */}
-      <div style={{ position: 'absolute', bottom: 16, right: 16, background: 'rgba(255,255,255,0.95)', borderRadius: 10, padding: '8px 14px', fontSize: '0.75rem', zIndex: 1000, boxShadow: '0 2px 8px rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 14, height: 14, background: '#b8986a', borderRadius: '50% 50% 50% 0', transform: 'rotate(-45deg)' }} />
-          <span style={{ color: '#526266' }}>عقار مميز</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 14, height: 14, background: '#27423e', borderRadius: '50% 50% 50% 0', transform: 'rotate(-45deg)' }} />
-          <span style={{ color: '#526266' }}>عقار عادي</span>
-        </div>
-      </div>
     </div>
   )
 }

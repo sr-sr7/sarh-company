@@ -227,7 +227,6 @@ export default function PropertyDetail({ id }: { id: string }) {
         )}
         <div style={{ position:'absolute', top:20, right:24, display:'flex', gap:8, pointerEvents:'none' }}>
           <span style={{ background:'#f0f4f2', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>{p.operation}</span>
-          {p.is_featured && <span style={{ background:'#b8986a', color:'#27423e', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>⭐ مميز</span>}
           {p.is_new      && <span style={{ background:'#fff', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>🆕 جديد</span>}
         </div>
         {allImgs.length>1 && (
