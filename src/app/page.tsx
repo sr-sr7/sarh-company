@@ -93,6 +93,7 @@ const S = {
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabKey>('الكل')
+  const [mobileDropOpen, setMobileDropOpen] = useState(false)
   const [properties, setProperties] = useState<Property[]>([])
   const [loading, setLoading] = useState(true)
   const [soldProperties, setSoldProperties] = useState<Property[]>([])
@@ -241,17 +242,35 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Mobile: قائمة منسدلة */}
-            <div className="sarh-tabs-mobile" style={{ display: 'none', flex: 1 }}>
-              <select
-                value={activeTab}
-                onChange={e => setActiveTab(e.target.value as TabKey)}
-                style={{ width: '100%', background: '#fff', border: '2px solid rgba(30,58,52,0.18)', borderRadius: 12, padding: '12px 16px', fontSize: '1rem', fontWeight: 700, color: '#1e3a34', fontFamily: "'Tajawal','Cairo',sans-serif", cursor: 'pointer', outline: 'none' }}
+            {/* Mobile: قائمة منسدلة مخصصة */}
+            <div className="sarh-tabs-mobile" style={{ display: 'none', flex: 1, position: 'relative' }}>
+              {/* الزر الحالي */}
+              <button
+                onClick={() => setMobileDropOpen(o => !o)}
+                style={{ width: '100%', background: '#fff', border: '2px solid rgba(30,58,52,0.18)', borderRadius: 12, padding: '10px 16px', fontSize: '1rem', fontWeight: 700, color: '#1e3a34', fontFamily: "'Tajawal','Cairo',sans-serif", cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'space-between', direction: 'rtl' }}
               >
-                {TABS.map(tab => (
-                  <option key={tab.key} value={tab.key}>{tab.label}</option>
-                ))}
-              </select>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <img src={TABS.find(t => t.key === activeTab)?.icon} alt="" width={20} height={20} />
+                  {TABS.find(t => t.key === activeTab)?.label}
+                </span>
+                <span style={{ fontSize: '0.75rem', opacity: 0.5 }}>{mobileDropOpen ? '▲' : '▼'}</span>
+              </button>
+
+              {/* القائمة */}
+              {mobileDropOpen && (
+                <div style={{ position: 'absolute', top: '110%', right: 0, left: 0, background: '#fff', border: '2px solid rgba(30,58,52,0.18)', borderRadius: 12, zIndex: 999, overflow: 'hidden', boxShadow: '0 8px 24px rgba(30,58,52,0.12)' }}>
+                  {TABS.map(tab => (
+                    <button
+                      key={tab.key}
+                      onClick={() => { setActiveTab(tab.key); setMobileDropOpen(false) }}
+                      style={{ width: '100%', background: tab.key === activeTab ? '#f0f4f2' : '#fff', border: 'none', padding: '12px 16px', fontSize: '0.95rem', fontWeight: 700, color: '#1e3a34', fontFamily: "'Tajawal','Cairo',sans-serif", cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, direction: 'rtl', borderBottom: '1px solid rgba(30,58,52,0.07)' }}
+                    >
+                      <img src={tab.icon} alt="" width={22} height={22} />
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Grid / Map toggle */}
