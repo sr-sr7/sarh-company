@@ -47,7 +47,8 @@ export default function PropertyCard({ property: p }: { property: Property }) {
         textDecoration: 'none',
         transition: 'box-shadow 0.2s, transform 0.2s',
         direction: 'rtl',
-        height: '100%',
+        flex: 1,
+        minHeight: 0,
       }}
       onMouseEnter={e => {
         (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 32px rgba(30,58,52,0.13)'
@@ -98,7 +99,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
       </div>
 
       {/* التفاصيل */}
-      <div style={{ flex: 1, padding: '20px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minWidth: 0 }}>
+      <div style={{ flex: 1, padding: '20px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minWidth: 0, overflow: 'hidden' }}>
 
         {/* الرأس */}
         <div>

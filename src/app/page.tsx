@@ -317,13 +317,15 @@ export default function Home() {
               overflowY: 'scroll',
               scrollSnapType: 'y mandatory',
               WebkitOverflowScrolling: 'touch',
-              paddingBottom: 24,
+              overscrollBehavior: 'contain',
             }}>
               {properties.map(p => (
                 <div key={p.id} style={{
                   height: '88vh',
                   scrollSnapAlign: 'start',
                   padding: '0 0 16px',
+                  boxSizing: 'border-box',
+                  display: 'flex',
                 }}>
                   <PropertyCard property={p} />
                 </div>
