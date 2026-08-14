@@ -249,7 +249,7 @@ export default function Home() {
                 style={{ width: '100%', background: '#fff', border: '2px solid rgba(30,58,52,0.18)', borderRadius: 12, padding: '12px 16px', fontSize: '1rem', fontWeight: 700, color: '#1e3a34', fontFamily: "'Tajawal','Cairo',sans-serif", cursor: 'pointer', outline: 'none' }}
               >
                 {TABS.map(tab => (
-                  <option key={tab.key} value={tab.key}>{tab.icon} {tab.label}</option>
+                  <option key={tab.key} value={tab.key}>{tab.label}</option>
                 ))}
               </select>
             </div>
