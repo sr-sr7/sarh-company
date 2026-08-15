@@ -321,7 +321,7 @@ export default function Home() {
             }}>
               {properties.map(p => (
                 <div key={p.id} style={{
-                  height: '88vh',
+                  height: 236,
                   scrollSnapAlign: 'start',
                   padding: '0 0 16px',
                   boxSizing: 'border-box',

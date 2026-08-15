@@ -47,8 +47,8 @@ export default function PropertyCard({ property: p }: { property: Property }) {
         textDecoration: 'none',
         transition: 'box-shadow 0.2s, transform 0.2s',
         direction: 'rtl',
-        flex: 1,
-        minHeight: 0,
+        height: 220,
+        width: '100%',
       }}
       onMouseEnter={e => {
         (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 32px rgba(30,58,52,0.13)'
