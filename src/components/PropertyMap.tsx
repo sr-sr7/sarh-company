@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { Property } from '@/lib/supabase'
+import 'leaflet/dist/leaflet.css'
 
 const CITY_COORDS: Record<string, [number, number]> = {
   'الرياض':         [24.7136, 46.6753],
@@ -200,7 +201,6 @@ export default function PropertyMap({ properties, onPinClick }: {
 
   return (
     <div style={{ width:'100%', height:'100%' }}>
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
       <div ref={divRef} style={{ width:'100%', height:'100%' }} />
     </div>
   )
