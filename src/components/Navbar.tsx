@@ -30,11 +30,11 @@ export default function Navbar() {
   }
 
   const links = [
-    { href: '#about',      label: 'عن صرح' },
-    { href: '#properties', label: 'العقارات' },
-    { href: '#services',   label: 'خدماتنا' },
-    { href: '/map',        label: '🗺️ الخريطة' },
-    { href: '/favorites',  label: '❤️ المفضلة' },
+    { href: '#about',      label: 'عن صرح',    icon: null },
+    { href: '#properties', label: 'العقارات',   icon: null },
+    { href: '#services',   label: 'خدماتنا',   icon: null },
+    { href: '/map',        label: 'الخريطة',   icon: '/icons/icon_r1_c16.png' },
+    { href: '/favorites',  label: 'المفضلة',   icon: null },
   ]
 
   const navBg = scrolled ? 'rgba(207,224,218,0.99)' : 'rgba(211,226,220,0.95)'
@@ -107,9 +107,10 @@ export default function Navbar() {
         {/* Desktop links */}
         <ul style={{ display: 'flex', gap: 20, listStyle: 'none', margin: 0, padding: 0, flexShrink: 0 }}
           className="sarh-desktop-nav">
-          {links.map(({ href, label }) => (
+          {links.map(({ href, label, icon }) => (
             <li key={label}>
-              <a href={href} style={{ color: '#2d5750', textDecoration: 'none', fontSize: '0.88rem', fontWeight: 600 }}>
+              <a href={href} style={{ color: '#2d5750', textDecoration: 'none', fontSize: '0.88rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
+                {icon && <img src={icon} alt="" width={16} height={16} style={{ verticalAlign: 'middle' }} />}
                 {label}
               </a>
             </li>
