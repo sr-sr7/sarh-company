@@ -64,11 +64,11 @@ export default function MapPage() {
   const withCoords    = filtered.filter(p => p.lat && p.lng).length
 
   return (
-    <div style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', height:'100dvh', display:'flex', flexDirection:'column', background:'#f4ede4', overflow:'hidden' }}>
+    <div style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', height:'100vh', display:'flex', flexDirection:'column', background:'#f4ede4', overflow:'hidden', position:'fixed', inset:0 }}>
       <Navbar />
 
       {/* شريط الفلاتر */}
-      <div style={{ paddingTop:'calc(80px)', background:'#f4ede4', borderBottom:'1px solid rgba(30,58,52,0.1)', padding:'80px 16px 12px', display:'flex', gap:10, alignItems:'center', flexWrap:'wrap', flexShrink:0 }}>
+      <div style={{ background:'#f4ede4', borderBottom:'1px solid rgba(30,58,52,0.1)', padding:'88px 16px 12px', display:'flex', gap:10, alignItems:'center', flexWrap:'wrap', flexShrink:0 }}>
 
         <div style={{ display:'flex', alignItems:'center', gap:6, background:'#fff', borderRadius:10, padding:'0 12px', border:'1px solid rgba(30,58,52,0.12)', height:38, flex:'1 1 160px', maxWidth:260 }}>
           <svg width="16" height="16" fill="none" stroke="#7a9188" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
@@ -113,18 +113,20 @@ export default function MapPage() {
       <div style={{ flex:1, display:'flex', overflow:'hidden', minHeight:0 }}>
 
         {/* الخريطة */}
-        <div style={{ flex:1, position:'relative', minWidth:0 }}>
-          {!loading && (
-            <PropertyMap properties={filtered} onPinClick={handlePin} />
-          )}
-          {loading && (
-            <div style={{ height:'100%', display:'flex', alignItems:'center', justifyContent:'center', background:'#e8ede8' }}>
-              <div style={{ textAlign:'center' }}>
-                <div style={{ width:48, height:48, border:'4px solid #f4ede4', borderTop:'4px solid #1e3a34', borderRadius:'50%', margin:'0 auto 16px', animation:'spin 1s linear infinite' }} />
-                <span style={{ color:'#41646d', fontFamily:'Tajawal' }}>جاري تحميل العقارات...</span>
+        <div style={{ flex:1, position:'relative', minWidth:0, minHeight:500 }}>
+          <div style={{ position:'absolute', inset:0 }}>
+            {!loading && (
+              <PropertyMap properties={filtered} onPinClick={handlePin} />
+            )}
+            {loading && (
+              <div style={{ height:'100%', display:'flex', alignItems:'center', justifyContent:'center', background:'#e8ede8' }}>
+                <div style={{ textAlign:'center' }}>
+                  <div style={{ width:48, height:48, border:'4px solid #f4ede4', borderTop:'4px solid #1e3a34', borderRadius:'50%', margin:'0 auto 16px', animation:'spin 1s linear infinite' }} />
+                  <span style={{ color:'#41646d', fontFamily:'Tajawal' }}>جاري تحميل العقارات...</span>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* القائمة الجانبية */}
