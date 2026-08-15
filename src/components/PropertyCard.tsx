@@ -164,9 +164,6 @@ export default function PropertyCard({ property: p }: { property: Property }) {
               style={{ background: '#25D366', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '8px 16px', borderRadius: 10, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
               <BIcon name="icon_r3_c6" size={18} /> واتساب
             </a>
-            <span style={{ background: '#1e3a34', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '8px 16px', borderRadius: 10, cursor: 'pointer' }}>
-              التفاصيل
-            </span>
           </div>
         </div>
       </div>
