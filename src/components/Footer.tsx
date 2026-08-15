@@ -80,20 +80,6 @@ export default function Footer() {
         </div>
       </div>
 
-      <div style={{ borderTop: '1px solid rgba(30,58,52,0.12)', maxWidth: 1100, margin: '0 auto', padding: '28px 0 10px', display: 'flex', flexDirection: 'column' as const, alignItems: 'center', gap: 10 }}>
-        <a
-          href="https://wa.me/966591088884"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ display: 'flex', flexDirection: 'column' as const, alignItems: 'center', gap: 8, textDecoration: 'none' }}
-        >
-          <img src="/asimjed-logo.png" alt="AsiMjed" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} style={{ width: 100, height: 100, objectFit: 'contain' }} />
-          <span style={{ color: 'rgba(30,58,52,0.7)', fontSize: '0.78rem', fontWeight: 500, fontFamily: "'Tajawal','Cairo',sans-serif", textAlign: 'center' as const }}>
-            تم تطوير وتنفيذ هذا الموقع من قبل مجموعة AsiMjed لتطوير المواقع — للتواصل 0591088884
-          </span>
-        </a>
-      </div>
-
       <div style={S.bottom}>
         <span>© 2026 صرح العقارية — جميع الحقوق محفوظة</span>
       </div>
