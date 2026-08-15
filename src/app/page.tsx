@@ -7,7 +7,7 @@ import PropertyCard from '@/components/PropertyCard'
 import dynamic from 'next/dynamic'
 
 const PropertyMap = dynamic(() => import('@/components/PropertyMap'), { ssr: false, loading: () => (
-  <div style={{ height: 500, background: '#f0f4f2', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#41646d', fontSize: '1rem' }}>🗺️ جاري تحميل الخريطة...</div>
+  <div style={{ height: 500, background: '#f0f4f2', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#41646d', fontSize: '1rem' }}><img src="/icons/icon_r1_c16.png" width={24} height={24} style={{verticalAlign:'middle',marginLeft:8,opacity:0.5}} /> جاري تحميل الخريطة...</div>
 )})
 
 type TabKey = 'الكل' | 'فيلا' | 'أرض' | 'استراحة' | 'مزرعة' | 'إيجار' | 'شقة' | 'دبلكس' | 'تجاري'
@@ -279,7 +279,7 @@ export default function Home() {
                 ⊞ شبكة
               </button>
               <button onClick={() => setViewMode('map')} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', borderRadius: 9, border: 'none', fontFamily: "'Tajawal','Cairo',sans-serif", fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s', background: viewMode === 'map' ? '#f0f4f2' : 'transparent', color: '#1e3a34' }}>
-                🗺️ خريطة
+                <img src="/icons/icon_r1_c16.png" alt="" width={18} height={18} style={{verticalAlign:'middle'}} /> خريطة
               </button>
             </div>
           </div>
@@ -296,7 +296,7 @@ export default function Home() {
             loading
               ? <div style={{ height: 500, background: '#f0f4f2', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#41646d' }}>جاري التحميل...</div>
               : properties.length === 0
-                ? <div style={S.empty}><span style={S.emptyIcon}>🗺️</span><p style={S.emptyText}>لا توجد عقارات في هذه الفئة حالياً</p></div>
+                ? <div style={S.empty}><img src="/icons/icon_r1_c16.png" style={{width:48,height:48,opacity:0.4,marginBottom:12}} /><p style={S.emptyText}>لا توجد عقارات في هذه الفئة حالياً</p></div>
                 : <PropertyMap properties={properties} />
           )}
 
