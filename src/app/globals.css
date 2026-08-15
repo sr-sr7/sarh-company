@@ -48,12 +48,10 @@ img {
   outline-offset: 2px;
 }
 
-/* ── Snap scroll: desktop فقط، جوال grid ── */
-.snap-desktop { display: block; }
-.snap-mobile  { display: none; }
+/* ── Snap scroll items ── */
+.snap-item { height: 236px; }
 @media (max-width: 600px) {
-  .snap-desktop { display: none !important; }
-  .snap-mobile  { display: flex !important; }
+  .snap-item { height: auto !important; }
 }
 
 /* ── بطاقة العقار — جوال ── */
