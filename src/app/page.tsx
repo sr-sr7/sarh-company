@@ -312,7 +312,7 @@ export default function Home() {
             </div>
           )}
           {viewMode === 'grid' && !loading && properties.length > 0 && (
-            <div style={{
+            <div className="snap-scroll-cards" style={{
               height: '100vh',
               overflowY: 'scroll',
               scrollSnapType: 'y mandatory',
