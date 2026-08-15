@@ -2,7 +2,6 @@
 import { useEffect, useRef } from 'react'
 import { Property } from '@/lib/supabase'
 
-// City center coordinates — Saudi Arabia
 const CITY_COORDS: Record<string, [number, number]> = {
   'الرياض':         [24.7136, 46.6753],
   'جدة':            [21.4858, 39.1925],
@@ -32,28 +31,28 @@ const CITY_COORDS: Record<string, [number, number]> = {
   'الخرج':          [24.1559, 47.3006],
   'الدوادمي':       [24.5097, 44.3880],
 }
-const DEFAULT_CENTER: [number, number] = [24.7136, 46.6753]
+const DEFAULT_CENTER: [number, number] = [26.3292, 43.9758]
 
 function getCoords(p: Property, index: number): [number, number] {
+  if (p.lat && p.lng) return [p.lat, p.lng]
   const base = CITY_COORDS[p.city] || DEFAULT_CENTER
-  // Slight random offset so overlapping pins spread out
   const seed = (index * 7919) % 100
   return [base[0] + (seed - 50) * 0.0008, base[1] + ((seed * 13) % 100 - 50) * 0.0008]
 }
 
-export default function PropertyMap({ properties }: { properties: Property[] }) {
-  const mapRef   = useRef<any>(null)
-  const divRef   = useRef<HTMLDivElement>(null)
-  const leafRef  = useRef<any>(null)
+export default function PropertyMap({ properties, onPinClick }: {
+  properties: Property[]
+  onPinClick?: (p: Property) => void
+}) {
+  const mapRef  = useRef<any>(null)
+  const divRef  = useRef<HTMLDivElement>(null)
+  const leafRef = useRef<any>(null)
 
   useEffect(() => {
     if (!divRef.current || mapRef.current) return
 
-    // Dynamically load Leaflet (avoids SSR issues)
     import('leaflet').then(L => {
       leafRef.current = L
-
-      // Fix default icon URLs broken by webpack
       delete (L.Icon.Default.prototype as any)._getIconUrl
       L.Icon.Default.mergeOptions({
         iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
@@ -63,9 +62,9 @@ export default function PropertyMap({ properties }: { properties: Property[] }) 
 
       const map = L.map(divRef.current!, {
         center: DEFAULT_CENTER,
-        zoom: 11,
+        zoom: 12,
         zoomControl: true,
-        scrollWheelZoom: false,
+        scrollWheelZoom: true,
       })
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -82,77 +81,81 @@ export default function PropertyMap({ properties }: { properties: Property[] }) 
     }
   }, [])
 
-  // Update markers when properties change
   useEffect(() => {
     if (!mapRef.current || !leafRef.current) return
-    // Clear old markers
-    mapRef.current.eachLayer((l: any) => { if (l._popup) mapRef.current.removeLayer(l) })
+    mapRef.current.eachLayer((l: any) => { if (l._popup || l.options?.icon) mapRef.current.removeLayer(l) })
     addMarkers(leafRef.current, mapRef.current, properties)
   }, [properties])
 
   function addMarkers(L: any, map: any, props: Property[]) {
     if (!props.length) return
-
     const bounds: [number, number][] = []
 
     props.forEach((p, i) => {
       const coords = getCoords(p, i)
       bounds.push(coords)
+      const hasRealCoords = !!(p.lat && p.lng)
 
-      // Custom colored pin
       const icon = L.divIcon({
         className: '',
         html: `<div style="
-          width:36px;height:36px;
-          background:#27423e;
+          width:32px;height:32px;
+          background:${hasRealCoords ? '#1e3a34' : '#b8986a'};
           border-radius:50% 50% 50% 0;
           transform:rotate(-45deg);
-          border:3px solid #fff;
-          box-shadow:0 3px 10px rgba(0,0,0,0.35);
+          border:2px solid #fff;
+          box-shadow:0 2px 8px rgba(0,0,0,0.3);
           cursor:pointer;
         "></div>`,
-        iconSize:   [36, 36],
-        iconAnchor: [18, 36],
-        popupAnchor:[0, -38],
+        iconSize:   [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor:[0, -34],
       })
 
       const waLink = `https://wa.me/${p.whatsapp}?text=${encodeURIComponent('مرحباً، أريد الاستفسار عن: ' + p.title)}`
       const imgHtml = p.main_image
-        ? `<img src="${p.main_image}" style="width:100%;height:110px;object-fit:cover;border-radius:8px;margin-bottom:8px;display:block"/>`
-        : `<div style="width:100%;height:80px;background:#f4ede4;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:8px">🏠</div>`
+        ? `<img src="${p.main_image}" style="width:100%;height:100px;object-fit:cover;border-radius:8px;margin-bottom:8px;display:block"/>`
+        : `<div style="width:100%;height:70px;background:#f4ede4;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:8px">🏠</div>`
 
-      const popup = L.popup({ maxWidth: 220, className: 'sarh-popup' }).setContent(`
-        <div style="font-family:'Tajawal',sans-serif;direction:rtl;width:200px">
+      const popup = L.popup({ maxWidth: 210, className: 'sarh-popup' }).setContent(`
+        <div style="font-family:'Tajawal',sans-serif;direction:rtl;width:190px">
           ${imgHtml}
-          <div style="font-weight:700;font-size:13px;color:#1e3a34;margin-bottom:4px;line-height:1.4">${p.title}</div>
-          <div style="font-size:11px;color:#41646d;margin-bottom:6px">📍 ${p.district ? p.district + '، ' : ''}${p.city}</div>
-          <div style="font-weight:800;font-size:15px;color:#27423e;margin-bottom:10px">
+          <div style="font-size:0.7rem;font-weight:800;color:#b8986a;margin-bottom:3px">${p.operation} · ${p.type}</div>
+          <div style="font-weight:700;font-size:12px;color:#1e3a34;margin-bottom:4px;line-height:1.4">${p.title}</div>
+          <div style="font-size:11px;color:#7a9188;margin-bottom:6px">📍 ${p.district ? p.district + '، ' : ''}${p.city}</div>
+          <div style="font-weight:800;font-size:14px;color:#1e3a34;margin-bottom:10px">
             ${Number(p.price).toLocaleString('ar-SA')} <span style="font-size:10px;font-weight:400;color:#9aada7">${p.price_unit}</span>
           </div>
-          <a href="${waLink}" target="_blank"
-            style="display:block;background:#25D366;color:#fff;text-align:center;padding:8px;border-radius:8px;font-weight:700;font-size:12px;text-decoration:none">
-            💬 تواصل واتساب
-          </a>
+          <div style="display:flex;gap:6px">
+            <a href="/properties/${p.id}"
+              style="flex:1;display:block;background:#1e3a34;color:#f4ede4;text-align:center;padding:7px;border-radius:8px;font-weight:700;font-size:11px;text-decoration:none">
+              التفاصيل
+            </a>
+            <a href="${waLink}" target="_blank"
+              style="flex:1;display:block;background:#25D366;color:#fff;text-align:center;padding:7px;border-radius:8px;font-weight:700;font-size:11px;text-decoration:none">
+              واتساب
+            </a>
+          </div>
         </div>
       `)
 
-      L.marker(coords, { icon }).addTo(map).bindPopup(popup)
+      const marker = L.marker(coords, { icon }).addTo(map).bindPopup(popup)
+      if (onPinClick) {
+        marker.on('click', () => onPinClick(p))
+      }
     })
 
-    // Fit map to all markers
     if (bounds.length === 1) {
-      map.setView(bounds[0], 14)
+      map.setView(bounds[0], 15)
     } else if (bounds.length > 1) {
-      map.fitBounds(bounds, { padding: [40, 40] })
+      map.fitBounds(bounds, { padding: [48, 48] })
     }
   }
 
   return (
-    <div style={{ position: 'relative', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 20px rgba(39,66,62,0.15)', border: '1px solid rgba(39,66,62,0.12)' }}>
-      {/* Leaflet CSS */}
+    <div style={{ position:'relative', borderRadius:16, overflow:'hidden', boxShadow:'0 4px 20px rgba(39,66,62,0.15)', border:'1px solid rgba(39,66,62,0.12)' }}>
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-      <div ref={divRef} style={{ height: 500, width: '100%' }} />
-      {/* Legend */}
+      <div ref={divRef} style={{ height:'100%', width:'100%', minHeight:400 }} />
     </div>
   )
 }

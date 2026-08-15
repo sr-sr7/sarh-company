@@ -58,6 +58,8 @@ export type Property = {
   deed_type: string | null
   bank_finance: boolean
   price_per_meter: number | null
+  lat: number | null
+  lng: number | null
 }
 
 export type Inquiry = {
