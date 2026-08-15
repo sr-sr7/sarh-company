@@ -19,12 +19,8 @@ export default function Footer() {
     <footer style={S.footer}>
       <div style={S.grid}>
         <div>
-          <div style={S.brand}>
-            <img src={LOGO_GIF} alt="صرح" width={60} height={60} style={{ borderRadius: 8, filter: 'brightness(0.15) saturate(1.5)' }} />
-            <div>
-              <div>صرح <span style={S.brandAccent}>العقارية</span></div>
-              <div style={{ fontSize: 9, letterSpacing: 2, color: 'rgba(211,226,220,0.35)', marginTop: 2 }}>SARH REAL ESTATE</div>
-            </div>
+          <div style={{ marginBottom: 14 }}>
+            <img src="/logo.png" alt="صرح العقارية" style={{ height: 60, width: 'auto', maxWidth: 220, objectFit: 'contain' }} />
           </div>
           <p style={S.desc}>شركة عقارية متخصصة في منطقة القصيم، تقدم خدمات عقارية بخبرة متكاملة</p>
         </div>
