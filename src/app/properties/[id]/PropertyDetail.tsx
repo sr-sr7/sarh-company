@@ -13,7 +13,7 @@ function TikTokEmbed({ url }: { url: string }) {
   return (
     <div style={{ background:'#f4ede4', borderRadius:20, padding:'24px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
       <div>
-        <div style={{ fontWeight:800, fontSize:'0.95rem', color:'#1e3a34', marginBottom:4 }}>🎵 فيديو العقار متاح على قناتنا</div>
+        <div style={{ fontWeight:800, fontSize:'0.95rem', color:'#1e3a34', marginBottom:4 }}>فيديو العقار متاح على قناتنا</div>
         <div style={{ fontSize:'0.8rem', color:'#9aada7' }}>اضغط لمشاهدة الفيديو كاملاً</div>
       </div>
       <a href={url} target="_blank" rel="noopener noreferrer" style={{
@@ -23,15 +23,21 @@ function TikTokEmbed({ url }: { url: string }) {
         textDecoration:'none', fontFamily:"'Tajawal','Cairo',sans-serif",
         flexShrink:0,
       }}>
-        <span>🎵</span> شاهد الفيديو
+        شاهد الفيديو
       </a>
     </div>
   )
 }
 
 const TYPE_ICONS: Record<string, string> = {
-  'فيلا':'🏡','أرض':'🏗️','شقة':'🏢','استراحة':'🏖️',
-  'دبلكس':'🏘️','محل تجاري':'🏪','مستودع':'🏭','مزرعة':'🌾','قصر':'🏰'
+  'فيلا':'icon_r3_c1','أرض':'icon_r2_c3','شقة':'icon_r2_c7',
+  'استراحة':'icon_r6_c9','شاليه':'icon_r6_c9','دبلكس':'icon_r2_c7',
+  'محل تجاري':'icon_r6_c2','تجاري':'icon_r6_c2',
+  'مستودع':'icon_r6_c15','مزرعة':'icon_r4_c4','قصر':'icon_r3_c1',
+}
+
+function BIcon({ name, size=20 }: { name:string; size?:number }) {
+  return <img src={`/icons/${name}.png`} alt="" width={size} height={size} style={{ display:'inline-block', verticalAlign:'middle', flexShrink:0 }} />
 }
 
 const CITY_COORDS: Record<string, [number, number]> = {
@@ -131,7 +137,7 @@ export default function PropertyDetail({ id }: { id: string }) {
   if (loading) return (
     <div style={{ minHeight:'100vh', background:'#f4ede4', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
       <div style={{ textAlign:'center' }}>
-        <div style={{ fontSize:'2rem', marginBottom:12 }}>⏳</div>
+        <div style={{ width:40, height:40, border:'4px solid #f4ede4', borderTop:'4px solid #1e3a34', borderRadius:'50%', margin:'0 auto 16px', animation:'spin 1s linear infinite' }} />
         <p style={{ color:'#41646d' }}>جاري تحميل بيانات العقار...</p>
       </div>
     </div>
@@ -140,8 +146,8 @@ export default function PropertyDetail({ id }: { id: string }) {
   if (!property) return (
     <div style={{ minHeight:'100vh', background:'#f4ede4', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
       <div style={{ textAlign:'center' }}>
-        <div style={{ fontSize:'3rem', marginBottom:12 }}>🔍</div>
-        <p style={{ color:'#526266', fontSize:'1.1rem', marginBottom:20 }}>العقار غير موجود</p>
+        <BIcon name="icon_r1_c16" size={48} />
+        <p style={{ color:'#526266', fontSize:'1.1rem', marginBottom:20, marginTop:12 }}>العقار غير موجود</p>
         <button onClick={() => router.push('/properties')}
           style={{ background:'#27423e', color:'#fff', border:'none', borderRadius:10, padding:'12px 28px', fontSize:'0.9rem', fontWeight:700, cursor:'pointer', fontFamily:'Tajawal' }}>
           ← العودة للعقارات
@@ -163,12 +169,12 @@ export default function PropertyDetail({ id }: { id: string }) {
   const shareText = encodeURIComponent(`${p.title}\n📍 ${p.city}\n💰 ${price} ${p.price_unit}\n`)
 
   const specs = [
-    p.area        && { icon:'📐', label:'المساحة',    val:`${p.area} م²` },
-    p.bedrooms>0  && { icon:'🛏️', label:'الغرف',      val:`${p.bedrooms} غرف` },
-    p.bathrooms>0 && { icon:'🚿', label:'الحمامات',   val:`${p.bathrooms} حمام` },
-    p.has_pool    && { icon:'🏊', label:'مسبح',       val:'يوجد' },
-    p.has_parking && { icon:'🚗', label:'مواقف',      val:'يوجد' },
-    p.has_garden  && { icon:'🌿', label:'حديقة',      val:'يوجد' },
+    p.area        && { icon:'icon_r1_c5',  label:'المساحة',  val:`${p.area} م²` },
+    p.bedrooms>0  && { icon:'icon_r1_c3',  label:'الغرف',    val:`${p.bedrooms} غرف` },
+    p.bathrooms>0 && { icon:'icon_r1_c2',  label:'الحمامات', val:`${p.bathrooms} حمام` },
+    p.has_pool    && { icon:'icon_r6_c8',  label:'مسبح',     val:'يوجد' },
+    p.has_parking && { icon:'icon_r1_c7',  label:'مواقف',    val:'يوجد' },
+    p.has_garden  && { icon:'icon_r4_c4',  label:'حديقة',    val:'يوجد' },
   ].filter(Boolean) as {icon:string;label:string;val:string}[]
 
   const avgRating = reviews.length
@@ -222,16 +228,16 @@ export default function PropertyDetail({ id }: { id: string }) {
         )}
         {allImgs.length>0 && (
           <div onClick={()=>setLightbox(allImgs[activeImg])} style={{ position:'absolute', top:16, left:16, background:'rgba(0,0,0,0.45)', color:'#fff', borderRadius:8, padding:'6px 12px', fontSize:'0.8rem', cursor:'zoom-in', backdropFilter:'blur(4px)', display:'flex', alignItems:'center', gap:6, zIndex:5 }}>
-            🔍 اضغط لعرض الصورة كاملة
+            اضغط لعرض الصورة كاملة
           </div>
         )}
         <div style={{ position:'absolute', top:20, right:24, display:'flex', gap:8, pointerEvents:'none' }}>
           <span style={{ background:'#f4ede4', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>{p.operation}</span>
-          {p.is_new      && <span style={{ background:'#fff', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>🆕 جديد</span>}
+          {p.is_new      && <span style={{ background:'#fff', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>جديد</span>}
         </div>
         {allImgs.length>1 && (
           <div style={{ position:'absolute', bottom:20, left:24, background:'rgba(0,0,0,0.5)', color:'#fff', fontSize:'0.8rem', padding:'5px 14px', borderRadius:50, backdropFilter:'blur(4px)' }}>
-            🖼️ {allImgs.length} صورة
+            {allImgs.length} صورة
           </div>
         )}
       </div>
@@ -257,7 +263,7 @@ export default function PropertyDetail({ id }: { id: string }) {
           {/* Title */}
           <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12, flexWrap:'wrap' }}>
-              <span style={{ fontSize:'1.6rem' }}>{TYPE_ICONS[p.type]||'🏠'}</span>
+              <BIcon name={TYPE_ICONS[p.type]||'icon_r3_c1'} size={28} />
               <span style={{ background:'rgba(39,66,62,0.08)', color:'#41646d', fontSize:'0.78rem', fontWeight:700, padding:'4px 14px', borderRadius:50 }}>{p.type}</span>
               {p.listing_number && (
                 <span style={{ background:'#27423e', color:'#b8986a', fontSize:'0.78rem', fontWeight:800, padding:'4px 14px', borderRadius:50, fontFamily:'monospace', letterSpacing:1 }}>
@@ -273,14 +279,14 @@ export default function PropertyDetail({ id }: { id: string }) {
             </div>
             <h1 style={{ fontSize:'clamp(1.4rem,2.5vw,2rem)', fontWeight:800, color:'#1e3a34', lineHeight:1.4, marginBottom:12 }}>{p.title}</h1>
             <p style={{ color:'#7a9188', fontSize:'0.9rem', display:'flex', alignItems:'center', gap:6 }}>
-              📍 {p.city}{p.district?` — ${p.district}`:''}
+              {p.city}{p.district?` — ${p.district}`:''}
             </p>
           </div>
 
           {/* Description */}
           {p.description && (
             <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
-              <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>📄 وصف العقار</h2>
+              <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>وصف العقار</h2>
               <p style={{ color:'#526266', lineHeight:2, fontSize:'0.95rem', whiteSpace:'pre-wrap' }}>{p.description}</p>
             </div>
           )}
@@ -288,11 +294,11 @@ export default function PropertyDetail({ id }: { id: string }) {
           {/* Specs */}
           {specs.length>0 && (
             <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
-              <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:20, display:'flex', alignItems:'center', gap:8 }}>🏗️ المواصفات والمميزات</h2>
+              <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:20, display:'flex', alignItems:'center', gap:8 }}>المواصفات والمميزات</h2>
               <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(150px,1fr))', gap:12 }}>
                 {specs.map(s => (
                   <div key={s.label} style={{ background:'#f4ede4', borderRadius:12, padding:'14px 16px', textAlign:'center' }}>
-                    <div style={{ fontSize:'1.5rem', marginBottom:6 }}>{s.icon}</div>
+                    <div style={{ marginBottom:6, display:'flex', justifyContent:'center' }}><BIcon name={s.icon} size={28} /></div>
                     <div style={{ fontSize:'0.72rem', color:'#9aada7', fontWeight:600, marginBottom:4 }}>{s.label}</div>
                     <div style={{ fontSize:'0.95rem', fontWeight:800, color:'#27423e' }}>{s.val}</div>
                   </div>
@@ -307,17 +313,17 @@ export default function PropertyDetail({ id }: { id: string }) {
           {/* Map */}
           <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:16, flexWrap:'wrap', gap:10 }}>
-              <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', display:'flex', alignItems:'center', gap:8, margin:0 }}>📍 موقع العقار</h2>
+              <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', display:'flex', alignItems:'center', gap:8, margin:0 }}><BIcon name="icon_r1_c16" size={18} /> موقع العقار</h2>
               <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
                 style={{ background:'#4285f4', color:'#fff', fontSize:'0.82rem', fontWeight:700, padding:'8px 18px', borderRadius:8, textDecoration:'none' }}>
-                🗺️ فتح في قوقل ماب
+                فتح في قوقل ماب
               </a>
             </div>
             <div style={{ borderRadius:16, overflow:'hidden', border:'1px solid rgba(39,66,62,0.1)' }}>
               <iframe src={mapEmbed} width="100%" height="360" style={{ border:'none', display:'block' }} loading="lazy" title="موقع العقار" />
             </div>
             <p style={{ marginTop:12, fontSize:'0.78rem', color:'#9aada7', textAlign:'center' }}>
-              📍 {p.city}{p.district?` — ${p.district}`:''} — المملكة العربية السعودية
+              {p.city}{p.district?` — ${p.district}`:''} — المملكة العربية السعودية
             </p>
           </div>
 
@@ -325,7 +331,7 @@ export default function PropertyDetail({ id }: { id: string }) {
           <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', border:'1px solid rgba(39,66,62,0.12)' }}>
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:20, flexWrap:'wrap', gap:8 }}>
               <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', display:'flex', alignItems:'center', gap:8, margin:0 }}>
-                ⭐ تعليقات العملاء
+                تعليقات العملاء
               </h2>
               {reviews.length>0 && (
                 <div style={{ display:'flex', alignItems:'center', gap:8 }}>
@@ -360,7 +366,7 @@ export default function PropertyDetail({ id }: { id: string }) {
               </div>
             ) : (
               <div style={{ textAlign:'center', padding:'20px 0 24px', color:'#9aada7' }}>
-                <div style={{ fontSize:'2.5rem', marginBottom:8, opacity:0.4 }}>💬</div>
+                
                 <p style={{ fontSize:'0.88rem', margin:0 }}>لا توجد تعليقات بعد — كن أول من يقيّم!</p>
               </div>
             )}
@@ -368,11 +374,11 @@ export default function PropertyDetail({ id }: { id: string }) {
             {/* Review form */}
             <div style={{ borderTop:'1px solid rgba(39,66,62,0.08)', paddingTop:20 }}>
               <h3 style={{ fontSize:'0.88rem', fontWeight:800, color:'#1e3a34', margin:'0 0 16px', display:'flex', alignItems:'center', gap:8 }}>
-                ✍️ أضف تقييمك
+                أضف تقييمك
               </h3>
               {sent ? (
                 <div style={{ background:'#f0fdf4', border:'1px solid #bbf7d0', borderRadius:12, padding:'16px', textAlign:'center' }}>
-                  <div style={{ fontSize:'1.8rem', marginBottom:8 }}>🎉</div>
+                  
                   <p style={{ color:'#166534', fontWeight:700, fontSize:'0.9rem', margin:'0 0 4px' }}>شكراً على تقييمك!</p>
                   <p style={{ color:'#4ade80', fontSize:'0.8rem', margin:0 }}>سيظهر تعليقك بعد مراجعة الإدارة</p>
                 </div>
@@ -394,7 +400,7 @@ export default function PropertyDetail({ id }: { id: string }) {
                   </div>
                   <button type="submit" disabled={sending}
                     style={{ background:sending?'#9aada7':'linear-gradient(135deg,#27423e,#1e3a34)', color:'#fff', border:'none', borderRadius:10, padding:'11px', fontWeight:800, cursor:sending?'not-allowed':'pointer', fontFamily:"'Tajawal','Cairo',sans-serif", fontSize:'0.88rem' }}>
-                    {sending ? '⏳ جاري الإرسال...' : '📤 إرسال التقييم'}
+                    {sending ? 'جاري الإرسال...' : 'إرسال التقييم'}
                   </button>
                   <p style={{ fontSize:'0.68rem', color:'#9aada7', textAlign:'center', margin:0 }}>
                     * التعليقات تظهر بعد موافقة الإدارة
@@ -419,7 +425,7 @@ export default function PropertyDetail({ id }: { id: string }) {
             )}
             {isSold ? (
               <div style={{ textAlign:'center', padding:'12px 0' }}>
-                <div style={{ background:'#dc2626', color:'#fff', fontWeight:900, fontSize:'1.2rem', padding:'10px 28px', borderRadius:12, display:'inline-block', marginBottom:12 }}>✅ تم البيع</div>
+                <div style={{ background:'#dc2626', color:'#fff', fontWeight:900, fontSize:'1.2rem', padding:'10px 28px', borderRadius:12, display:'inline-block', marginBottom:12 }}>تم البيع</div>
                 <p style={{ color:'#4a7a72', fontSize:'0.82rem' }}>هذا العقار غير متاح حالياً</p>
               </div>
             ) : (
@@ -438,15 +444,17 @@ export default function PropertyDetail({ id }: { id: string }) {
                 <div style={{ height:1, background:'rgba(30,58,52,0.12)', margin:'20px 0' }} />
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
                   {[
-                    { icon:'🏠', label:'النوع',   val:p.type },
-                    { icon:'🔄', label:'العملية', val:p.operation },
-                    { icon:'📍', label:'المدينة', val:p.city },
-                    p.district && { icon:'🏘️', label:'الحي', val:p.district },
-                    p.area     && { icon:'📐', label:'المساحة', val:`${p.area} م²` },
-                    p.bedrooms>0 && { icon:'🛏️', label:'الغرف', val:`${p.bedrooms}` },
+                    { icon: TYPE_ICONS[p.type]||'icon_r3_c1', label:'النوع',    val:p.type },
+                    { icon:'icon_r1_c16',                      label:'المدينة', val:p.city },
+                    p.district && { icon:'icon_r1_c16',        label:'الحي',    val:p.district },
+                    p.area     && { icon:'icon_r1_c5',         label:'المساحة', val:`${p.area} م²` },
+                    p.bedrooms>0 && { icon:'icon_r1_c3',       label:'الغرف',   val:`${p.bedrooms}` },
+                    p.bathrooms>0 && { icon:'icon_r1_c2',      label:'الحمام',  val:`${p.bathrooms}` },
                   ].filter(Boolean).map((s:any) => (
                     <div key={s.label} style={{ background:'rgba(30,58,52,0.06)', borderRadius:10, padding:'10px 12px' }}>
-                      <div style={{ fontSize:'0.68rem', color:'#4a7a72', marginBottom:3 }}>{s.icon} {s.label}</div>
+                      <div style={{ display:'flex', alignItems:'center', gap:5, fontSize:'0.68rem', color:'#4a7a72', marginBottom:4 }}>
+                        <BIcon name={s.icon} size={14} /> {s.label}
+                      </div>
                       <div style={{ fontSize:'0.88rem', fontWeight:700, color:'#1e3a34' }}>{s.val}</div>
                     </div>
                   ))}
