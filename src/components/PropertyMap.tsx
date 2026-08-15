@@ -44,9 +44,10 @@ export default function PropertyMap({ properties, onPinClick }: {
   properties: Property[]
   onPinClick?: (p: Property) => void
 }) {
-  const mapRef  = useRef<any>(null)
-  const divRef  = useRef<HTMLDivElement>(null)
-  const leafRef = useRef<any>(null)
+  const mapRef      = useRef<any>(null)
+  const divRef      = useRef<HTMLDivElement>(null)
+  const leafRef     = useRef<any>(null)
+  const myMarkerRef = useRef<any>(null)
 
   useEffect(() => {
     if (!divRef.current || mapRef.current) return
@@ -74,6 +75,51 @@ export default function PropertyMap({ properties, onPinClick }: {
 
       mapRef.current = map
       addMarkers(L, map, properties)
+
+      // زر تحديد الموقع
+      const LocateControl = L.Control.extend({
+        onAdd() {
+          const btn = L.DomUtil.create('button', '')
+          btn.title = 'موقعي الحالي'
+          btn.style.cssText = `
+            width:36px;height:36px;background:#fff;border:none;border-radius:8px;
+            cursor:pointer;display:flex;align-items:center;justify-content:center;
+            box-shadow:0 2px 8px rgba(0,0,0,0.2);font-size:18px;
+          `
+          btn.innerHTML = '📍'
+          L.DomEvent.on(btn, 'click', L.DomEvent.stopPropagation)
+          L.DomEvent.on(btn, 'click', () => {
+            btn.innerHTML = '⏳'
+            if (!navigator.geolocation) { btn.innerHTML = '📍'; return }
+            navigator.geolocation.getCurrentPosition(
+              ({ coords }) => {
+                const { latitude: lat, longitude: lng } = coords
+                map.setView([lat, lng], 15)
+
+                if (myMarkerRef.current) myMarkerRef.current.remove()
+                const myIcon = L.divIcon({
+                  className: '',
+                  html: `<div style="
+                    width:18px;height:18px;background:#4285f4;
+                    border-radius:50%;border:3px solid #fff;
+                    box-shadow:0 0 0 4px rgba(66,133,244,0.3);
+                  "></div>`,
+                  iconSize: [18, 18],
+                  iconAnchor: [9, 9],
+                })
+                myMarkerRef.current = L.marker([lat, lng], { icon: myIcon })
+                  .addTo(map)
+                  .bindPopup('<div style="font-family:Tajawal;direction:rtl;font-weight:700;color:#1e3a34">موقعك الحالي</div>')
+                  .openPopup()
+                btn.innerHTML = '📍'
+              },
+              () => { btn.innerHTML = '📍'; alert('تعذّر تحديد الموقع. تأكد من منح الإذن.') }
+            )
+          })
+          return btn
+        },
+      })
+      new LocateControl({ position: 'topleft' }).addTo(map)
     })
 
     return () => {
