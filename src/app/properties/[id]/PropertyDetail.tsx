@@ -11,7 +11,7 @@ const H = SB_HEADERS
 function TikTokEmbed({ url }: { url: string }) {
   if (!url) return null
   return (
-    <div style={{ background:'#fff', borderRadius:20, padding:'24px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
+    <div style={{ background:'#f4ede4', borderRadius:20, padding:'24px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
       <div>
         <div style={{ fontWeight:800, fontSize:'0.95rem', color:'#1e3a34', marginBottom:4 }}>🎵 فيديو العقار متاح على قناتنا</div>
         <div style={{ fontSize:'0.8rem', color:'#9aada7' }}>اضغط لمشاهدة الفيديو كاملاً</div>
@@ -255,7 +255,7 @@ export default function PropertyDetail({ id }: { id: string }) {
         <div className="prop-main">
 
           {/* Title */}
-          <div style={{ background:'#fff', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)' }}>
+          <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12, flexWrap:'wrap' }}>
               <span style={{ fontSize:'1.6rem' }}>{TYPE_ICONS[p.type]||'🏠'}</span>
               <span style={{ background:'rgba(39,66,62,0.08)', color:'#41646d', fontSize:'0.78rem', fontWeight:700, padding:'4px 14px', borderRadius:50 }}>{p.type}</span>
@@ -279,7 +279,7 @@ export default function PropertyDetail({ id }: { id: string }) {
 
           {/* Description */}
           {p.description && (
-            <div style={{ background:'#fff', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)' }}>
+            <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
               <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>📄 وصف العقار</h2>
               <p style={{ color:'#526266', lineHeight:2, fontSize:'0.95rem', whiteSpace:'pre-wrap' }}>{p.description}</p>
             </div>
@@ -287,7 +287,7 @@ export default function PropertyDetail({ id }: { id: string }) {
 
           {/* Specs */}
           {specs.length>0 && (
-            <div style={{ background:'#fff', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)' }}>
+            <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
               <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:20, display:'flex', alignItems:'center', gap:8 }}>🏗️ المواصفات والمميزات</h2>
               <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(150px,1fr))', gap:12 }}>
                 {specs.map(s => (
@@ -305,7 +305,7 @@ export default function PropertyDetail({ id }: { id: string }) {
           {p.video_url && <TikTokEmbed url={p.video_url} />}
 
           {/* Map */}
-          <div style={{ background:'#fff', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.08)' }}>
+          <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:16, flexWrap:'wrap', gap:10 }}>
               <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', display:'flex', alignItems:'center', gap:8, margin:0 }}>📍 موقع العقار</h2>
               <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
@@ -322,7 +322,7 @@ export default function PropertyDetail({ id }: { id: string }) {
           </div>
 
           {/* ── Customer Reviews ── */}
-          <div style={{ background:'#fff', borderRadius:20, padding:'28px 32px', border:'1px solid rgba(39,66,62,0.08)' }}>
+          <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', border:'1px solid rgba(39,66,62,0.12)' }}>
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:20, flexWrap:'wrap', gap:8 }}>
               <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', display:'flex', alignItems:'center', gap:8, margin:0 }}>
                 ⭐ تعليقات العملاء
@@ -465,7 +465,7 @@ export default function PropertyDetail({ id }: { id: string }) {
 
 
           {/* Share */}
-          <div style={{ background:'#fff', borderRadius:16, padding:'16px 20px', border:'1px solid rgba(39,66,62,0.08)', marginBottom:0 }}>
+          <div style={{ background:'#f4ede4', borderRadius:16, padding:'16px 20px', border:'1px solid rgba(39,66,62,0.12)', marginBottom:0 }}>
             <p style={{ fontSize:'0.75rem', color:'#9aada7', fontWeight:600, marginBottom:12, textAlign:'center' }}>مشاركة العقار</p>
             <div style={{ display:'flex', justifyContent:'center' }}>
               <a href={`https://wa.me/?text=${shareText}${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer"
@@ -486,7 +486,7 @@ export default function PropertyDetail({ id }: { id: string }) {
       {/* Back button */}
       <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 24px 40px' }}>
         <button onClick={()=>router.back()}
-          style={{ background:'#fff', color:'#526266', border:'1px solid rgba(39,66,62,0.15)', borderRadius:10, padding:'10px 24px', fontSize:'0.9rem', fontWeight:700, cursor:'pointer', fontFamily:'Tajawal' }}>
+          style={{ background:'#f4ede4', color:'#526266', border:'1px solid rgba(39,66,62,0.2)', borderRadius:10, padding:'10px 24px', fontSize:'0.9rem', fontWeight:700, cursor:'pointer', fontFamily:'Tajawal' }}>
           ← العودة للعقارات
         </button>
       </div>
