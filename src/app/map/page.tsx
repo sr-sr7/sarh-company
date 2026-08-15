@@ -95,26 +95,12 @@ export default function MapPage() {
         </button>
       </div>
 
-      {/* المحتوى: خريطة + قائمة */}
-      <div style={{ marginTop: NAV_H + FILTER_H, height: BODY_H, display:'flex', overflow:'hidden' }}>
+      {/* المحتوى: خريطة + قائمة — flex-direction: row بدون direction:rtl */}
+      <div style={{ marginTop: NAV_H + FILTER_H, height: BODY_H, display:'flex', flexDirection:'row', overflow:'hidden' }}>
 
-        {/* الخريطة */}
-        <div style={{ flex:1, height:'100%', position:'relative', minWidth:0 }}>
-          {loading ? (
-            <div style={{ height:'100%', display:'flex', alignItems:'center', justifyContent:'center', background:'#e8ede8' }}>
-              <div style={{ textAlign:'center' }}>
-                <div style={{ width:40, height:40, border:'4px solid #f4ede4', borderTop:'4px solid #1e3a34', borderRadius:'50%', margin:'0 auto 12px', animation:'spin 1s linear infinite' }} />
-                <span style={{ color:'#41646d', fontFamily:'Tajawal' }}>جاري التحميل...</span>
-              </div>
-            </div>
-          ) : (
-            <PropertyMap properties={filtered} onPinClick={handlePin} />
-          )}
-        </div>
-
-        {/* القائمة الجانبية */}
+        {/* القائمة الجانبية — يسار */}
         {sideOpen && (
-          <div style={{ width:320, height:'100%', borderRight:'1px solid rgba(30,58,52,0.1)', overflowY:'auto', background:'#f4ede4', flexShrink:0, display:'flex', flexDirection:'column' }}>
+          <div style={{ width:300, minWidth:300, height:'100%', borderLeft:'1px solid rgba(30,58,52,0.1)', overflowY:'auto', background:'#f4ede4', display:'flex', flexDirection:'column', order:2 }}>
             {/* العقار المحدد */}
             {selected && (
               <div style={{ background:'#1e3a34', padding:'14px', borderBottom:'1px solid rgba(255,255,255,0.08)', flexShrink:0 }}>
@@ -176,6 +162,20 @@ export default function MapPage() {
             </div>
           </div>
         )}
+
+        {/* الخريطة — تملأ الباقي */}
+        <div style={{ flex:1, height:'100%', position:'relative', minWidth:0, order:1 }}>
+          {loading ? (
+            <div style={{ height:'100%', display:'flex', alignItems:'center', justifyContent:'center', background:'#e8ede8' }}>
+              <div style={{ textAlign:'center' }}>
+                <div style={{ width:40, height:40, border:'4px solid #f4ede4', borderTop:'4px solid #1e3a34', borderRadius:'50%', margin:'0 auto 12px', animation:'spin 1s linear infinite' }} />
+                <span style={{ color:'#41646d', fontFamily:'Tajawal' }}>جاري التحميل...</span>
+              </div>
+            </div>
+          ) : (
+            <PropertyMap properties={filtered} onPinClick={handlePin} />
+          )}
+        </div>
       </div>
 
       <style>{`
