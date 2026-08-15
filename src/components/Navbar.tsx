@@ -70,7 +70,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <a href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
-          <img src="/logo.png" alt="صرح العقارية" height={52} style={{ width: 'auto', maxWidth: 220, objectFit: 'contain' }} />
+          <img src="/logo.png" alt="صرح العقارية" style={{ height: 44, width: 'auto', maxWidth: 160, objectFit: 'contain' }} />
         </a>
 
         {/* Search form — desktop only */}
