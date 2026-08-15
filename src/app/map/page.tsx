@@ -67,7 +67,7 @@ export default function MapPage() {
         borderBottom:'1px solid rgba(30,58,52,0.12)',
         display:'flex', gap:8, alignItems:'center', padding:'0 16px', flexWrap:'nowrap',
       }}>
-        <div style={{ display:'flex', alignItems:'center', gap:6, background:'#fff', borderRadius:8, padding:'0 10px', border:'1px solid rgba(30,58,52,0.12)', height:34, flex:'1 1 140px', maxWidth:220, minWidth:0 }}>
+        <div className="map-filter-search" style={{ display:'flex', alignItems:'center', gap:6, background:'#fff', borderRadius:8, padding:'0 10px', border:'1px solid rgba(30,58,52,0.12)', height:34, flex:'1 1 140px', maxWidth:220, minWidth:0 }}>
           <svg width="14" height="14" fill="none" stroke="#7a9188" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="ابحث..."
             style={{ border:'none', outline:'none', background:'none', fontSize:'0.8rem', fontFamily:"'Tajawal','Cairo',sans-serif", color:'#1e3a34', width:'100%' }} />
@@ -95,12 +95,12 @@ export default function MapPage() {
         </button>
       </div>
 
-      {/* المحتوى: خريطة + قائمة — flex-direction: row بدون direction:rtl */}
-      <div style={{ marginTop: NAV_H + FILTER_H, height: BODY_H, display:'flex', flexDirection:'row', overflow:'hidden' }}>
+      {/* المحتوى: خريطة + قائمة */}
+      <div className="map-body" style={{ marginTop: NAV_H + FILTER_H, height: BODY_H, display:'flex', flexDirection:'row', overflow:'hidden' }}>
 
-        {/* القائمة الجانبية — يسار */}
+        {/* القائمة الجانبية */}
         {sideOpen && (
-          <div style={{ width:300, minWidth:300, height:'100%', borderLeft:'1px solid rgba(30,58,52,0.1)', overflowY:'auto', background:'#f4ede4', display:'flex', flexDirection:'column', order:2 }}>
+          <div className="map-sidebar" style={{ width:300, minWidth:300, height:'100%', borderLeft:'1px solid rgba(30,58,52,0.1)', overflowY:'auto', background:'#f4ede4', display:'flex', flexDirection:'column', order:2 }}>
             {/* العقار المحدد */}
             {selected && (
               <div style={{ background:'#1e3a34', padding:'14px', borderBottom:'1px solid rgba(255,255,255,0.08)', flexShrink:0 }}>
@@ -164,7 +164,7 @@ export default function MapPage() {
         )}
 
         {/* الخريطة — تملأ الباقي */}
-        <div style={{ flex:1, height:'100%', position:'relative', minWidth:0, order:1 }}>
+        <div className="map-view" style={{ flex:1, height:'100%', position:'relative', minWidth:0, order:1 }}>
           {loading ? (
             <div style={{ height:'100%', display:'flex', alignItems:'center', justifyContent:'center', background:'#e8ede8' }}>
               <div style={{ textAlign:'center' }}>

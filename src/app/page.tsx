@@ -312,25 +312,32 @@ export default function Home() {
             </div>
           )}
           {viewMode === 'grid' && !loading && properties.length > 0 && (
-            <div className="snap-scroll-cards" style={{
-              height: '100vh',
-              overflowY: 'scroll',
-              scrollSnapType: 'y mandatory',
-              WebkitOverflowScrolling: 'touch',
-              overscrollBehavior: 'contain',
-            }}>
-              {properties.map(p => (
-                <div key={p.id} style={{
-                  height: 236,
-                  scrollSnapAlign: 'start',
-                  padding: '0 0 16px',
-                  boxSizing: 'border-box',
-                  display: 'flex',
-                }}>
-                  <PropertyCard property={p} />
-                </div>
-              ))}
-            </div>
+            <>
+              {/* ديسكتوب: snap scroll */}
+              <div className="snap-scroll-cards snap-desktop" style={{
+                height: '100vh',
+                overflowY: 'scroll',
+                scrollSnapType: 'y mandatory',
+                WebkitOverflowScrolling: 'touch',
+                overscrollBehavior: 'contain',
+              }}>
+                {properties.map(p => (
+                  <div key={p.id} style={{
+                    height: 236,
+                    scrollSnapAlign: 'start',
+                    padding: '0 0 16px',
+                    boxSizing: 'border-box',
+                    display: 'flex',
+                  }}>
+                    <PropertyCard property={p} />
+                  </div>
+                ))}
+              </div>
+              {/* جوال: grid عادي */}
+              <div className="snap-mobile" style={{ display:'flex', flexDirection:'column', gap:14 }}>
+                {properties.map(p => <PropertyCard key={p.id} property={p} />)}
+              </div>
+            </>
           )}
         </div>
 

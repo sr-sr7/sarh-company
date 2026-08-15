@@ -47,3 +47,45 @@ img {
   outline: 2px solid #b8986a;
   outline-offset: 2px;
 }
+
+/* ── Snap scroll: desktop فقط، جوال grid ── */
+.snap-desktop { display: block; }
+.snap-mobile  { display: none; }
+@media (max-width: 600px) {
+  .snap-desktop { display: none !important; }
+  .snap-mobile  { display: flex !important; }
+}
+
+/* ── بطاقة العقار — جوال ── */
+@media (max-width: 600px) {
+  .sarh-card {
+    flex-direction: column !important;
+    height: auto !important;
+  }
+  .sarh-card-img {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 190px !important;
+  }
+}
+
+/* ── خريطة — جوال ── */
+@media (max-width: 768px) {
+  .map-body {
+    flex-direction: column !important;
+    height: auto !important;
+  }
+  .map-sidebar {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 50vh !important;
+    order: 2 !important;
+    border-left: none !important;
+    border-top: 1px solid rgba(30,58,52,0.1) !important;
+  }
+  .map-view {
+    height: 50vh !important;
+    order: 1 !important;
+  }
+  .map-filter-search { display: none !important; }
+}

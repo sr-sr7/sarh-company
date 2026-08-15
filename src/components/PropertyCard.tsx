@@ -37,6 +37,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
   return (
     <a
       href={`/properties/${p.id}`}
+      className="sarh-card"
       style={{
         display: 'flex',
         background: '#fff',
@@ -60,7 +61,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
       }}
     >
       {/* الصورة */}
-      <div style={{ position: 'relative', width: 220, minWidth: 220, alignSelf: 'stretch', background: '#f4ede4', flexShrink: 0 }}>
+      <div className="sarh-card-img" style={{ position: 'relative', width: 220, minWidth: 220, alignSelf: 'stretch', background: '#f4ede4', flexShrink: 0 }}>
         {img ? (
           <img src={img} alt={p.title} loading="eager"
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', position: 'absolute', inset: 0 }} />
@@ -182,3 +183,4 @@ function Spec({ icon, label }: { icon: string; label: string }) {
     </span>
   )
 }
+
