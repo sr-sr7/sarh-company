@@ -398,8 +398,8 @@ export default function Home() {
         <h2 style={S.ctaH2}>هل أنت مستعد للخطوة التالية؟</h2>
         <p style={S.ctaP}>تواصل معنا اليوم ودعنا نساعدك في إيجاد العقار المثالي الذي يلبي احتياجاتك</p>
         <div style={S.ctaBtns}>
-          <a href="https://wa.me/966552226345" target="_blank" rel="noopener noreferrer" style={S.btnWa}>💬 تواصل على واتساب</a>
-          <a href="tel:+966552226345" style={S.btnDark}>📞 اتصل بنا</a>
+          <a href="https://wa.me/966557340222" target="_blank" rel="noopener noreferrer" style={S.btnWa}>💬 تواصل على واتساب</a>
+          <a href="tel:+966557340222" style={S.btnDark}>📞 اتصل بنا</a>
         </div>
       </section>
 

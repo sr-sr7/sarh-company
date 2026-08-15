@@ -117,7 +117,7 @@ export default async function MaintenancePage() {
 
           {/* WhatsApp contact */}
           <a
-            href="https://wa.me/966552226345?text=السلام عليكم، متى سيعود الموقع؟"
+            href="https://wa.me/966557340222?text=السلام عليكم، متى سيعود الموقع؟"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display:'inline-flex', alignItems:'center', gap:10, background:'#25D366', color:'#fff', borderRadius:12, padding:'13px 28px', fontWeight:800, fontSize:'0.95rem', textDecoration:'none', boxShadow:'0 4px 20px rgba(37,211,102,0.35)', transition:'all 0.2s' }}

@@ -60,7 +60,7 @@ const jsonLd = {
   logo:          'https://sarh-company.com/icon-512.png',
   image:         'https://sarh-company.com/icon-512.png',
   description:   'شركة صرح العقارية في القصيم — بريدة. خدمات عقارية متكاملة من بيع وإيجار وتطوير.',
-  telephone:     '+966552226345',
+  telephone:     '+966557340222',
   address: {
     '@type':          'PostalAddress',
     addressLocality:  'بريدة',
@@ -68,7 +68,7 @@ const jsonLd = {
     addressCountry:   'SA',
   },
   areaServed: 'المملكة العربية السعودية',
-  sameAs:     ['https://wa.me/966552226345'],
+  sameAs:     ['https://wa.me/966557340222'],
   openingHours: 'Mo-Sa 08:00-22:00',
 }
 

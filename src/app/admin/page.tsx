@@ -85,7 +85,7 @@ const emptyForm = {
   facade:'', street_width:'', property_age:'', deed_type:'', bank_finance:false,
   bedrooms:'0', bathrooms:'0', maid_rooms:'0', kitchens:'1',
   has_pool:false, has_parking:false, has_garden:false, has_annex:false,
-  is_featured:false, is_new:true, whatsapp:'966552226345',
+  is_featured:false, is_new:true, whatsapp:'966557340222',
   status:'active', main_image:'', images:[] as string[], video_url:'', map_url:'',
 }
 
@@ -702,7 +702,7 @@ export default function AdminPage() {
               <div><label style={S.label}>عدد الحمامات</label><input type="number" min="0" value={form.bathrooms} onChange={e=>ff('bathrooms',e.target.value)} style={S.input} /></div>
               <div><label style={S.label}>غرف الخادمة</label><input type="number" min="0" value={form.maid_rooms} onChange={e=>ff('maid_rooms',e.target.value)} style={S.input} /></div>
               <div><label style={S.label}>عدد المطابخ</label><input type="number" min="0" value={form.kitchens} onChange={e=>ff('kitchens',e.target.value)} style={S.input} /></div>
-              <div><label style={S.label}>رقم الواتساب</label><input value={form.whatsapp} onChange={e=>ff('whatsapp',e.target.value)} style={S.input} placeholder="966552226345" /></div>
+              <div><label style={S.label}>رقم الواتساب</label><input value={form.whatsapp} onChange={e=>ff('whatsapp',e.target.value)} style={S.input} placeholder="966557340222" /></div>
               {/* Map */}
               <div style={S.fullCol}>
                 <label style={S.label}>📍 موقع العقار على قوقل ماب</label>

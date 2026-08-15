@@ -108,7 +108,7 @@ export default function Navbar() {
             </li>
           ))}
           <li>
-            <a href="https://wa.me/966552226345" target="_blank" rel="noopener noreferrer"
+            <a href="https://wa.me/966557340222" target="_blank" rel="noopener noreferrer"
               style={{ background: '#b8986a', color: '#1e3a34', padding: '8px 18px', borderRadius: 6, fontWeight: 700, textDecoration: 'none', fontSize: '0.88rem' }}>
               💬 تواصل معنا
             </a>
@@ -209,7 +209,7 @@ export default function Navbar() {
             </li>
           ))}
           <li style={{ padding: '12px 28px' }}>
-            <a href="https://wa.me/966552226345" target="_blank" rel="noopener noreferrer" onClick={closeMenu}
+            <a href="https://wa.me/966557340222" target="_blank" rel="noopener noreferrer" onClick={closeMenu}
               style={{ display: 'block', textAlign: 'center', background: '#b8986a', color: '#27423e', padding: '13px 0', borderRadius: 10, fontWeight: 700, fontSize: '1rem', textDecoration: 'none', fontFamily: "'Tajawal','Cairo',sans-serif" }}>
               💬 تواصل معنا عبر واتساب
             </a>
