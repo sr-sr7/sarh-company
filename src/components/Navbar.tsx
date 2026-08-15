@@ -69,16 +69,8 @@ export default function Navbar() {
       }}>
 
         {/* Logo */}
-        <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', flexShrink: 0 }}>
-          <img src={LOGO_GIF} alt="صرح" width={50} height={50} style={{ borderRadius: 8, filter: 'brightness(0.15) saturate(1.5)' }} />
-          <div>
-            <span style={{ color: '#1e3a34', fontSize: '1rem', fontWeight: 700 }}>
-              صرح <span style={{ color: '#b8986a' }}>العقارية</span>
-            </span>
-            <span style={{ display: 'block', fontSize: 7, letterSpacing: 3, color: 'rgba(30,58,52,0.35)', marginTop: 1 }}>
-              SARH REAL ESTATE
-            </span>
-          </div>
+        <a href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
+          <img src="/logo.png" alt="صرح العقارية" height={52} style={{ width: 'auto', maxWidth: 220, objectFit: 'contain' }} />
         </a>
 
         {/* Search form — desktop only */}
