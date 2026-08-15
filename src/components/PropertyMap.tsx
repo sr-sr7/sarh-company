@@ -153,9 +153,9 @@ export default function PropertyMap({ properties, onPinClick }: {
   }
 
   return (
-    <div style={{ position:'absolute', inset:0 }}>
+    <div style={{ width:'100%', height:'100%' }}>
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-      <div ref={divRef} style={{ position:'absolute', inset:0 }} />
+      <div ref={divRef} style={{ width:'100%', height:'100%' }} />
     </div>
   )
 }
