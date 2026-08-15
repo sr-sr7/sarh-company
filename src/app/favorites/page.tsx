@@ -20,7 +20,7 @@ export default function FavoritesPage() {
   }, [ids.join(',')])
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#f7faf8' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#f4ede4' }}>
       <Navbar />
 
       {/* Header */}

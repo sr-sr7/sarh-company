@@ -48,7 +48,7 @@ export default function LoginPage() {
               onChange={e => setUsername(e.target.value)}
               placeholder="admin"
               autoFocus
-              style={{ width:'100%', padding:'11px 14px', borderRadius:10, border:'1.5px solid #f0f4f2', fontSize:'0.95rem', outline:'none', fontFamily:'Tajawal', boxSizing:'border-box', background:'#f8fbfa', color:'#1e3a34' }}
+              style={{ width:'100%', padding:'11px 14px', borderRadius:10, border:'1.5px solid #f4ede4', fontSize:'0.95rem', outline:'none', fontFamily:'Tajawal', boxSizing:'border-box', background:'#f8fbfa', color:'#1e3a34' }}
             />
           </div>
           <div>
@@ -58,7 +58,7 @@ export default function LoginPage() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="••••••••"
-              style={{ width:'100%', padding:'11px 14px', borderRadius:10, border:'1.5px solid #f0f4f2', fontSize:'0.95rem', outline:'none', fontFamily:'Tajawal', boxSizing:'border-box', background:'#f8fbfa', color:'#1e3a34' }}
+              style={{ width:'100%', padding:'11px 14px', borderRadius:10, border:'1.5px solid #f4ede4', fontSize:'0.95rem', outline:'none', fontFamily:'Tajawal', boxSizing:'border-box', background:'#f8fbfa', color:'#1e3a34' }}
             />
           </div>
 

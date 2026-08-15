@@ -2,7 +2,7 @@ import { LOGO_GIF } from '@/lib/logo'
 
 export default function Footer() {
   const S = {
-    footer: { background: '#f0f4f2', color: '#3a5a54', padding: '60px 5% 30px', direction: 'rtl' as const },
+    footer: { background: '#f4ede4', color: '#3a5a54', padding: '60px 5% 30px', direction: 'rtl' as const },
     grid: { maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px,1fr))', gap: 48, paddingBottom: 40 },
     brand: { fontSize: '1.1rem', fontWeight: 700, color: '#1e3a34', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 10 },
     brandAccent: { color: '#b8986a' },

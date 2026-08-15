@@ -119,7 +119,7 @@ export default function PropertyMap({ properties }: { properties: Property[] }) 
       const waLink = `https://wa.me/${p.whatsapp}?text=${encodeURIComponent('مرحباً، أريد الاستفسار عن: ' + p.title)}`
       const imgHtml = p.main_image
         ? `<img src="${p.main_image}" style="width:100%;height:110px;object-fit:cover;border-radius:8px;margin-bottom:8px;display:block"/>`
-        : `<div style="width:100%;height:80px;background:#f0f4f2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:8px">🏠</div>`
+        : `<div style="width:100%;height:80px;background:#f4ede4;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:8px">🏠</div>`
 
       const popup = L.popup({ maxWidth: 220, className: 'sarh-popup' }).setContent(`
         <div style="font-family:'Tajawal',sans-serif;direction:rtl;width:200px">

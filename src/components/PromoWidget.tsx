@@ -48,7 +48,7 @@ export default function PromoWidget() {
 
   const inputStyle: React.CSSProperties = {
     width: '100%', padding: '9px 11px', borderRadius: 9,
-    border: '1.5px solid #f0f4f2', fontSize: '0.88rem',
+    border: '1.5px solid #f4ede4', fontSize: '0.88rem',
     fontFamily: 'Tajawal,sans-serif', color: '#1e3a34',
     outline: 'none', boxSizing: 'border-box', background: '#f8fbfa',
   }

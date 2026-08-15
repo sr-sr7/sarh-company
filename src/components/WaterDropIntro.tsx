@@ -26,7 +26,7 @@ export default function WaterDropIntro() {
     <div style={{
       position:'fixed', inset:0, zIndex:99999,
       display:'flex', alignItems:'center', justifyContent:'center',
-      background:'#f7faf8',
+      background:'#f4ede4',
       pointerEvents: 'all',
     }}>
       <style>{`

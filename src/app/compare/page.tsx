@@ -48,11 +48,11 @@ function CompareInner() {
   }
   const head: React.CSSProperties = {
     padding:'14px 16px', textAlign:'center', fontWeight:800, fontSize:'0.82rem',
-    color:'#526266', borderBottom:'2px solid rgba(39,66,62,0.12)', background:'#f7faf8',
+    color:'#526266', borderBottom:'2px solid rgba(39,66,62,0.12)', background:'#f4ede4',
   }
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#f7faf8' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#f4ede4' }}>
       <Navbar />
 
       {/* Header */}
@@ -87,7 +87,7 @@ function CompareInner() {
                 <div key={p.id} style={{ padding:'16px', borderRight:'1px solid rgba(39,66,62,0.07)', textAlign:'center' }}>
                   {p.main_image
                     ? <img src={p.main_image} alt={p.title} style={{ width:'100%', height:120, objectFit:'cover', borderRadius:10, marginBottom:8 }} />
-                    : <div style={{ height:120, background:'#f0f4f2', borderRadius:10, marginBottom:8, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'2.5rem' }}>{ICONS[p.type]||'🏠'}</div>
+                    : <div style={{ height:120, background:'#f4ede4', borderRadius:10, marginBottom:8, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'2.5rem' }}>{ICONS[p.type]||'🏠'}</div>
                   }
                   <a href={`/properties/${p.id}`} style={{ fontSize:'0.85rem', fontWeight:800, color:'#1e3a34', textDecoration:'none', display:'block', marginBottom:4, lineHeight:1.4 }}>{p.title}</a>
                   {p.listing_number && <span style={{ fontSize:'0.7rem', color:'#b8986a', fontFamily:'monospace' }}>#{p.listing_number}</span>}

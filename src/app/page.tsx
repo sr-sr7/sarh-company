@@ -7,7 +7,7 @@ import PropertyCard from '@/components/PropertyCard'
 import dynamic from 'next/dynamic'
 
 const PropertyMap = dynamic(() => import('@/components/PropertyMap'), { ssr: false, loading: () => (
-  <div style={{ height: 500, background: '#f0f4f2', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#41646d', fontSize: '1rem' }}><img src="/icons/icon_r1_c16.png" width={24} height={24} style={{verticalAlign:'middle',marginLeft:8,opacity:0.5}} /> جاري تحميل الخريطة...</div>
+  <div style={{ height: 500, background: '#f4ede4', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#41646d', fontSize: '1rem' }}><img src="/icons/icon_r1_c16.png" width={24} height={24} style={{verticalAlign:'middle',marginLeft:8,opacity:0.5}} /> جاري تحميل الخريطة...</div>
 )})
 
 type TabKey = 'الكل' | 'فيلا' | 'أرض' | 'استراحة' | 'مزرعة' | 'إيجار' | 'شقة' | 'دبلكس' | 'تجاري'
@@ -25,10 +25,10 @@ const TABS: { key: TabKey; label: string; icon: string }[] = [
 ]
 
 const S = {
-  main: { fontFamily: "'Tajawal','Cairo',sans-serif", background: '#f0f4f2', minHeight: '100vh', direction: 'rtl' as const },
+  main: { fontFamily: "'Tajawal','Cairo',sans-serif", background: '#f4ede4', minHeight: '100vh', direction: 'rtl' as const },
 
   // Hero
-  hero: { position: 'relative' as const, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' as const, background: 'linear-gradient(150deg,#f0f4f2 0%,#f7faf8 50%,#f0f4f2 100%)', overflow: 'hidden' },
+  hero: { position: 'relative' as const, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' as const, background: 'linear-gradient(150deg,#f4ede4 0%,#f4ede4 50%,#f4ede4 100%)', overflow: 'hidden' },
   heroInner: { position: 'relative' as const, zIndex: 10, padding: '100px 24px 60px', maxWidth: 800, margin: '0 auto' },
   heroBadge: { display: 'inline-block', background: 'rgba(30,58,52,0.08)', border: '1px solid rgba(30,58,52,0.15)', color: '#2d5750', fontSize: '0.75rem', padding: '8px 20px', borderRadius: 50, marginBottom: 32, letterSpacing: 3 },
   heroH1: { fontSize: 'clamp(2rem,5vw,3.5rem)', fontWeight: 800, color: '#1e3a34', lineHeight: 1.3, marginBottom: 24 },
@@ -42,35 +42,35 @@ const S = {
   statLabel: { color: '#4a7a72', fontSize: '0.85rem', marginTop: 4, display: 'block' },
 
   // About
-  about: { padding: '80px 24px', background: '#f0f4f2' },
+  about: { padding: '80px 24px', background: '#f4ede4' },
   aboutInner: { maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: 64, alignItems: 'center' },
   sectionLabel: { color: '#2d5750', fontSize: '0.72rem', fontWeight: 700, letterSpacing: 3, borderRight: '4px solid #b8986a', paddingRight: 12 },
   aboutH2: { fontSize: 'clamp(1.6rem,3vw,2.4rem)', fontWeight: 800, color: '#1e3a34', margin: '16px 0 20px', lineHeight: 1.35 },
   aboutP: { color: '#3a5a54', lineHeight: 1.9, marginBottom: 16, fontSize: '1rem', fontWeight: 500 },
   tagRow: { display: 'flex', gap: 10, marginTop: 24, flexWrap: 'wrap' as const },
-  tag: { background: '#f0f4f2', color: '#1e3a34', padding: '8px 16px', borderRadius: 50, fontSize: '0.85rem', fontWeight: 600 },
-  quoteBox: { background: '#f0f4f2', borderRadius: 20, padding: 40, color: '#1e3a34', position: 'relative' as const, overflow: 'hidden', border: '1px solid rgba(30,58,52,0.1)' },
+  tag: { background: '#f4ede4', color: '#1e3a34', padding: '8px 16px', borderRadius: 50, fontSize: '0.85rem', fontWeight: 600 },
+  quoteBox: { background: '#f4ede4', borderRadius: 20, padding: 40, color: '#1e3a34', position: 'relative' as const, overflow: 'hidden', border: '1px solid rgba(30,58,52,0.1)' },
   quoteText: { color: '#1e3a34', fontSize: '1.05rem', lineHeight: 1.9, fontWeight: 500, position: 'relative' as const, zIndex: 1 },
   quoteBy: { color: '#b8986a', fontWeight: 700, marginTop: 24, position: 'relative' as const, zIndex: 1 },
 
   // Properties
-  props: { padding: '80px 24px', background: '#f0f4f2' },
+  props: { padding: '80px 24px', background: '#f4ede4' },
   propsInner: { maxWidth: 1200, margin: '0 auto' },
   sectionTitle: { textAlign: 'center' as const, marginBottom: 48 },
   propsH2: { fontSize: 'clamp(1.6rem,3vw,2.4rem)', fontWeight: 800, color: '#1e3a34', margin: '16px 0 12px' },
   propsSub: { color: '#7a9188', fontSize: '0.95rem' },
   tabsRow: { display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' as const, marginBottom: 40 },
-  tabActive: { display: 'flex', alignItems: 'center', gap: 8, padding: '10px 28px', borderRadius: 50, border: '2px solid rgba(30,58,52,0.25)', fontWeight: 700, fontSize: '0.9rem', background: '#f0f4f2', color: '#1e3a34', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 14px rgba(30,58,52,0.12)', fontFamily: "'Tajawal','Cairo',sans-serif" },
+  tabActive: { display: 'flex', alignItems: 'center', gap: 8, padding: '10px 28px', borderRadius: 50, border: '2px solid rgba(30,58,52,0.25)', fontWeight: 700, fontSize: '0.9rem', background: '#f4ede4', color: '#1e3a34', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 14px rgba(30,58,52,0.12)', fontFamily: "'Tajawal','Cairo',sans-serif" },
   tabInactive: { display: 'flex', alignItems: 'center', gap: 8, padding: '10px 28px', borderRadius: 50, border: '2px solid rgba(30,58,52,0.18)', fontWeight: 600, fontSize: '0.9rem', background: '#fff', color: '#526266', cursor: 'pointer', transition: 'all 0.2s', fontFamily: "'Tajawal','Cairo',sans-serif" },
   grid3: { display: 'grid', gridTemplateColumns: '1fr', gap: 16 },
   skeleton: { background: '#e4ede8', borderRadius: 20, height: 288, border: '1px solid rgba(30,58,52,0.1)' },
   empty: { textAlign: 'center' as const, padding: '80px 0' },
   emptyIcon: { fontSize: '4rem', opacity: 0.2, display: 'block', marginBottom: 16 },
   emptyText: { color: '#7a9188', fontSize: '1.1rem', marginBottom: 24 },
-  emptyBtn: { display: 'inline-block', background: '#f0f4f2', color: '#1e3a34', padding: '12px 28px', borderRadius: 10, fontSize: '0.9rem', fontWeight: 700, textDecoration: 'none' },
+  emptyBtn: { display: 'inline-block', background: '#f4ede4', color: '#1e3a34', padding: '12px 28px', borderRadius: 10, fontSize: '0.9rem', fontWeight: 700, textDecoration: 'none' },
 
   // Features
-  features: { padding: '80px 24px', background: '#f0f4f2' },
+  features: { padding: '80px 24px', background: '#f4ede4' },
   featInner: { maxWidth: 1000, margin: '0 auto' },
   featTitle: { textAlign: 'center' as const, marginBottom: 56 },
   featLabel: { color: '#b8986a', fontSize: '0.72rem', fontWeight: 700, letterSpacing: 3 },
@@ -83,12 +83,12 @@ const S = {
   featCardDesc: { color: '#3a5a54', fontSize: '0.85rem', lineHeight: 1.75 },
 
   // CTA
-  cta: { padding: '80px 24px', background: '#f0f4f2', textAlign: 'center' as const },
+  cta: { padding: '80px 24px', background: '#f4ede4', textAlign: 'center' as const },
   ctaH2: { fontSize: 'clamp(1.6rem,3vw,2.4rem)', fontWeight: 800, color: '#1e3a34', marginBottom: 16 },
   ctaP: { color: '#2d5750', fontSize: '0.97rem', maxWidth: 500, margin: '0 auto 40px', lineHeight: 1.85 },
   ctaBtns: { display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' as const },
   btnWa: { background: '#25D366', color: '#fff', padding: '14px 32px', borderRadius: 10, fontWeight: 700, fontSize: '1rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 },
-  btnDark: { background: '#f0f4f2', color: '#1e3a34', padding: '14px 32px', borderRadius: 10, fontWeight: 700, fontSize: '1rem', textDecoration: 'none', display: 'inline-block', border: '1px solid rgba(30,58,52,0.2)' },
+  btnDark: { background: '#f4ede4', color: '#1e3a34', padding: '14px 32px', borderRadius: 10, fontWeight: 700, fontSize: '1rem', textDecoration: 'none', display: 'inline-block', border: '1px solid rgba(30,58,52,0.2)' },
 }
 
 export default function Home() {
@@ -263,7 +263,7 @@ export default function Home() {
                     <button
                       key={tab.key}
                       onClick={() => { setActiveTab(tab.key); setMobileDropOpen(false) }}
-                      style={{ width: '100%', background: tab.key === activeTab ? '#f0f4f2' : '#fff', border: 'none', padding: '12px 16px', fontSize: '0.95rem', fontWeight: 700, color: '#1e3a34', fontFamily: "'Tajawal','Cairo',sans-serif", cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, direction: 'rtl', borderBottom: '1px solid rgba(30,58,52,0.07)' }}
+                      style={{ width: '100%', background: tab.key === activeTab ? '#f4ede4' : '#fff', border: 'none', padding: '12px 16px', fontSize: '0.95rem', fontWeight: 700, color: '#1e3a34', fontFamily: "'Tajawal','Cairo',sans-serif", cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, direction: 'rtl', borderBottom: '1px solid rgba(30,58,52,0.07)' }}
                     >
                       <img src={tab.icon} alt="" width={22} height={22} />
                       {tab.label}
@@ -275,10 +275,10 @@ export default function Home() {
 
             {/* Grid / Map toggle */}
             <div style={{ display: 'flex', gap: 6, background: '#fff', borderRadius: 12, padding: 4, border: '1px solid rgba(39,66,62,0.15)', flexShrink: 0 }}>
-              <button onClick={() => setViewMode('grid')} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', borderRadius: 9, border: 'none', fontFamily: "'Tajawal','Cairo',sans-serif", fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s', background: viewMode === 'grid' ? '#f0f4f2' : 'transparent', color: '#1e3a34' }}>
+              <button onClick={() => setViewMode('grid')} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', borderRadius: 9, border: 'none', fontFamily: "'Tajawal','Cairo',sans-serif", fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s', background: viewMode === 'grid' ? '#f4ede4' : 'transparent', color: '#1e3a34' }}>
                 ⊞ شبكة
               </button>
-              <button onClick={() => setViewMode('map')} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', borderRadius: 9, border: 'none', fontFamily: "'Tajawal','Cairo',sans-serif", fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s', background: viewMode === 'map' ? '#f0f4f2' : 'transparent', color: '#1e3a34' }}>
+              <button onClick={() => setViewMode('map')} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', borderRadius: 9, border: 'none', fontFamily: "'Tajawal','Cairo',sans-serif", fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s', background: viewMode === 'map' ? '#f4ede4' : 'transparent', color: '#1e3a34' }}>
                 <img src="/icons/icon_r1_c16.png" alt="" width={18} height={18} style={{verticalAlign:'middle'}} /> خريطة
               </button>
             </div>
@@ -294,7 +294,7 @@ export default function Home() {
           {/* Map view */}
           {viewMode === 'map' && (
             loading
-              ? <div style={{ height: 500, background: '#f0f4f2', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#41646d' }}>جاري التحميل...</div>
+              ? <div style={{ height: 500, background: '#f4ede4', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#41646d' }}>جاري التحميل...</div>
               : properties.length === 0
                 ? <div style={S.empty}><img src="/icons/icon_r1_c16.png" style={{width:48,height:48,opacity:0.4,marginBottom:12}} /><p style={S.emptyText}>لا توجد عقارات في هذه الفئة حالياً</p></div>
                 : <PropertyMap properties={properties} />
@@ -339,7 +339,7 @@ export default function Home() {
           <a href="/properties" style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             background: '#1e3a34',
-            color: '#f0f4f2', fontFamily: "'Tajawal','Cairo',sans-serif",
+            color: '#f4ede4', fontFamily: "'Tajawal','Cairo',sans-serif",
             fontWeight: 700, fontSize: '0.9rem',
             padding: '12px 32px', borderRadius: 50,
             textDecoration: 'none',

@@ -44,27 +44,27 @@ export function HeroSlider() {
 
       {/* Content */}
       <div className="relative z-10 px-16 max-w-2xl pt-20">
-        <p className="text-xs tracking-[4px] uppercase text-[#f0f4f2]/75 mb-6 flex items-center gap-3">
-          <span className="w-7 h-px bg-[#f0f4f2]/50 inline-block"></span>
+        <p className="text-xs tracking-[4px] uppercase text-[#f4ede4]/75 mb-6 flex items-center gap-3">
+          <span className="w-7 h-px bg-[#f4ede4]/50 inline-block"></span>
           متخصصون في منطقة القصيم
         </p>
         <h1 className="font-amiri text-[clamp(46px,5.5vw,72px)] leading-[1.15] text-white mb-5">
           نبني أثرى<br/>
-          <span className="text-[#f0f4f2]">تجربة حياتية</span><br/>
+          <span className="text-[#f4ede4]">تجربة حياتية</span><br/>
           في المملكة
         </h1>
-        <p className="text-base leading-[1.9] text-[#f0f4f2]/70 max-w-lg mb-10">
+        <p className="text-base leading-[1.9] text-[#f4ede4]/70 max-w-lg mb-10">
           صرح العقارية تُعزز مسيرة التطور من خلال استثمارات الأراضي وتطويرها، لخلق مفاهيم عقارية تتميز بالتفرد والأصالة.
         </p>
         <div className="flex gap-4">
-          <a href="/properties" className="bg-[#f0f4f2] text-[#1e3a34] px-8 py-3 rounded-lg font-bold text-sm hover:bg-white transition shadow-lg">تصفح العقارات</a>
+          <a href="/properties" className="bg-[#f4ede4] text-[#1e3a34] px-8 py-3 rounded-lg font-bold text-sm hover:bg-white transition shadow-lg">تصفح العقارات</a>
           <a href="#contact" className="border border-white/30 text-white px-8 py-3 rounded-lg font-semibold text-sm hover:bg-white/10 transition">تواصل معنا</a>
         </div>
         <div className="flex gap-10 mt-14 pt-8 border-t border-white/12">
           {[['500+','عقار مُدرج'],['1200+','عميل راضٍ'],['12+','سنة خبرة']].map(([n,l])=>(
             <div key={l}>
-              <div className="font-amiri text-4xl text-[#f0f4f2] leading-none">{n}</div>
-              <div className="text-xs text-[#f0f4f2]/55 mt-1">{l}</div>
+              <div className="font-amiri text-4xl text-[#f4ede4] leading-none">{n}</div>
+              <div className="text-xs text-[#f4ede4]/55 mt-1">{l}</div>
             </div>
           ))}
         </div>
@@ -85,7 +85,7 @@ export function HeroSlider() {
 
       {/* Progress */}
       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/10 z-10">
-        <div className="h-full bg-[#f0f4f2] transition-none" style={{ width: `${progress}%` }} />
+        <div className="h-full bg-[#f4ede4] transition-none" style={{ width: `${progress}%` }} />
       </div>
     </section>
   )
@@ -107,7 +107,7 @@ export function SearchBar() {
     window.location.href = `/properties?${params.toString()}`
   }
 
-  const selectCls = "flex-1 min-w-[150px] bg-[#f7faf8] border border-[#27423e]/12 rounded-lg px-3 py-2.5 text-sm font-tajawal outline-none focus:border-[#41646d] appearance-none"
+  const selectCls = "flex-1 min-w-[150px] bg-[#f4ede4] border border-[#27423e]/12 rounded-lg px-3 py-2.5 text-sm font-tajawal outline-none focus:border-[#41646d] appearance-none"
 
   return (
     <div className="px-16 -mt-9 relative z-10">
@@ -138,7 +138,7 @@ export function SearchBar() {
           <input value={form.search} onChange={e=>setForm(p=>({...p,search:e.target.value}))}
             placeholder="مثال: حي النزهة" className={selectCls + ' w-full'} />
         </div>
-        <button type="submit" className="bg-[#27423e] text-[#f0f4f2] px-7 py-2.5 rounded-lg text-sm font-bold hover:bg-[#1e3a34] transition whitespace-nowrap">
+        <button type="submit" className="bg-[#27423e] text-[#f4ede4] px-7 py-2.5 rounded-lg text-sm font-bold hover:bg-[#1e3a34] transition whitespace-nowrap">
           🔍 بحث
         </button>
       </form>

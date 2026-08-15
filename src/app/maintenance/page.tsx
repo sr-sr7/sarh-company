@@ -49,7 +49,7 @@ export default async function MaintenancePage() {
           .bar {
             height: 4px;
             border-radius: 2px;
-            background: linear-gradient(90deg, #f0f4f2 0%, #b8986a 40%, #27423e 70%, #f0f4f2 100%);
+            background: linear-gradient(90deg, #f4ede4 0%, #b8986a 40%, #27423e 70%, #f4ede4 100%);
             background-size: 400px 100%;
             animation: shimmer 2.5s linear infinite;
           }

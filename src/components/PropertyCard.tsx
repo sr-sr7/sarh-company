@@ -60,7 +60,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
       }}
     >
       {/* الصورة */}
-      <div style={{ position: 'relative', width: 220, minWidth: 220, alignSelf: 'stretch', background: '#f0f4f2', flexShrink: 0 }}>
+      <div style={{ position: 'relative', width: 220, minWidth: 220, alignSelf: 'stretch', background: '#f4ede4', flexShrink: 0 }}>
         {img ? (
           <img src={img} alt={p.title} loading="eager"
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', position: 'absolute', inset: 0 }} />
@@ -177,7 +177,7 @@ function BIcon({ name, size = 18 }: { name: string; size?: number }) {
 
 function Spec({ icon, label }: { icon: string; label: string }) {
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: '#f0f4f2', color: '#3a5a54', fontSize: '0.78rem', fontWeight: 600, padding: '4px 10px', borderRadius: 20 }}>
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: '#f4ede4', color: '#3a5a54', fontSize: '0.78rem', fontWeight: 600, padding: '4px 10px', borderRadius: 20 }}>
       <BIcon name={icon} size={16} /> {label}
     </span>
   )

@@ -71,7 +71,7 @@ function PropertiesInner() {
 
   const inp: React.CSSProperties = {
     width:'100%', background:'rgba(255,255,255,0.07)', border:'1.5px solid rgba(211,226,220,0.2)',
-    borderRadius:10, padding:'9px 12px', fontSize:'0.88rem', outline:'none', color:'#f0f4f2',
+    borderRadius:10, padding:'9px 12px', fontSize:'0.88rem', outline:'none', color:'#f4ede4',
     fontFamily:"'Tajawal','Cairo',sans-serif", boxSizing:'border-box',
   }
   const lbl: React.CSSProperties = {
@@ -80,7 +80,7 @@ function PropertiesInner() {
   }
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#0d1f1b' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#f4ede4' }}>
       <Navbar />
 
       <style>{`
@@ -121,7 +121,7 @@ function PropertiesInner() {
       {/* ═══ HERO ═══ */}
       <div style={{
         position:'relative', overflow:'hidden',
-        background:'linear-gradient(160deg, #0d1f1b 0%, #1e3a34 50%, #2d5a4e 100%)',
+        background:'linear-gradient(160deg, #f4ede4 0%, #1e3a34 50%, #2d5a4e 100%)',
         paddingTop:100, paddingBottom:60, paddingRight:'5%', paddingLeft:'5%',
         textAlign:'center', animation:'heroSlideDown 0.7s ease',
       }}>
@@ -152,7 +152,7 @@ function PropertiesInner() {
         <div style={{
           display:'inline-flex', alignItems:'center', gap:8,
           background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.12)',
-          padding:'8px 22px', borderRadius:50, fontSize:'0.82rem', color:'#f0f4f2', fontWeight:700,
+          padding:'8px 22px', borderRadius:50, fontSize:'0.82rem', color:'#f4ede4', fontWeight:700,
         }}>
           <span style={{ width:8, height:8, background:'#b8986a', borderRadius:'50%', display:'inline-block', boxShadow:'0 0 8px #b8986a' }} />
           {loading ? '...' : `${properties.length} عقار متاح`}
@@ -162,7 +162,7 @@ function PropertiesInner() {
       <style>{`
         .props-layout { display:flex; min-height:80vh; direction:rtl; }
         .props-sidebar { width:260px; background:rgba(30,58,52,0.95); backdrop-filter:blur(12px); border-left:1px solid rgba(211,226,220,0.08); padding:28px 18px; flex-shrink:0; position:sticky; top:0; height:100vh; overflow-y:auto; }
-        .props-grid-wrap { flex:1; padding:32px 28px 80px; min-width:0; background:#111d1a; }
+        .props-grid-wrap { flex:1; padding:32px 28px 80px; min-width:0; background:#f4ede4; }
         @media(max-width:700px){
           .props-layout   { flex-direction:column; }
           .props-sidebar  { width:100% !important; height:auto !important; position:static !important; padding:16px !important; border-left:none !important; border-bottom:1px solid rgba(211,226,220,0.08); }
@@ -294,7 +294,7 @@ function PropertiesInner() {
         </div>
       </div>
 
-      <div style={{ background:'#0d1f1b' }}><Footer /></div>
+      <div style={{ background:'#f4ede4' }}><Footer /></div>
     </main>
   )
 }
@@ -302,7 +302,7 @@ function PropertiesInner() {
 export default function PropertiesPage() {
   return (
     <Suspense fallback={
-      <div style={{ minHeight:'100vh', background:'#0d1f1b', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
+      <div style={{ minHeight:'100vh', background:'#f4ede4', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
         <span style={{ color:'#b8986a', fontSize:'1.1rem' }}>جاري التحميل...</span>
       </div>
     }>

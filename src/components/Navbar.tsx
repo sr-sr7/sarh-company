@@ -48,7 +48,7 @@ export default function Navbar() {
 
   const mobileInputStyle: React.CSSProperties = {
     width: '100%', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(211,226,220,0.2)',
-    borderRadius: 10, padding: '11px 14px', fontSize: '0.92rem', color: '#f0f4f2',
+    borderRadius: 10, padding: '11px 14px', fontSize: '0.92rem', color: '#f4ede4',
     outline: 'none', fontFamily: "'Tajawal','Cairo',sans-serif",
     boxSizing: 'border-box' as const,
   }

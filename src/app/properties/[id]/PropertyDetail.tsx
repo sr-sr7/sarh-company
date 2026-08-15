@@ -129,7 +129,7 @@ export default function PropertyDetail({ id }: { id: string }) {
   }
 
   if (loading) return (
-    <div style={{ minHeight:'100vh', background:'#f0f4f2', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
+    <div style={{ minHeight:'100vh', background:'#f4ede4', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
       <div style={{ textAlign:'center' }}>
         <div style={{ fontSize:'2rem', marginBottom:12 }}>⏳</div>
         <p style={{ color:'#41646d' }}>جاري تحميل بيانات العقار...</p>
@@ -138,7 +138,7 @@ export default function PropertyDetail({ id }: { id: string }) {
   )
 
   if (!property) return (
-    <div style={{ minHeight:'100vh', background:'#f0f4f2', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
+    <div style={{ minHeight:'100vh', background:'#f4ede4', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
       <div style={{ textAlign:'center' }}>
         <div style={{ fontSize:'3rem', marginBottom:12 }}>🔍</div>
         <p style={{ color:'#526266', fontSize:'1.1rem', marginBottom:20 }}>العقار غير موجود</p>
@@ -176,7 +176,7 @@ export default function PropertyDetail({ id }: { id: string }) {
     : 0
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", background:'#f0f4f2', minHeight:'100vh', direction:'rtl' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", background:'#f4ede4', minHeight:'100vh', direction:'rtl' }}>
       <Navbar />
 
       {/* Breadcrumb */}
@@ -226,7 +226,7 @@ export default function PropertyDetail({ id }: { id: string }) {
           </div>
         )}
         <div style={{ position:'absolute', top:20, right:24, display:'flex', gap:8, pointerEvents:'none' }}>
-          <span style={{ background:'#f0f4f2', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>{p.operation}</span>
+          <span style={{ background:'#f4ede4', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>{p.operation}</span>
           {p.is_new      && <span style={{ background:'#fff', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>🆕 جديد</span>}
         </div>
         {allImgs.length>1 && (
@@ -238,7 +238,7 @@ export default function PropertyDetail({ id }: { id: string }) {
 
       {/* Thumbnails */}
       {allImgs.length>1 && (
-        <div style={{ background:'#f0f4f2', padding:'12px 24px', display:'flex', gap:10, overflowX:'auto', borderBottom:'1px solid rgba(30,58,52,0.1)' }}>
+        <div style={{ background:'#f4ede4', padding:'12px 24px', display:'flex', gap:10, overflowX:'auto', borderBottom:'1px solid rgba(30,58,52,0.1)' }}>
           {allImgs.map((img,i) => (
             <div key={i} onClick={()=>setActiveImg(i)} onDoubleClick={()=>setLightbox(img)}
               style={{ flexShrink:0, width:80, height:56, borderRadius:8, overflow:'hidden', cursor:'pointer', border:activeImg===i?'3px solid #b8986a':'3px solid transparent', transition:'border 0.2s' }}>
@@ -291,7 +291,7 @@ export default function PropertyDetail({ id }: { id: string }) {
               <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:20, display:'flex', alignItems:'center', gap:8 }}>🏗️ المواصفات والمميزات</h2>
               <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(150px,1fr))', gap:12 }}>
                 {specs.map(s => (
-                  <div key={s.label} style={{ background:'#f0f4f2', borderRadius:12, padding:'14px 16px', textAlign:'center' }}>
+                  <div key={s.label} style={{ background:'#f4ede4', borderRadius:12, padding:'14px 16px', textAlign:'center' }}>
                     <div style={{ fontSize:'1.5rem', marginBottom:6 }}>{s.icon}</div>
                     <div style={{ fontSize:'0.72rem', color:'#9aada7', fontWeight:600, marginBottom:4 }}>{s.label}</div>
                     <div style={{ fontSize:'0.95rem', fontWeight:800, color:'#27423e' }}>{s.val}</div>
@@ -339,10 +339,10 @@ export default function PropertyDetail({ id }: { id: string }) {
             {reviews.length>0 ? (
               <div style={{ display:'flex', flexDirection:'column', gap:16, marginBottom:28 }}>
                 {reviews.map(r => (
-                  <div key={r.id} style={{ background:'#f7faf8', borderRadius:14, padding:'16px 20px', border:'1px solid rgba(39,66,62,0.07)' }}>
+                  <div key={r.id} style={{ background:'#f4ede4', borderRadius:14, padding:'16px 20px', border:'1px solid rgba(39,66,62,0.07)' }}>
                     <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:8, flexWrap:'wrap', gap:8 }}>
                       <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-                        <div style={{ width:36, height:36, borderRadius:'50%', background:'linear-gradient(135deg,#27423e,#41646d)', display:'flex', alignItems:'center', justifyContent:'center', color:'#f0f4f2', fontWeight:800, fontSize:'0.9rem' }}>
+                        <div style={{ width:36, height:36, borderRadius:'50%', background:'linear-gradient(135deg,#27423e,#41646d)', display:'flex', alignItems:'center', justifyContent:'center', color:'#f4ede4', fontWeight:800, fontSize:'0.9rem' }}>
                           {r.client_name?.[0] || '؟'}
                         </div>
                         <span style={{ fontWeight:700, color:'#1e3a34', fontSize:'0.9rem' }}>{r.client_name}</span>
@@ -381,7 +381,7 @@ export default function PropertyDetail({ id }: { id: string }) {
                   <div>
                     <label style={{ fontSize:'0.72rem', color:'#526266', fontWeight:700, display:'block', marginBottom:4 }}>الاسم *</label>
                     <input value={revName} onChange={e=>setRevName(e.target.value)} placeholder="اسمك الكريم" required
-                      style={{ width:'100%', background:'#f7faf8', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'9px 12px', fontSize:'0.88rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', boxSizing:'border-box' }} />
+                      style={{ width:'100%', background:'#f4ede4', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'9px 12px', fontSize:'0.88rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', boxSizing:'border-box' }} />
                   </div>
                   <div>
                     <label style={{ fontSize:'0.72rem', color:'#526266', fontWeight:700, display:'block', marginBottom:8 }}>تقييمك</label>
@@ -390,7 +390,7 @@ export default function PropertyDetail({ id }: { id: string }) {
                   <div>
                     <label style={{ fontSize:'0.72rem', color:'#526266', fontWeight:700, display:'block', marginBottom:4 }}>تعليقك *</label>
                     <textarea value={revMsg} onChange={e=>setRevMsg(e.target.value)} rows={3} placeholder="شاركنا تجربتك مع هذا العقار..." required
-                      style={{ width:'100%', background:'#f7faf8', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'9px 12px', fontSize:'0.85rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', resize:'vertical', boxSizing:'border-box' }} />
+                      style={{ width:'100%', background:'#f4ede4', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'9px 12px', fontSize:'0.85rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', resize:'vertical', boxSizing:'border-box' }} />
                   </div>
                   <button type="submit" disabled={sending}
                     style={{ background:sending?'#9aada7':'linear-gradient(135deg,#27423e,#1e3a34)', color:'#fff', border:'none', borderRadius:10, padding:'11px', fontWeight:800, cursor:sending?'not-allowed':'pointer', fontFamily:"'Tajawal','Cairo',sans-serif", fontSize:'0.88rem' }}>
@@ -410,7 +410,7 @@ export default function PropertyDetail({ id }: { id: string }) {
         <div className="prop-sidebar" style={{ position:'sticky', top:90 }}>
 
           {/* Price / Sold */}
-          <div style={{ background:'#f0f4f2', borderRadius:20, padding:'28px 24px', marginBottom:16, color:'#1e3a34', border:'1px solid rgba(30,58,52,0.12)' }}>
+          <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 24px', marginBottom:16, color:'#1e3a34', border:'1px solid rgba(30,58,52,0.12)' }}>
             {p.listing_number && (
               <div style={{ background:'rgba(184,152,106,0.15)', border:'1px solid rgba(184,152,106,0.3)', borderRadius:10, padding:'8px 14px', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>
                 <span style={{ color:'#4a7a72', fontSize:'0.72rem', fontWeight:600 }}>رقم العرض</span>
