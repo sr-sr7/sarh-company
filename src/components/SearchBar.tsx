@@ -2,7 +2,7 @@
 import { useState } from 'react'
 
 const operations = ['للبيع', 'للإيجار', 'إيجار يومي']
-const types = ['الكل', 'فيلا', 'شقة', 'أرض', 'استراحة', 'محل تجاري']
+const types = ['الكل', 'فيلا', 'شقة', 'أرض', 'استراحة', 'شاليه', 'محل تجاري']
 const cities = ['الكل', 'بريدة', 'عنيزة', 'الرس', 'البكيرية', 'المذنب']
 
 export default function SearchBar() {

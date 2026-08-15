@@ -14,7 +14,7 @@ const PropertyMap = dynamic(() => import('@/components/PropertyMap'), {
 })
 
 const OPERATIONS = ['للبيع','للإيجار','إيجار يومي','استثماري']
-const TYPES      = ['فيلا','أرض','شقة','استراحة','دبلكس','مزرعة','تجاري','مستودع']
+const TYPES      = ['فيلا','أرض','شقة','استراحة','شاليه','دبلكس','مزرعة','تجاري','مستودع']
 const FILTER_H   = 58  // ارتفاع شريط الفلاتر
 const NAV_H      = 80  // ارتفاع النافبار
 const BODY_H     = `calc(100vh - ${NAV_H + FILTER_H}px)`
