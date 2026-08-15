@@ -34,7 +34,7 @@ export default function Navbar() {
     { href: '#properties', label: 'العقارات',   icon: null },
     { href: '#services',   label: 'خدماتنا',   icon: null },
     { href: '/map',        label: 'الخريطة',   icon: '/icons/icon_r1_c16.png' },
-    { href: '/favorites',  label: 'المفضلة',   icon: null },
+    { href: '/favorites',  label: 'المفضلة',   icon: '/icons/icon_r3_c2.png' },
   ]
 
   const navBg = scrolled ? 'rgba(207,224,218,0.99)' : 'rgba(211,226,220,0.95)'
