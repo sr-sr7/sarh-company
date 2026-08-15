@@ -180,7 +180,7 @@ export default function PropertyDetail({ id }: { id: string }) {
       <Navbar />
 
       {/* Breadcrumb */}
-      <div style={{ paddingTop:80, background:'#fff', borderBottom:'1px solid rgba(39,66,62,0.08)' }}>
+      <div style={{ paddingTop:80, background:'#f4ede4', borderBottom:'1px solid rgba(39,66,62,0.08)' }}>
         <div style={{ maxWidth:1200, margin:'0 auto', padding:'14px 24px', display:'flex', alignItems:'center', gap:8, fontSize:'0.8rem', color:'#9aada7', flexWrap:'wrap' }}>
           <a href="/"           style={{ color:'#41646d', textDecoration:'none', fontWeight:600 }}>الرئيسية</a>
           <span>›</span>
