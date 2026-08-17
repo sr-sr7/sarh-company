@@ -2,17 +2,17 @@ import { LOGO_GIF } from '@/lib/logo'
 
 export default function Footer() {
   const S = {
-    footer: { background: '#f4ede4', color: '#3a5a54', padding: '60px 5% 30px', direction: 'rtl' as const },
+    footer: { background: '#d3e2dc', color: '#3a5a54', padding: '60px 5% 30px', direction: 'rtl' as const },
     grid: { maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px,1fr))', gap: 48, paddingBottom: 40 },
     brand: { fontSize: '1.1rem', fontWeight: 700, color: '#1e3a34', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 10 },
-    brandAccent: { color: '#b8986a' },
+    brandAccent: { color: '#41646d' },
     desc: { fontSize: '0.88rem', lineHeight: 1.85, color: '#1e3a34', fontWeight: 500 },
     heading: { fontSize: '0.75rem', letterSpacing: 2, textTransform: 'uppercase' as const, color: '#1e3a34', fontWeight: 700, marginBottom: 18 },
     list: { listStyle: 'none', display: 'flex', flexDirection: 'column' as const, gap: 10 },
     link: { color: '#1e3a34', textDecoration: 'none', fontSize: '0.88rem', fontWeight: 600 },
     contactItem: { display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.88rem', marginBottom: 10, color: '#1e3a34', fontWeight: 500 },
     bottom: { maxWidth: 1100, margin: '24px auto 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.78rem', color: 'rgba(30,58,52,0.7)', fontWeight: 500, flexWrap: 'wrap' as const, gap: 10 },
-    bottomLink: { color: '#b8986a', textDecoration: 'none' },
+    bottomLink: { color: '#41646d', textDecoration: 'none' },
   }
 
   return (

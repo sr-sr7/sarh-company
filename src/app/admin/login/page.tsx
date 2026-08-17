@@ -36,7 +36,7 @@ export default function LoginPage() {
 
         <div style={{ textAlign:'center', marginBottom:32 }}>
           <img src={LOGO_GIF} alt="صرح" width={56} height={56} style={{ borderRadius:10, marginBottom:12 }} />
-          <div style={{ fontSize:'1.3rem', fontWeight:800, color:'#1e3a34' }}>صرح <span style={{ color:'#b8986a' }}>العقارية</span></div>
+          <div style={{ fontSize:'1.3rem', fontWeight:800, color:'#1e3a34' }}>صرح <span style={{ color:'#41646d' }}>العقارية</span></div>
           <div style={{ fontSize:'0.72rem', color:'#9aada7', letterSpacing:2, marginTop:4 }}>لوحة التحكم</div>
         </div>
 
@@ -48,7 +48,7 @@ export default function LoginPage() {
               onChange={e => setUsername(e.target.value)}
               placeholder="admin"
               autoFocus
-              style={{ width:'100%', padding:'11px 14px', borderRadius:10, border:'1.5px solid #f4ede4', fontSize:'0.95rem', outline:'none', fontFamily:'Tajawal', boxSizing:'border-box', background:'#f8fbfa', color:'#1e3a34' }}
+              style={{ width:'100%', padding:'11px 14px', borderRadius:10, border:'1.5px solid #d3e2dc', fontSize:'0.95rem', outline:'none', fontFamily:'Tajawal', boxSizing:'border-box', background:'#f8fbfa', color:'#1e3a34' }}
             />
           </div>
           <div>
@@ -58,7 +58,7 @@ export default function LoginPage() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="••••••••"
-              style={{ width:'100%', padding:'11px 14px', borderRadius:10, border:'1.5px solid #f4ede4', fontSize:'0.95rem', outline:'none', fontFamily:'Tajawal', boxSizing:'border-box', background:'#f8fbfa', color:'#1e3a34' }}
+              style={{ width:'100%', padding:'11px 14px', borderRadius:10, border:'1.5px solid #d3e2dc', fontSize:'0.95rem', outline:'none', fontFamily:'Tajawal', boxSizing:'border-box', background:'#f8fbfa', color:'#1e3a34' }}
             />
           </div>
 

@@ -71,7 +71,7 @@ function PropertiesInner() {
 
   const inp: React.CSSProperties = {
     width:'100%', background:'rgba(255,255,255,0.07)', border:'1.5px solid rgba(211,226,220,0.2)',
-    borderRadius:10, padding:'9px 12px', fontSize:'0.88rem', outline:'none', color:'#f4ede4',
+    borderRadius:10, padding:'9px 12px', fontSize:'0.88rem', outline:'none', color:'#d3e2dc',
     fontFamily:"'Tajawal','Cairo',sans-serif", boxSizing:'border-box',
   }
   const lbl: React.CSSProperties = {
@@ -80,7 +80,7 @@ function PropertiesInner() {
   }
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#f4ede4' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#d3e2dc' }}>
       <Navbar />
 
       <style>{`
@@ -114,14 +114,14 @@ function PropertiesInner() {
           transform: perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1);
         }
         .filter-inp::placeholder { color: rgba(211,226,220,0.35); }
-        .filter-inp:focus { border-color: rgba(184,152,106,0.5) !important; background: rgba(255,255,255,0.1) !important; }
+        .filter-inp:focus { border-color: rgba(65,100,109,0.5) !important; background: rgba(255,255,255,0.1) !important; }
         select.filter-inp option { background: #1e3a34; color: #fff; }
       `}</style>
 
       {/* ═══ HERO ═══ */}
       <div style={{
         position:'relative', overflow:'hidden',
-        background:'linear-gradient(160deg, #f4ede4 0%, #1e3a34 50%, #2d5a4e 100%)',
+        background:'linear-gradient(160deg, #d3e2dc 0%, #1e3a34 50%, #2d5a4e 100%)',
         paddingTop:100, paddingBottom:60, paddingRight:'5%', paddingLeft:'5%',
         textAlign:'center', animation:'heroSlideDown 0.7s ease',
       }}>
@@ -132,7 +132,7 @@ function PropertiesInner() {
               position:'absolute',
               width: 8 + (i%3)*6, height: 8 + (i%3)*6,
               borderRadius:'50%',
-              background: i%2===0 ? 'rgba(184,152,106,0.18)' : 'rgba(211,226,220,0.08)',
+              background: i%2===0 ? 'rgba(65,100,109,0.18)' : 'rgba(211,226,220,0.08)',
               top: `${10 + i*14}%`,
               left: `${5 + i*16}%`,
               animation: `orbit${i%2===0?'':'2'} ${12+i*4}s linear infinite`,
@@ -140,11 +140,11 @@ function PropertiesInner() {
           ))}
         </div>
 
-        <p style={{ fontSize:'0.75rem', color:'rgba(184,152,106,0.8)', fontWeight:700, letterSpacing:3, marginBottom:12, animation:'heroSlideDown 0.6s ease' }}>
+        <p style={{ fontSize:'0.75rem', color:'rgba(65,100,109,0.8)', fontWeight:700, letterSpacing:3, marginBottom:12, animation:'heroSlideDown 0.6s ease' }}>
           ✦ صرح العقارية
         </p>
         <h1 style={{ fontSize:'clamp(2rem,5vw,3.2rem)', fontWeight:900, color:'#fff', margin:'0 0 12px', lineHeight:1.2 }}>
-          جميع <span style={{ color:'#b8986a', textShadow:'0 0 40px rgba(184,152,106,0.4)' }}>العقارات</span>
+          جميع <span style={{ color:'#41646d', textShadow:'0 0 40px rgba(65,100,109,0.4)' }}>العقارات</span>
         </h1>
         <p style={{ color:'rgba(211,226,220,0.65)', fontSize:'0.95rem', marginBottom:28 }}>
           تصفح مجموعتنا الكاملة — اقلب أي كرت لترى التفاصيل
@@ -152,9 +152,9 @@ function PropertiesInner() {
         <div style={{
           display:'inline-flex', alignItems:'center', gap:8,
           background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.12)',
-          padding:'8px 22px', borderRadius:50, fontSize:'0.82rem', color:'#f4ede4', fontWeight:700,
+          padding:'8px 22px', borderRadius:50, fontSize:'0.82rem', color:'#d3e2dc', fontWeight:700,
         }}>
-          <span style={{ width:8, height:8, background:'#b8986a', borderRadius:'50%', display:'inline-block', boxShadow:'0 0 8px #b8986a' }} />
+          <span style={{ width:8, height:8, background:'#41646d', borderRadius:'50%', display:'inline-block', boxShadow:'0 0 8px #41646d' }} />
           {loading ? '...' : `${properties.length} عقار متاح`}
         </div>
       </div>
@@ -162,7 +162,7 @@ function PropertiesInner() {
       <style>{`
         .props-layout { display:flex; min-height:80vh; direction:rtl; }
         .props-sidebar { width:260px; background:rgba(30,58,52,0.95); backdrop-filter:blur(12px); border-left:1px solid rgba(211,226,220,0.08); padding:28px 18px; flex-shrink:0; position:sticky; top:0; height:100vh; overflow-y:auto; }
-        .props-grid-wrap { flex:1; padding:32px 28px 80px; min-width:0; background:#f4ede4; }
+        .props-grid-wrap { flex:1; padding:32px 28px 80px; min-width:0; background:#d3e2dc; }
         @media(max-width:700px){
           .props-layout   { flex-direction:column; }
           .props-sidebar  { width:100% !important; height:auto !important; position:static !important; padding:16px !important; border-left:none !important; border-bottom:1px solid rgba(211,226,220,0.08); }
@@ -176,7 +176,7 @@ function PropertiesInner() {
         {/* ═══ SIDEBAR ═══ */}
         <aside className="props-sidebar">
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:24 }}>
-            <h3 style={{ fontWeight:800, fontSize:'0.95rem', color:'#b8986a', margin:0 }}>🔍 فلترة</h3>
+            <h3 style={{ fontWeight:800, fontSize:'0.95rem', color:'#41646d', margin:0 }}>🔍 فلترة</h3>
             {hasFilters && (
               <button onClick={resetFilters} style={{ background:'none', border:'none', color:'rgba(211,226,220,0.5)', fontSize:'0.75rem', fontWeight:700, cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif" }}>
                 مسح ✕
@@ -233,7 +233,7 @@ function PropertiesInner() {
             {hasFilters && (
               <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
                 {Object.entries(filters).filter(([,v])=>v).map(([k,v]) => (
-                  <span key={k} onClick={()=>setF(k,'')} style={{ background:'rgba(184,152,106,0.2)', color:'#b8986a', fontSize:'0.7rem', fontWeight:700, padding:'4px 10px', borderRadius:50, cursor:'pointer', display:'flex', alignItems:'center', gap:4 }}>
+                  <span key={k} onClick={()=>setF(k,'')} style={{ background:'rgba(65,100,109,0.2)', color:'#41646d', fontSize:'0.7rem', fontWeight:700, padding:'4px 10px', borderRadius:50, cursor:'pointer', display:'flex', alignItems:'center', gap:4 }}>
                     {v} <span>×</span>
                   </span>
                 ))}
@@ -268,7 +268,7 @@ function PropertiesInner() {
               <div style={{ fontSize:'5rem', opacity:0.1, marginBottom:20 }}>🔍</div>
               <p style={{ fontSize:'1.1rem', marginBottom:28 }}>لا توجد نتائج — جرّب تغيير الفلاتر</p>
               <button onClick={resetFilters} style={{
-                background:'#b8986a', color:'#1e3a34', border:'none', borderRadius:50,
+                background:'#41646d', color:'#1e3a34', border:'none', borderRadius:50,
                 padding:'12px 32px', fontSize:'0.9rem', fontWeight:800, cursor:'pointer',
                 fontFamily:"'Tajawal','Cairo',sans-serif",
               }}>عرض الكل</button>
@@ -294,7 +294,7 @@ function PropertiesInner() {
         </div>
       </div>
 
-      <div style={{ background:'#f4ede4' }}><Footer /></div>
+      <div style={{ background:'#d3e2dc' }}><Footer /></div>
     </main>
   )
 }
@@ -302,8 +302,8 @@ function PropertiesInner() {
 export default function PropertiesPage() {
   return (
     <Suspense fallback={
-      <div style={{ minHeight:'100vh', background:'#f4ede4', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
-        <span style={{ color:'#b8986a', fontSize:'1.1rem' }}>جاري التحميل...</span>
+      <div style={{ minHeight:'100vh', background:'#d3e2dc', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
+        <span style={{ color:'#41646d', fontSize:'1.1rem' }}>جاري التحميل...</span>
       </div>
     }>
       <PropertiesInner />

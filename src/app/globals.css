@@ -11,7 +11,7 @@
 
 body {
   font-family: 'Tajawal', 'Cairo', sans-serif;
-  background: #f4ede4;
+  background: #d3e2dc;
   color: #2a2a2a;
   direction: rtl;
   /* iOS safe area */
@@ -24,7 +24,7 @@ body {
 }
 
 ::-webkit-scrollbar       { width: 5px; }
-::-webkit-scrollbar-track { background: #f4ede4; }
+::-webkit-scrollbar-track { background: #d3e2dc; }
 ::-webkit-scrollbar-thumb { background: #41646d; border-radius: 4px; }
 
 img {
@@ -44,7 +44,7 @@ img {
 
 /* Focus visible for accessibility */
 :focus-visible {
-  outline: 2px solid #b8986a;
+  outline: 2px solid #41646d;
   outline-offset: 2px;
 }
 

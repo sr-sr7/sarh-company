@@ -48,7 +48,7 @@ export default function Navbar() {
 
   const mobileInputStyle: React.CSSProperties = {
     width: '100%', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(211,226,220,0.2)',
-    borderRadius: 10, padding: '11px 14px', fontSize: '0.92rem', color: '#f4ede4',
+    borderRadius: 10, padding: '11px 14px', fontSize: '0.92rem', color: '#d3e2dc',
     outline: 'none', fontFamily: "'Tajawal','Cairo',sans-serif",
     boxSizing: 'border-box' as const,
   }
@@ -91,7 +91,7 @@ export default function Navbar() {
             <option value="">المدينة</option>
             {['الرياض','جدة','مكة المكرمة','المدينة المنورة','الدمام','الخبر','الظهران','القطيف','الأحساء','الطائف','تبوك','أبها','خميس مشيط','بريدة','عنيزة','الرس','البكيرية','المذنب','حائل','ينبع','نجران','جازان','الباحة','عرعر','سكاكا','الخرج','الدوادمي'].map(c => <option key={c} value={c}>{c}</option>)}
           </select>
-          <button type="submit" style={{ background: '#b8986a', color: '#1e3a34', border: 'none', borderRadius: 8, padding: '6px 14px', fontWeight: 800, fontSize: '0.82rem', cursor: 'pointer', fontFamily: "'Tajawal','Cairo',sans-serif", height: 34, whiteSpace: 'nowrap' as const }}>
+          <button type="submit" style={{ background: '#41646d', color: '#1e3a34', border: 'none', borderRadius: 8, padding: '6px 14px', fontWeight: 800, fontSize: '0.82rem', cursor: 'pointer', fontFamily: "'Tajawal','Cairo',sans-serif", height: 34, whiteSpace: 'nowrap' as const }}>
             🔍
           </button>
         </form>
@@ -109,7 +109,7 @@ export default function Navbar() {
           ))}
           <li>
             <a href="https://wa.me/966557340222" target="_blank" rel="noopener noreferrer"
-              style={{ background: '#b8986a', color: '#1e3a34', padding: '8px 18px', borderRadius: 6, fontWeight: 700, textDecoration: 'none', fontSize: '0.88rem' }}>
+              style={{ background: '#41646d', color: '#1e3a34', padding: '8px 18px', borderRadius: 6, fontWeight: 700, textDecoration: 'none', fontSize: '0.88rem' }}>
               💬 تواصل معنا
             </a>
           </li>
@@ -173,7 +173,7 @@ export default function Navbar() {
                 {['الرياض','جدة','مكة المكرمة','المدينة المنورة','الدمام','الخبر','الظهران','القطيف','الأحساء','الطائف','تبوك','أبها','خميس مشيط','بريدة','عنيزة','الرس','البكيرية','المذنب','حائل','ينبع','نجران','جازان','الباحة','عرعر','سكاكا','الخرج','الدوادمي'].map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
-            <button type="submit" style={{ background: '#b8986a', color: '#1e3a34', border: 'none', borderRadius: 10, padding: '13px 0', fontWeight: 800, fontSize: '1rem', cursor: 'pointer', fontFamily: "'Tajawal','Cairo',sans-serif", width: '100%' }}>
+            <button type="submit" style={{ background: '#41646d', color: '#1e3a34', border: 'none', borderRadius: 10, padding: '13px 0', fontWeight: 800, fontSize: '1rem', cursor: 'pointer', fontFamily: "'Tajawal','Cairo',sans-serif", width: '100%' }}>
               🔍 بحث
             </button>
           </div>
@@ -210,7 +210,7 @@ export default function Navbar() {
           ))}
           <li style={{ padding: '12px 28px' }}>
             <a href="https://wa.me/966557340222" target="_blank" rel="noopener noreferrer" onClick={closeMenu}
-              style={{ display: 'block', textAlign: 'center', background: '#b8986a', color: '#27423e', padding: '13px 0', borderRadius: 10, fontWeight: 700, fontSize: '1rem', textDecoration: 'none', fontFamily: "'Tajawal','Cairo',sans-serif" }}>
+              style={{ display: 'block', textAlign: 'center', background: '#41646d', color: '#27423e', padding: '13px 0', borderRadius: 10, fontWeight: 700, fontSize: '1rem', textDecoration: 'none', fontFamily: "'Tajawal','Cairo',sans-serif" }}>
               💬 تواصل معنا عبر واتساب
             </a>
           </li>

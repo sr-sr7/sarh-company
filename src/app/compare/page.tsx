@@ -39,7 +39,7 @@ function CompareInner() {
     { label:'مسبح',          key:'has_pool',  render: bool },
     { label:'مواقف',         key:'has_parking',render: bool },
     { label:'حديقة',         key:'has_garden', render: bool },
-    { label:'السعر',         key:'price',     render: (v) => <span style={{ color:'#b8986a', fontWeight:800 }}>{fmt(v)}</span> },
+    { label:'السعر',         key:'price',     render: (v) => <span style={{ color:'#41646d', fontWeight:800 }}>{fmt(v)}</span> },
   ]
 
   const cell: React.CSSProperties = {
@@ -48,18 +48,18 @@ function CompareInner() {
   }
   const head: React.CSSProperties = {
     padding:'14px 16px', textAlign:'center', fontWeight:800, fontSize:'0.82rem',
-    color:'#526266', borderBottom:'2px solid rgba(39,66,62,0.12)', background:'#f4ede4',
+    color:'#526266', borderBottom:'2px solid rgba(39,66,62,0.12)', background:'#d3e2dc',
   }
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#f4ede4' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#d3e2dc' }}>
       <Navbar />
 
       {/* Header */}
       <div style={{ paddingTop:96, paddingBottom:32, padding:'96px 5% 32px', background:'linear-gradient(160deg,#27423e,#41646d)' }}>
         <p style={{ fontSize:'0.78rem', color:'rgba(211,226,220,0.6)', marginBottom:8 }}>الرئيسية › مقارنة العقارات</p>
         <h1 style={{ fontWeight:800, fontSize:'clamp(1.8rem,3vw,2.4rem)', color:'#fff', margin:0 }}>
-          ⚖️ مقارنة <span style={{ color:'#b8986a' }}>العقارات</span>
+          ⚖️ مقارنة <span style={{ color:'#41646d' }}>العقارات</span>
         </h1>
       </div>
 
@@ -87,10 +87,10 @@ function CompareInner() {
                 <div key={p.id} style={{ padding:'16px', borderRight:'1px solid rgba(39,66,62,0.07)', textAlign:'center' }}>
                   {p.main_image
                     ? <img src={p.main_image} alt={p.title} style={{ width:'100%', height:120, objectFit:'cover', borderRadius:10, marginBottom:8 }} />
-                    : <div style={{ height:120, background:'#f4ede4', borderRadius:10, marginBottom:8, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'2.5rem' }}>{ICONS[p.type]||'🏠'}</div>
+                    : <div style={{ height:120, background:'#d3e2dc', borderRadius:10, marginBottom:8, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'2.5rem' }}>{ICONS[p.type]||'🏠'}</div>
                   }
                   <a href={`/properties/${p.id}`} style={{ fontSize:'0.85rem', fontWeight:800, color:'#1e3a34', textDecoration:'none', display:'block', marginBottom:4, lineHeight:1.4 }}>{p.title}</a>
-                  {p.listing_number && <span style={{ fontSize:'0.7rem', color:'#b8986a', fontFamily:'monospace' }}>#{p.listing_number}</span>}
+                  {p.listing_number && <span style={{ fontSize:'0.7rem', color:'#41646d', fontFamily:'monospace' }}>#{p.listing_number}</span>}
                 </div>
               ))}
             </div>

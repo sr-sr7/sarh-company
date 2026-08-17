@@ -49,7 +49,7 @@ export default async function MaintenancePage() {
           .bar {
             height: 4px;
             border-radius: 2px;
-            background: linear-gradient(90deg, #f4ede4 0%, #b8986a 40%, #27423e 70%, #f4ede4 100%);
+            background: linear-gradient(90deg, #d3e2dc 0%, #41646d 40%, #27423e 70%, #d3e2dc 100%);
             background-size: 400px 100%;
             animation: shimmer 2.5s linear infinite;
           }
@@ -73,13 +73,13 @@ export default async function MaintenancePage() {
 
           {/* Logo */}
           <div style={{ marginBottom:28 }}>
-            <img src={LOGO_GIF} alt="صرح" width={72} height={72} style={{ borderRadius:16, boxShadow:'0 8px 32px rgba(0,0,0,0.3)', border:'2px solid rgba(184,152,106,0.4)' }} />
+            <img src={LOGO_GIF} alt="صرح" width={72} height={72} style={{ borderRadius:16, boxShadow:'0 8px 32px rgba(0,0,0,0.3)', border:'2px solid rgba(65,100,109,0.4)' }} />
           </div>
 
           {/* Brand */}
           <div style={{ marginBottom:32 }}>
             <div style={{ fontSize:'1.8rem', fontWeight:900, color:'#fff', letterSpacing:1, marginBottom:4 }}>
-              صرح <span style={{ color:'#b8986a' }}>العقارية</span>
+              صرح <span style={{ color:'#41646d' }}>العقارية</span>
             </div>
             <div style={{ fontSize:'0.7rem', color:'rgba(211,226,220,0.45)', letterSpacing:4 }}>SARH REAL ESTATE</div>
           </div>

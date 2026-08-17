@@ -48,7 +48,7 @@ export default function PromoWidget() {
 
   const inputStyle: React.CSSProperties = {
     width: '100%', padding: '9px 11px', borderRadius: 9,
-    border: '1.5px solid #f4ede4', fontSize: '0.88rem',
+    border: '1.5px solid #d3e2dc', fontSize: '0.88rem',
     fontFamily: 'Tajawal,sans-serif', color: '#1e3a34',
     outline: 'none', boxSizing: 'border-box', background: '#f8fbfa',
   }
@@ -160,15 +160,15 @@ export default function PromoWidget() {
             }} />
           )}
           <svg width="46" height="58" viewBox="0 0 46 58" fill="none" xmlns="http://www.w3.org/2000/svg"
-            style={{ filter: 'drop-shadow(0 4px 10px rgba(184,152,106,0.5))', transition: 'transform 0.2s' }}>
+            style={{ filter: 'drop-shadow(0 4px 10px rgba(65,100,109,0.5))', transition: 'transform 0.2s' }}>
             <ellipse cx="23" cy="20" rx="18" ry="20" fill="url(#balloonGrad)" />
             <ellipse cx="16" cy="12" rx="5" ry="7" fill="rgba(255,255,255,0.28)" transform="rotate(-20 16 12)" />
             <path d="M23 40 C21 42 25 44 23 46" stroke="#9a7d52" strokeWidth="1.5" fill="none" />
-            <path d="M23 46 C20 50 26 52 23 58" stroke="#b8986a" strokeWidth="1.2" fill="none" strokeDasharray="2 1" />
+            <path d="M23 46 C20 50 26 52 23 58" stroke="#41646d" strokeWidth="1.2" fill="none" strokeDasharray="2 1" />
             <defs>
               <linearGradient id="balloonGrad" x1="5" y1="0" x2="41" y2="40" gradientUnits="userSpaceOnUse">
                 <stop offset="0%" stopColor="#d4aa70" />
-                <stop offset="100%" stopColor="#b8986a" />
+                <stop offset="100%" stopColor="#41646d" />
               </linearGradient>
             </defs>
           </svg>

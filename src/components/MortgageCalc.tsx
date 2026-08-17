@@ -19,7 +19,7 @@ export default function MortgageCalc({ price }: { price: number }) {
   const sl: React.CSSProperties = { width: '100%', accentColor: '#27423e', margin: '6px 0 0' }
   const row = (label: string, val: string) => (
     <div style={{ display:'flex', justifyContent:'space-between', fontSize:'0.72rem', color:'#526266', fontWeight:700, marginBottom:2 }}>
-      <span>{label}</span><span style={{ color:'#b8986a' }}>{val}</span>
+      <span>{label}</span><span style={{ color:'#41646d' }}>{val}</span>
     </div>
   )
 
@@ -48,7 +48,7 @@ export default function MortgageCalc({ price }: { price: number }) {
         {/* Result */}
         <div style={{ background:'linear-gradient(135deg,#1e3a34,#27423e)', borderRadius:12, padding:'14px', textAlign:'center' }}>
           <div style={{ fontSize:'0.65rem', color:'rgba(211,226,220,0.65)', marginBottom:4 }}>القسط الشهري التقريبي</div>
-          <div style={{ fontSize:'1.5rem', fontWeight:800, color:'#b8986a' }}>{fmt(monthly)}</div>
+          <div style={{ fontSize:'1.5rem', fontWeight:800, color:'#41646d' }}>{fmt(monthly)}</div>
           <div style={{ fontSize:'0.65rem', color:'rgba(211,226,220,0.65)', marginTop:2 }}>ريال / شهر</div>
         </div>
 
@@ -58,7 +58,7 @@ export default function MortgageCalc({ price }: { price: number }) {
             { label:'قيمة القرض',        val: fmt(loan) },
             { label:'إجمالي المدفوعات', val: fmt(monthly * n) },
           ].map(({ label, val }) => (
-            <div key={label} style={{ background:'#f4ede4', borderRadius:8, padding:'8px', textAlign:'center' }}>
+            <div key={label} style={{ background:'#d3e2dc', borderRadius:8, padding:'8px', textAlign:'center' }}>
               <div style={{ fontWeight:800, color:'#27423e', fontSize:'0.78rem' }}>{val}</div>
               <div style={{ fontSize:'0.62rem', color:'#7a9188', marginTop:2 }}>{label}</div>
             </div>

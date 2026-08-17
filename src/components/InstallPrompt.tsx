@@ -77,7 +77,7 @@ export default function InstallPrompt() {
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
         <img src="/icon-192.png" alt="صرح" style={{ width: 54, height: 54, borderRadius: 14, flexShrink: 0 }} />
         <div>
-          <div style={{ color: '#b8986a', fontSize: '0.68rem', fontWeight: 700, letterSpacing: 1, marginBottom: 3 }}>
+          <div style={{ color: '#41646d', fontSize: '0.68rem', fontWeight: 700, letterSpacing: 1, marginBottom: 3 }}>
             أضف للشاشة الرئيسية
           </div>
           <div style={{ color: '#fff', fontSize: '1rem', fontWeight: 800 }}>صرح العقارية</div>
@@ -89,10 +89,10 @@ export default function InstallPrompt() {
       {isIOS && (
         <div style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 12, padding: '12px 14px', marginBottom: 14 }}>
           <div style={{ color: '#d0e8e2', fontSize: '0.82rem', lineHeight: 2 }}>
-            <span style={{ color: '#b8986a', fontWeight: 700 }}>١.</span>{' '}
+            <span style={{ color: '#41646d', fontWeight: 700 }}>١.</span>{' '}
             اضغط زر <strong style={{ color: '#fff' }}>المشاركة</strong>{' '}
             <span style={{ fontSize: '1.1rem' }}>⎙</span> في أسفل Safari<br />
-            <span style={{ color: '#b8986a', fontWeight: 700 }}>٢.</span>{' '}
+            <span style={{ color: '#41646d', fontWeight: 700 }}>٢.</span>{' '}
             اختر <strong style={{ color: '#fff' }}>«إضافة إلى الشاشة الرئيسية»</strong>
           </div>
         </div>
@@ -102,9 +102,9 @@ export default function InstallPrompt() {
       {!isIOS && !deferredPrompt && (
         <div style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 12, padding: '12px 14px', marginBottom: 14 }}>
           <div style={{ color: '#d0e8e2', fontSize: '0.82rem', lineHeight: 2 }}>
-            <span style={{ color: '#b8986a', fontWeight: 700 }}>١.</span>{' '}
+            <span style={{ color: '#41646d', fontWeight: 700 }}>١.</span>{' '}
             اضغط قائمة المتصفح <strong style={{ color: '#fff' }}>⋮</strong><br />
-            <span style={{ color: '#b8986a', fontWeight: 700 }}>٢.</span>{' '}
+            <span style={{ color: '#41646d', fontWeight: 700 }}>٢.</span>{' '}
             اختر <strong style={{ color: '#fff' }}>«إضافة إلى الشاشة الرئيسية»</strong>
           </div>
         </div>
@@ -113,7 +113,7 @@ export default function InstallPrompt() {
       <div style={{ display: 'flex', gap: 10 }}>
         {showNativeBtn && (
           <button onClick={install} style={{
-            flex: 1, background: '#b8986a', color: '#1e3a34',
+            flex: 1, background: '#41646d', color: '#1e3a34',
             border: 'none', borderRadius: 12, padding: '13px 0',
             fontWeight: 800, fontSize: '0.9rem', cursor: 'pointer',
             fontFamily: 'Tajawal, sans-serif',
@@ -123,7 +123,7 @@ export default function InstallPrompt() {
         )}
         <button onClick={dismiss} style={{
           flex: showNativeBtn ? 0 : 1,
-          background: showNativeBtn ? 'rgba(255,255,255,0.1)' : '#b8986a',
+          background: showNativeBtn ? 'rgba(255,255,255,0.1)' : '#41646d',
           color: showNativeBtn ? '#a8c5be' : '#1e3a34',
           border: 'none', borderRadius: 12,
           padding: showNativeBtn ? '13px 20px' : '13px 0',

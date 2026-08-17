@@ -40,7 +40,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
       className="sarh-card"
       style={{
         display: 'flex',
-        background: '#fff',
+        background: '#f4ede4',
         borderRadius: 16,
         overflow: 'hidden',
         border: '1px solid rgba(30,58,52,0.09)',
@@ -61,7 +61,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
       }}
     >
       {/* الصورة */}
-      <div className="sarh-card-img" style={{ position: 'relative', width: 220, minWidth: 220, alignSelf: 'stretch', background: '#f4ede4', flexShrink: 0 }}>
+      <div className="sarh-card-img" style={{ position: 'relative', width: 220, minWidth: 220, alignSelf: 'stretch', background: '#d3e2dc', flexShrink: 0 }}>
         {img ? (
           <img src={img} alt={p.title} loading="eager"
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', position: 'absolute', inset: 0 }} />
@@ -92,7 +92,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
         {p.listing_number && (
           <span style={{
             position: 'absolute', bottom: 10, left: 10,
-            background: 'rgba(0,0,0,0.55)', color: '#b8986a',
+            background: 'rgba(0,0,0,0.55)', color: '#41646d',
             fontSize: '0.68rem', fontWeight: 800, padding: '3px 8px',
             borderRadius: 6, fontFamily: 'monospace', backdropFilter: 'blur(4px)',
           }}>#{p.listing_number}</span>
@@ -105,7 +105,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
         {/* الرأس */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
-            <span style={{ display:'inline-flex', alignItems:'center', gap:4, fontSize: '0.72rem', fontWeight: 700, color: '#b8986a', background: 'rgba(184,152,106,0.1)', padding: '3px 10px', borderRadius: 20 }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:4, fontSize: '0.72rem', fontWeight: 700, color: '#41646d', background: 'rgba(65,100,109,0.1)', padding: '3px 10px', borderRadius: 20 }}>
               {TYPE_ICON[p.type] && <BIcon name={TYPE_ICON[p.type]} size={14} />}{p.type}
             </span>
             {p.is_new      && <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#0d6832', background: '#e8f5e9', padding: '3px 10px', borderRadius: 20 }}>جديد</span>}
@@ -141,17 +141,17 @@ export default function PropertyCard({ property: p }: { property: Property }) {
                 <span style={{ background: '#1e3a34', color: '#f0c060', fontSize: '0.8rem', fontWeight: 800, padding: '4px 12px', borderRadius: 20 }}>
                   {p.price > 0 ? `وصل السوم: ${priceNum} ر` : 'على السوم'}
                 </span>
-                {bidPriceNum && <span style={{ fontSize: '0.72rem', color: '#b8986a', paddingRight: 4 }}>الحد: {bidPriceNum} ر</span>}
+                {bidPriceNum && <span style={{ fontSize: '0.72rem', color: '#41646d', paddingRight: 4 }}>الحد: {bidPriceNum} ر</span>}
               </div>
             ) : isNegotiable ? (
-              <span style={{ background: '#1e3a34', color: '#b8986a', fontSize: '0.82rem', fontWeight: 800, padding: '5px 14px', borderRadius: 20 }}>آخر سوم</span>
+              <span style={{ background: '#1e3a34', color: '#41646d', fontSize: '0.82rem', fontWeight: 800, padding: '5px 14px', borderRadius: 20 }}>آخر سوم</span>
             ) : (
               <div>
                 <span style={{ fontSize: '1.25rem', fontWeight: 900, color: '#1e3a34' }}>{priceNum}</span>
                 <span style={{ fontSize: '0.78rem', color: '#7a9188', marginRight: 4 }}>{p.price_unit}</span>
                 {p.type === 'أرض' && p.price_per_meter && (
                   <div style={{ fontSize: '0.72rem', color: '#7a9e96', marginTop: 2 }}>
-                    سعر المتر: <span style={{ color: '#b8986a', fontWeight: 700 }}>{new Intl.NumberFormat('ar-SA').format(p.price_per_meter)} ر/م²</span>
+                    سعر المتر: <span style={{ color: '#41646d', fontWeight: 700 }}>{new Intl.NumberFormat('ar-SA').format(p.price_per_meter)} ر/م²</span>
                   </div>
                 )}
               </div>
@@ -178,7 +178,7 @@ function BIcon({ name, size = 18 }: { name: string; size?: number }) {
 
 function Spec({ icon, label }: { icon: string; label: string }) {
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: '#f4ede4', color: '#3a5a54', fontSize: '0.78rem', fontWeight: 600, padding: '4px 10px', borderRadius: 20 }}>
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: '#d3e2dc', color: '#3a5a54', fontSize: '0.78rem', fontWeight: 600, padding: '4px 10px', borderRadius: 20 }}>
       <BIcon name={icon} size={16} /> {label}
     </span>
   )

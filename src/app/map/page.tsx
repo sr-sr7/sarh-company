@@ -57,13 +57,13 @@ export default function MapPage() {
   const opBg    = (o: string) => o==='للإيجار' ? '#e8f5e9' : o==='على السوم' ? '#fff3e0' : '#e3f2fd'
 
   return (
-    <div style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', background:'#f4ede4' }}>
+    <div style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', background:'#d3e2dc' }}>
       <Navbar />
 
       {/* شريط الفلاتر — ثابت تحت النافبار */}
       <div style={{
         position:'fixed', top:NAV_H, right:0, left:0, zIndex:900,
-        height:FILTER_H, background:'#f4ede4',
+        height:FILTER_H, background:'#d3e2dc',
         borderBottom:'1px solid rgba(30,58,52,0.12)',
         display:'flex', gap:8, alignItems:'center', padding:'0 16px', flexWrap:'nowrap',
       }}>
@@ -82,7 +82,7 @@ export default function MapPage() {
         </select>
         {(op||type||search) && (
           <button onClick={() => { setOp(''); setType(''); setSearch('') }}
-            style={{ background:'none', border:'1px solid rgba(184,152,106,0.4)', borderRadius:8, color:'#b8986a', fontWeight:700, cursor:'pointer', fontSize:'0.78rem', fontFamily:"'Tajawal','Cairo',sans-serif", padding:'0 10px', height:34, whiteSpace:'nowrap', flexShrink:0 }}>
+            style={{ background:'none', border:'1px solid rgba(65,100,109,0.4)', borderRadius:8, color:'#41646d', fontWeight:700, cursor:'pointer', fontSize:'0.78rem', fontFamily:"'Tajawal','Cairo',sans-serif", padding:'0 10px', height:34, whiteSpace:'nowrap', flexShrink:0 }}>
             مسح ✕
           </button>
         )}
@@ -90,7 +90,7 @@ export default function MapPage() {
           {loading ? '...' : <><b style={{ color:'#1e3a34' }}>{filtered.length}</b> عقار</>}
         </span>
         <button onClick={() => setSideOpen(o => !o)}
-          style={{ background:'#1e3a34', color:'#f4ede4', border:'none', borderRadius:8, padding:'0 12px', height:34, fontWeight:700, fontSize:'0.78rem', cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif", whiteSpace:'nowrap', flexShrink:0 }}>
+          style={{ background:'#1e3a34', color:'#d3e2dc', border:'none', borderRadius:8, padding:'0 12px', height:34, fontWeight:700, fontSize:'0.78rem', cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif", whiteSpace:'nowrap', flexShrink:0 }}>
           {sideOpen ? '◀ القائمة' : 'القائمة ▶'}
         </button>
       </div>
@@ -100,26 +100,26 @@ export default function MapPage() {
 
         {/* القائمة الجانبية */}
         {sideOpen && (
-          <div className="map-sidebar" style={{ width:300, minWidth:300, height:'100%', borderLeft:'1px solid rgba(30,58,52,0.1)', overflowY:'auto', background:'#f4ede4', display:'flex', flexDirection:'column', order:2 }}>
+          <div className="map-sidebar" style={{ width:300, minWidth:300, height:'100%', borderLeft:'1px solid rgba(30,58,52,0.1)', overflowY:'auto', background:'#d3e2dc', display:'flex', flexDirection:'column', order:2 }}>
             {/* العقار المحدد */}
             {selected && (
               <div style={{ background:'#1e3a34', padding:'14px', borderBottom:'1px solid rgba(255,255,255,0.08)', flexShrink:0 }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:10 }}>
-                  <span style={{ fontSize:'0.65rem', fontWeight:800, letterSpacing:1.5, color:'#b8986a' }}>العقار المحدد</span>
+                  <span style={{ fontSize:'0.65rem', fontWeight:800, letterSpacing:1.5, color:'#41646d' }}>العقار المحدد</span>
                   <button onClick={() => setSelected(null)} style={{ background:'none', border:'none', color:'rgba(211,226,220,0.5)', cursor:'pointer', fontSize:'1.1rem', padding:0, lineHeight:1 }}>✕</button>
                 </div>
                 {selected.main_image && <img src={selected.main_image} alt="" style={{ width:'100%', height:120, objectFit:'cover', borderRadius:10, marginBottom:10, display:'block' }} />}
                 <div style={{ display:'flex', gap:5, marginBottom:8, flexWrap:'wrap' }}>
                   <span style={{ background:opBg(selected.operation), color:opColor(selected.operation), fontSize:'0.65rem', fontWeight:800, padding:'2px 9px', borderRadius:20 }}>{selected.operation}</span>
-                  <span style={{ background:'rgba(184,152,106,0.15)', color:'#b8986a', fontSize:'0.65rem', fontWeight:700, padding:'2px 9px', borderRadius:20 }}>{selected.type}</span>
+                  <span style={{ background:'rgba(65,100,109,0.15)', color:'#41646d', fontSize:'0.65rem', fontWeight:700, padding:'2px 9px', borderRadius:20 }}>{selected.type}</span>
                 </div>
                 <p style={{ fontSize:'0.85rem', fontWeight:800, color:'#fff', margin:'0 0 5px', lineHeight:1.4 }}>{selected.title}</p>
                 <p style={{ fontSize:'0.72rem', color:'rgba(211,226,220,0.65)', margin:'0 0 10px' }}>📍 {selected.district ? selected.district+'، ' : ''}{selected.city}</p>
-                <p style={{ fontSize:'1rem', fontWeight:900, color:'#b8986a', margin:'0 0 12px' }}>
+                <p style={{ fontSize:'1rem', fontWeight:900, color:'#41646d', margin:'0 0 12px' }}>
                   {fmt(selected.price)} <span style={{ fontSize:'0.7rem', fontWeight:400, color:'rgba(211,226,220,0.5)' }}>{selected.price_unit}</span>
                 </p>
                 <div style={{ display:'flex', gap:8 }}>
-                  <a href={`/properties/${selected.id}`} style={{ flex:1, display:'block', background:'#b8986a', color:'#1e3a34', textAlign:'center', padding:'9px', borderRadius:8, fontWeight:800, fontSize:'0.8rem', textDecoration:'none' }}>التفاصيل</a>
+                  <a href={`/properties/${selected.id}`} style={{ flex:1, display:'block', background:'#41646d', color:'#1e3a34', textAlign:'center', padding:'9px', borderRadius:8, fontWeight:800, fontSize:'0.8rem', textDecoration:'none' }}>التفاصيل</a>
                   <a href={`https://wa.me/${selected.whatsapp}?text=${encodeURIComponent('مرحباً، أريد الاستفسار عن: '+selected.title)}`} target="_blank"
                     style={{ flex:1, display:'block', background:'#25D366', color:'#fff', textAlign:'center', padding:'9px', borderRadius:8, fontWeight:800, fontSize:'0.8rem', textDecoration:'none' }}>واتساب</a>
                 </div>
@@ -138,7 +138,7 @@ export default function MapPage() {
                 <div key={p.id} onClick={() => setSelected(p)} style={{
                   display:'flex', gap:10, padding:'10px', borderRadius:10, marginBottom:6,
                   background: selected?.id===p.id ? '#fff' : 'transparent',
-                  border: selected?.id===p.id ? '1px solid rgba(184,152,106,0.4)' : '1px solid transparent',
+                  border: selected?.id===p.id ? '1px solid rgba(65,100,109,0.4)' : '1px solid transparent',
                   cursor:'pointer', transition:'background 0.15s', alignItems:'center',
                 }}
                   onMouseEnter={e => { if (selected?.id!==p.id) (e.currentTarget as HTMLElement).style.background='rgba(255,255,255,0.65)' }}
@@ -155,7 +155,7 @@ export default function MapPage() {
                     </div>
                     <p style={{ fontSize:'0.78rem', fontWeight:700, color:'#1e3a34', margin:'0 0 2px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.title}</p>
                     <p style={{ fontSize:'0.68rem', color:'#7a9188', margin:'0 0 2px' }}>{p.city}{p.district ? ` · ${p.district}` : ''}</p>
-                    <p style={{ fontSize:'0.8rem', fontWeight:900, color:'#b8986a', margin:0 }}>{fmt(p.price)} <span style={{ fontSize:'0.6rem', fontWeight:400, color:'#9aada7' }}>{p.price_unit}</span></p>
+                    <p style={{ fontSize:'0.8rem', fontWeight:900, color:'#41646d', margin:0 }}>{fmt(p.price)} <span style={{ fontSize:'0.6rem', fontWeight:400, color:'#9aada7' }}>{p.price_unit}</span></p>
                   </div>
                 </div>
               ))}
@@ -168,7 +168,7 @@ export default function MapPage() {
           {loading ? (
             <div style={{ height:'100%', display:'flex', alignItems:'center', justifyContent:'center', background:'#e8ede8' }}>
               <div style={{ textAlign:'center' }}>
-                <div style={{ width:40, height:40, border:'4px solid #f4ede4', borderTop:'4px solid #1e3a34', borderRadius:'50%', margin:'0 auto 12px', animation:'spin 1s linear infinite' }} />
+                <div style={{ width:40, height:40, border:'4px solid #d3e2dc', borderTop:'4px solid #1e3a34', borderRadius:'50%', margin:'0 auto 12px', animation:'spin 1s linear infinite' }} />
                 <span style={{ color:'#41646d', fontFamily:'Tajawal' }}>جاري التحميل...</span>
               </div>
             </div>

@@ -20,14 +20,14 @@ export default function FavoritesPage() {
   }, [ids.join(',')])
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#f4ede4' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', minHeight:'100vh', background:'#d3e2dc' }}>
       <Navbar />
 
       {/* Header */}
       <div style={{ paddingTop:96, paddingBottom:40, padding:'96px 5% 40px', background:'linear-gradient(160deg,#27423e,#41646d)' }}>
         <p style={{ fontSize:'0.78rem', color:'rgba(211,226,220,0.6)', marginBottom:8 }}>الرئيسية › المفضلة</p>
         <h1 style={{ fontWeight:800, fontSize:'clamp(1.8rem,3vw,2.4rem)', color:'#fff', margin:'0 0 8px' }}>
-          ❤️ <span style={{ color:'#b8986a' }}>المفضلة</span>
+          ❤️ <span style={{ color:'#41646d' }}>المفضلة</span>
         </h1>
         <p style={{ fontSize:'0.9rem', color:'rgba(211,226,220,0.75)', margin:'8px 0 0' }}>
           {ids.length === 0 ? 'لا توجد عقارات محفوظة بعد' : `${ids.length} عقار محفوظ`}

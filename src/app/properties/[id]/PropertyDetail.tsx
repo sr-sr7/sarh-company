@@ -11,7 +11,7 @@ const H = SB_HEADERS
 function TikTokEmbed({ url }: { url: string }) {
   if (!url) return null
   return (
-    <div style={{ background:'#f4ede4', borderRadius:20, padding:'24px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
+    <div style={{ background:'#d3e2dc', borderRadius:20, padding:'24px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
       <div>
         <div style={{ fontWeight:800, fontSize:'0.95rem', color:'#1e3a34', marginBottom:4 }}>فيديو العقار متاح على قناتنا</div>
         <div style={{ fontSize:'0.8rem', color:'#9aada7' }}>اضغط لمشاهدة الفيديو كاملاً</div>
@@ -135,16 +135,16 @@ export default function PropertyDetail({ id }: { id: string }) {
   }
 
   if (loading) return (
-    <div style={{ minHeight:'100vh', background:'#f4ede4', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
+    <div style={{ minHeight:'100vh', background:'#d3e2dc', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
       <div style={{ textAlign:'center' }}>
-        <div style={{ width:40, height:40, border:'4px solid #f4ede4', borderTop:'4px solid #1e3a34', borderRadius:'50%', margin:'0 auto 16px', animation:'spin 1s linear infinite' }} />
+        <div style={{ width:40, height:40, border:'4px solid #d3e2dc', borderTop:'4px solid #1e3a34', borderRadius:'50%', margin:'0 auto 16px', animation:'spin 1s linear infinite' }} />
         <p style={{ color:'#41646d' }}>جاري تحميل بيانات العقار...</p>
       </div>
     </div>
   )
 
   if (!property) return (
-    <div style={{ minHeight:'100vh', background:'#f4ede4', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
+    <div style={{ minHeight:'100vh', background:'#d3e2dc', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Tajawal' }}>
       <div style={{ textAlign:'center' }}>
         <BIcon name="icon_r1_c16" size={48} />
         <p style={{ color:'#526266', fontSize:'1.1rem', marginBottom:20, marginTop:12 }}>العقار غير موجود</p>
@@ -182,11 +182,11 @@ export default function PropertyDetail({ id }: { id: string }) {
     : 0
 
   return (
-    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", background:'#f4ede4', minHeight:'100vh', direction:'rtl' }}>
+    <main style={{ fontFamily:"'Tajawal','Cairo',sans-serif", background:'#d3e2dc', minHeight:'100vh', direction:'rtl' }}>
       <Navbar />
 
       {/* Breadcrumb */}
-      <div style={{ paddingTop:80, background:'#f4ede4', borderBottom:'1px solid rgba(39,66,62,0.08)' }}>
+      <div style={{ paddingTop:80, background:'#d3e2dc', borderBottom:'1px solid rgba(39,66,62,0.08)' }}>
         <div style={{ maxWidth:1200, margin:'0 auto', padding:'14px 24px', display:'flex', alignItems:'center', gap:8, fontSize:'0.8rem', color:'#9aada7', flexWrap:'wrap' }}>
           <a href="/"           style={{ color:'#41646d', textDecoration:'none', fontWeight:600 }}>الرئيسية</a>
           <span>›</span>
@@ -232,7 +232,7 @@ export default function PropertyDetail({ id }: { id: string }) {
           </div>
         )}
         <div style={{ position:'absolute', top:20, right:24, display:'flex', gap:8, pointerEvents:'none' }}>
-          <span style={{ background:'#f4ede4', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>{p.operation}</span>
+          <span style={{ background:'#d3e2dc', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>{p.operation}</span>
           {p.is_new      && <span style={{ background:'#fff', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>جديد</span>}
         </div>
         {allImgs.length>1 && (
@@ -244,10 +244,10 @@ export default function PropertyDetail({ id }: { id: string }) {
 
       {/* Thumbnails */}
       {allImgs.length>1 && (
-        <div style={{ background:'#f4ede4', padding:'12px 24px', display:'flex', gap:10, overflowX:'auto', borderBottom:'1px solid rgba(30,58,52,0.1)' }}>
+        <div style={{ background:'#d3e2dc', padding:'12px 24px', display:'flex', gap:10, overflowX:'auto', borderBottom:'1px solid rgba(30,58,52,0.1)' }}>
           {allImgs.map((img,i) => (
             <div key={i} onClick={()=>setActiveImg(i)} onDoubleClick={()=>setLightbox(img)}
-              style={{ flexShrink:0, width:80, height:56, borderRadius:8, overflow:'hidden', cursor:'pointer', border:activeImg===i?'3px solid #b8986a':'3px solid transparent', transition:'border 0.2s' }}>
+              style={{ flexShrink:0, width:80, height:56, borderRadius:8, overflow:'hidden', cursor:'pointer', border:activeImg===i?'3px solid #41646d':'3px solid transparent', transition:'border 0.2s' }}>
               <img src={img} alt="" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
             </div>
           ))}
@@ -261,12 +261,12 @@ export default function PropertyDetail({ id }: { id: string }) {
         <div className="prop-main">
 
           {/* Title */}
-          <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
+          <div style={{ background:'#d3e2dc', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12, flexWrap:'wrap' }}>
               <BIcon name={TYPE_ICONS[p.type]||'icon_r3_c1'} size={28} />
               <span style={{ background:'rgba(39,66,62,0.08)', color:'#41646d', fontSize:'0.78rem', fontWeight:700, padding:'4px 14px', borderRadius:50 }}>{p.type}</span>
               {p.listing_number && (
-                <span style={{ background:'#27423e', color:'#b8986a', fontSize:'0.78rem', fontWeight:800, padding:'4px 14px', borderRadius:50, fontFamily:'monospace', letterSpacing:1 }}>
+                <span style={{ background:'#27423e', color:'#41646d', fontSize:'0.78rem', fontWeight:800, padding:'4px 14px', borderRadius:50, fontFamily:'monospace', letterSpacing:1 }}>
                   رقم العرض: #{p.listing_number}
                 </span>
               )}
@@ -285,7 +285,7 @@ export default function PropertyDetail({ id }: { id: string }) {
 
           {/* Description */}
           {p.description && (
-            <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
+            <div style={{ background:'#d3e2dc', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
               <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>وصف العقار</h2>
               <p style={{ color:'#526266', lineHeight:2, fontSize:'0.95rem', whiteSpace:'pre-wrap' }}>{p.description}</p>
             </div>
@@ -293,11 +293,11 @@ export default function PropertyDetail({ id }: { id: string }) {
 
           {/* Specs */}
           {specs.length>0 && (
-            <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
+            <div style={{ background:'#d3e2dc', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
               <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:20, display:'flex', alignItems:'center', gap:8 }}>المواصفات والمميزات</h2>
               <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(150px,1fr))', gap:12 }}>
                 {specs.map(s => (
-                  <div key={s.label} style={{ background:'#f4ede4', borderRadius:12, padding:'14px 16px', textAlign:'center' }}>
+                  <div key={s.label} style={{ background:'#d3e2dc', borderRadius:12, padding:'14px 16px', textAlign:'center' }}>
                     <div style={{ marginBottom:6, display:'flex', justifyContent:'center' }}><BIcon name={s.icon} size={28} /></div>
                     <div style={{ fontSize:'0.72rem', color:'#9aada7', fontWeight:600, marginBottom:4 }}>{s.label}</div>
                     <div style={{ fontSize:'0.95rem', fontWeight:800, color:'#27423e' }}>{s.val}</div>
@@ -311,7 +311,7 @@ export default function PropertyDetail({ id }: { id: string }) {
           {p.video_url && <TikTokEmbed url={p.video_url} />}
 
           {/* Map */}
-          <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
+          <div style={{ background:'#d3e2dc', borderRadius:20, padding:'28px 32px', marginBottom:20, border:'1px solid rgba(39,66,62,0.12)' }}>
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:16, flexWrap:'wrap', gap:10 }}>
               <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', display:'flex', alignItems:'center', gap:8, margin:0 }}><BIcon name="icon_r1_c16" size={18} /> موقع العقار</h2>
               <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
@@ -328,7 +328,7 @@ export default function PropertyDetail({ id }: { id: string }) {
           </div>
 
           {/* ── Customer Reviews ── */}
-          <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 32px', border:'1px solid rgba(39,66,62,0.12)' }}>
+          <div style={{ background:'#d3e2dc', borderRadius:20, padding:'28px 32px', border:'1px solid rgba(39,66,62,0.12)' }}>
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:20, flexWrap:'wrap', gap:8 }}>
               <h2 style={{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', display:'flex', alignItems:'center', gap:8, margin:0 }}>
                 تعليقات العملاء
@@ -345,10 +345,10 @@ export default function PropertyDetail({ id }: { id: string }) {
             {reviews.length>0 ? (
               <div style={{ display:'flex', flexDirection:'column', gap:16, marginBottom:28 }}>
                 {reviews.map(r => (
-                  <div key={r.id} style={{ background:'#f4ede4', borderRadius:14, padding:'16px 20px', border:'1px solid rgba(39,66,62,0.07)' }}>
+                  <div key={r.id} style={{ background:'#d3e2dc', borderRadius:14, padding:'16px 20px', border:'1px solid rgba(39,66,62,0.07)' }}>
                     <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:8, flexWrap:'wrap', gap:8 }}>
                       <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-                        <div style={{ width:36, height:36, borderRadius:'50%', background:'linear-gradient(135deg,#27423e,#41646d)', display:'flex', alignItems:'center', justifyContent:'center', color:'#f4ede4', fontWeight:800, fontSize:'0.9rem' }}>
+                        <div style={{ width:36, height:36, borderRadius:'50%', background:'linear-gradient(135deg,#27423e,#41646d)', display:'flex', alignItems:'center', justifyContent:'center', color:'#d3e2dc', fontWeight:800, fontSize:'0.9rem' }}>
                           {r.client_name?.[0] || '؟'}
                         </div>
                         <span style={{ fontWeight:700, color:'#1e3a34', fontSize:'0.9rem' }}>{r.client_name}</span>
@@ -387,7 +387,7 @@ export default function PropertyDetail({ id }: { id: string }) {
                   <div>
                     <label style={{ fontSize:'0.72rem', color:'#526266', fontWeight:700, display:'block', marginBottom:4 }}>الاسم *</label>
                     <input value={revName} onChange={e=>setRevName(e.target.value)} placeholder="اسمك الكريم" required
-                      style={{ width:'100%', background:'#f4ede4', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'9px 12px', fontSize:'0.88rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', boxSizing:'border-box' }} />
+                      style={{ width:'100%', background:'#d3e2dc', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'9px 12px', fontSize:'0.88rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', boxSizing:'border-box' }} />
                   </div>
                   <div>
                     <label style={{ fontSize:'0.72rem', color:'#526266', fontWeight:700, display:'block', marginBottom:8 }}>تقييمك</label>
@@ -396,7 +396,7 @@ export default function PropertyDetail({ id }: { id: string }) {
                   <div>
                     <label style={{ fontSize:'0.72rem', color:'#526266', fontWeight:700, display:'block', marginBottom:4 }}>تعليقك *</label>
                     <textarea value={revMsg} onChange={e=>setRevMsg(e.target.value)} rows={3} placeholder="شاركنا تجربتك مع هذا العقار..." required
-                      style={{ width:'100%', background:'#f4ede4', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'9px 12px', fontSize:'0.85rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', resize:'vertical', boxSizing:'border-box' }} />
+                      style={{ width:'100%', background:'#d3e2dc', border:'1.5px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'9px 12px', fontSize:'0.85rem', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none', resize:'vertical', boxSizing:'border-box' }} />
                   </div>
                   <button type="submit" disabled={sending}
                     style={{ background:sending?'#9aada7':'linear-gradient(135deg,#27423e,#1e3a34)', color:'#fff', border:'none', borderRadius:10, padding:'11px', fontWeight:800, cursor:sending?'not-allowed':'pointer', fontFamily:"'Tajawal','Cairo',sans-serif", fontSize:'0.88rem' }}>
@@ -416,11 +416,11 @@ export default function PropertyDetail({ id }: { id: string }) {
         <div className="prop-sidebar" style={{ position:'sticky', top:90 }}>
 
           {/* Price / Sold */}
-          <div style={{ background:'#f4ede4', borderRadius:20, padding:'28px 24px', marginBottom:16, color:'#1e3a34', border:'1px solid rgba(30,58,52,0.12)' }}>
+          <div style={{ background:'#d3e2dc', borderRadius:20, padding:'28px 24px', marginBottom:16, color:'#1e3a34', border:'1px solid rgba(30,58,52,0.12)' }}>
             {p.listing_number && (
-              <div style={{ background:'rgba(184,152,106,0.15)', border:'1px solid rgba(184,152,106,0.3)', borderRadius:10, padding:'8px 14px', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>
+              <div style={{ background:'rgba(65,100,109,0.15)', border:'1px solid rgba(65,100,109,0.3)', borderRadius:10, padding:'8px 14px', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>
                 <span style={{ color:'#4a7a72', fontSize:'0.72rem', fontWeight:600 }}>رقم العرض</span>
-                <span style={{ color:'#b8986a', fontSize:'1rem', fontWeight:800, fontFamily:'monospace', letterSpacing:2 }}>#{p.listing_number}</span>
+                <span style={{ color:'#41646d', fontSize:'1rem', fontWeight:800, fontFamily:'monospace', letterSpacing:2 }}>#{p.listing_number}</span>
               </div>
             )}
             {isSold ? (
@@ -431,13 +431,13 @@ export default function PropertyDetail({ id }: { id: string }) {
             ) : (
               <>
                 <p style={{ color:'#4a7a72', fontSize:'0.78rem', fontWeight:600, marginBottom:8, letterSpacing:1 }}>السعر</p>
-                <div style={{ fontSize:'clamp(1.6rem,3vw,2.2rem)', fontWeight:800, color:'#b8986a', lineHeight:1.2 }}>{price}</div>
+                <div style={{ fontSize:'clamp(1.6rem,3vw,2.2rem)', fontWeight:800, color:'#41646d', lineHeight:1.2 }}>{price}</div>
                 <p style={{ color:'#4a7a72', fontSize:'0.82rem', marginTop:6 }}>{p.price_unit}</p>
                 {p.type === 'أرض' && p.price_per_meter && (
                   <div style={{ marginTop:10, display:'flex', gap:10, flexWrap:'wrap' }}>
-                    <div style={{ background:'rgba(184,152,106,0.1)', border:'1px solid rgba(184,152,106,0.25)', borderRadius:8, padding:'6px 12px', fontSize:'0.8rem', color:'#1e3a34' }}>
+                    <div style={{ background:'rgba(65,100,109,0.1)', border:'1px solid rgba(65,100,109,0.25)', borderRadius:8, padding:'6px 12px', fontSize:'0.8rem', color:'#1e3a34' }}>
                       <span style={{ color:'#4a7a72' }}>سعر المتر: </span>
-                      <span style={{ fontWeight:800, color:'#b8986a' }}>{new Intl.NumberFormat('ar-SA').format(p.price_per_meter)} ريال/م²</span>
+                      <span style={{ fontWeight:800, color:'#41646d' }}>{new Intl.NumberFormat('ar-SA').format(p.price_per_meter)} ريال/م²</span>
                     </div>
                   </div>
                 )}
@@ -473,7 +473,7 @@ export default function PropertyDetail({ id }: { id: string }) {
 
 
           {/* Share */}
-          <div style={{ background:'#f4ede4', borderRadius:16, padding:'16px 20px', border:'1px solid rgba(39,66,62,0.12)', marginBottom:0 }}>
+          <div style={{ background:'#d3e2dc', borderRadius:16, padding:'16px 20px', border:'1px solid rgba(39,66,62,0.12)', marginBottom:0 }}>
             <p style={{ fontSize:'0.75rem', color:'#9aada7', fontWeight:600, marginBottom:12, textAlign:'center' }}>مشاركة العقار</p>
             <div style={{ display:'flex', justifyContent:'center' }}>
               <a href={`https://wa.me/?text=${shareText}${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer"
@@ -494,7 +494,7 @@ export default function PropertyDetail({ id }: { id: string }) {
       {/* Back button */}
       <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 24px 40px' }}>
         <button onClick={()=>router.back()}
-          style={{ background:'#f4ede4', color:'#526266', border:'1px solid rgba(39,66,62,0.2)', borderRadius:10, padding:'10px 24px', fontSize:'0.9rem', fontWeight:700, cursor:'pointer', fontFamily:'Tajawal' }}>
+          style={{ background:'#d3e2dc', color:'#526266', border:'1px solid rgba(39,66,62,0.2)', borderRadius:10, padding:'10px 24px', fontSize:'0.9rem', fontWeight:700, cursor:'pointer', fontFamily:'Tajawal' }}>
           ← العودة للعقارات
         </button>
       </div>

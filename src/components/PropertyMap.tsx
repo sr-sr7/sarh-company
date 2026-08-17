@@ -147,7 +147,7 @@ export default function PropertyMap({ properties, onPinClick }: {
         className: '',
         html: `<div style="
           width:32px;height:32px;
-          background:${hasRealCoords ? '#1e3a34' : '#b8986a'};
+          background:${hasRealCoords ? '#1e3a34' : '#41646d'};
           border-radius:50% 50% 50% 0;
           transform:rotate(-45deg);
           border:2px solid #fff;
@@ -162,12 +162,12 @@ export default function PropertyMap({ properties, onPinClick }: {
       const waLink = `https://wa.me/${p.whatsapp}?text=${encodeURIComponent('مرحباً، أريد الاستفسار عن: ' + p.title)}`
       const imgHtml = p.main_image
         ? `<img src="${p.main_image}" style="width:100%;height:100px;object-fit:cover;border-radius:8px;margin-bottom:8px;display:block"/>`
-        : `<div style="width:100%;height:70px;background:#f4ede4;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:8px">🏠</div>`
+        : `<div style="width:100%;height:70px;background:#d3e2dc;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:8px">🏠</div>`
 
       const popup = L.popup({ maxWidth: 210, className: 'sarh-popup' }).setContent(`
         <div style="font-family:'Tajawal',sans-serif;direction:rtl;width:190px">
           ${imgHtml}
-          <div style="font-size:0.7rem;font-weight:800;color:#b8986a;margin-bottom:3px">${p.operation} · ${p.type}</div>
+          <div style="font-size:0.7rem;font-weight:800;color:#41646d;margin-bottom:3px">${p.operation} · ${p.type}</div>
           <div style="font-weight:700;font-size:12px;color:#1e3a34;margin-bottom:4px;line-height:1.4">${p.title}</div>
           <div style="font-size:11px;color:#7a9188;margin-bottom:6px">📍 ${p.district ? p.district + '، ' : ''}${p.city}</div>
           <div style="font-weight:800;font-size:14px;color:#1e3a34;margin-bottom:10px">
@@ -175,7 +175,7 @@ export default function PropertyMap({ properties, onPinClick }: {
           </div>
           <div style="display:flex;gap:6px">
             <a href="/properties/${p.id}"
-              style="flex:1;display:block;background:#1e3a34;color:#f4ede4;text-align:center;padding:7px;border-radius:8px;font-weight:700;font-size:11px;text-decoration:none">
+              style="flex:1;display:block;background:#1e3a34;color:#d3e2dc;text-align:center;padding:7px;border-radius:8px;font-weight:700;font-size:11px;text-decoration:none">
               التفاصيل
             </a>
             <a href="${waLink}" target="_blank"
