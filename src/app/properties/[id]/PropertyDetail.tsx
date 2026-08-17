@@ -233,7 +233,7 @@ export default function PropertyDetail({ id }: { id: string }) {
         )}
         <div style={{ position:'absolute', top:20, right:24, display:'flex', gap:8, pointerEvents:'none' }}>
           <span style={{ background:'#d3e2dc', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>{p.operation}</span>
-          {p.is_new      && <span style={{ background:'#fff', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>جديد</span>}
+          {p.is_new      && <span style={{ background:'#f4ede4', color:'#1e3a34', fontSize:'0.85rem', fontWeight:700, padding:'6px 16px', borderRadius:8 }}>جديد</span>}
         </div>
         {allImgs.length>1 && (
           <div style={{ position:'absolute', bottom:20, left:24, background:'rgba(0,0,0,0.5)', color:'#fff', fontSize:'0.8rem', padding:'5px 14px', borderRadius:50, backdropFilter:'blur(4px)' }}>

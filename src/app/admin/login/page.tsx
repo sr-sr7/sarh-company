@@ -32,7 +32,7 @@ export default function LoginPage() {
 
   return (
     <div style={{ minHeight:'100vh', background:'linear-gradient(160deg,#1e3a34,#27423e)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl', padding:20 }}>
-      <div style={{ background:'#fff', borderRadius:20, padding:'40px 36px', width:'100%', maxWidth:400, boxShadow:'0 20px 60px rgba(0,0,0,0.3)' }}>
+      <div style={{ background:'#f4ede4', borderRadius:20, padding:'40px 36px', width:'100%', maxWidth:400, boxShadow:'0 20px 60px rgba(0,0,0,0.3)' }}>
 
         <div style={{ textAlign:'center', marginBottom:32 }}>
           <img src={LOGO_GIF} alt="صرح" width={56} height={56} style={{ borderRadius:10, marginBottom:12 }} />

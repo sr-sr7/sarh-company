@@ -35,22 +35,22 @@ const S = {
   statNum:{ fontWeight:800, fontSize:'2rem', lineHeight:1 },
   statLabel:{ fontSize:'0.75rem', opacity:0.8, marginTop:4 },
   tabsRow:{ padding:'0 32px', display:'flex', gap:8, marginBottom:24, flexWrap:'wrap' as const },
-  tabBtn:(a:boolean)=>({ padding:'10px 20px', borderRadius:10, fontSize:'0.85rem', fontWeight:700, cursor:'pointer', border:a?'1px solid rgba(30,58,52,0.2)':'1px solid rgba(30,58,52,0.12)', background:a?'#d3e2dc':'#fff', color:'#1e3a34', fontFamily:"'Tajawal','Cairo',sans-serif" }),
+  tabBtn:(a:boolean)=>({ padding:'10px 20px', borderRadius:10, fontSize:'0.85rem', fontWeight:700, cursor:'pointer', border:a?'1px solid rgba(30,58,52,0.2)':'1px solid rgba(30,58,52,0.12)', background:a?'#d3e2dc':'#f4ede4', color:'#1e3a34', fontFamily:"'Tajawal','Cairo',sans-serif" }),
   msg:{ margin:'0 32px 16px', background:'#d3e2dc', color:'#1e3a34', padding:'12px 16px', borderRadius:10, fontSize:'0.85rem', fontWeight:600 },
   errMsg:{ margin:'0 32px 16px', background:'#fee2e2', color:'#cc0000', padding:'12px 16px', borderRadius:10, fontSize:'0.85rem', fontWeight:600 },
   content:{ padding:'0 32px 64px' },
-  tableWrap:{ background:'#fff', borderRadius:16, border:'1px solid rgba(39,66,62,0.1)', overflow:'auto' },
+  tableWrap:{ background:'#f4ede4', borderRadius:16, border:'1px solid rgba(39,66,62,0.1)', overflow:'auto' },
   table:{ width:'100%', borderCollapse:'collapse' as const, fontSize:'0.85rem', minWidth:600 },
   th:{ textAlign:'right' as const, padding:'12px 16px', fontSize:'0.72rem', color:'#526266', fontWeight:600, borderBottom:'1px solid rgba(39,66,62,0.1)', background:'rgba(39,66,62,0.03)' },
   td:{ padding:'12px 16px', borderBottom:'1px solid rgba(39,66,62,0.05)', verticalAlign:'middle' as const },
   badge:(bg:string,c:string)=>({ background:bg, color:c, fontSize:'0.7rem', fontWeight:700, padding:'3px 10px', borderRadius:50, display:'inline-block' }),
   editBtn:{ fontSize:'0.75rem', background:'rgba(39,66,62,0.08)', border:'1px solid rgba(39,66,62,0.15)', color:'#27423e', padding:'6px 12px', borderRadius:8, cursor:'pointer', fontWeight:600, fontFamily:"'Tajawal','Cairo',sans-serif" },
   delBtn:{ fontSize:'0.75rem', background:'#fff5f5', border:'1px solid #fecaca', color:'#dc2626', padding:'6px 12px', borderRadius:8, cursor:'pointer', fontWeight:600, fontFamily:"'Tajawal','Cairo',sans-serif" },
-  statusSel:{ fontSize:'0.72rem', border:'1px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'4px 8px', background:'#fff', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none' },
+  statusSel:{ fontSize:'0.72rem', border:'1px solid rgba(39,66,62,0.15)', borderRadius:8, padding:'4px 8px', background:'#f4ede4', fontFamily:"'Tajawal','Cairo',sans-serif", outline:'none' },
   emptyRow:{ textAlign:'center' as const, padding:'48px 0', color:'#7a9188' },
-  card:{ background:'#fff', borderRadius:16, border:'1px solid rgba(39,66,62,0.1)', padding:28, marginBottom:24 },
+  card:{ background:'#f4ede4', borderRadius:16, border:'1px solid rgba(39,66,62,0.1)', padding:28, marginBottom:24 },
   cardTitle:{ fontSize:'1rem', fontWeight:800, color:'#1e3a34', marginBottom:20 },
-  form:{ background:'#fff', borderRadius:16, border:'1px solid rgba(39,66,62,0.1)', padding:'24px clamp(12px,4vw,32px)', maxWidth:900 },
+  form:{ background:'#f4ede4', borderRadius:16, border:'1px solid rgba(39,66,62,0.1)', padding:'24px clamp(12px,4vw,32px)', maxWidth:900 },
   formTitle:{ fontSize:'1.4rem', fontWeight:800, color:'#1e3a34', marginBottom:32 },
   formGrid:{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:20 },
   fullCol:{ gridColumn:'1 / -1' as const },
@@ -75,7 +75,7 @@ const S = {
   uploadingText:{ fontSize:'0.8rem', color:'#41646d', marginTop:6 },
   formBtns:{ display:'flex', gap:12, marginTop:32 },
   submitBtn:{ background:'#d3e2dc', color:'#1e3a34', padding:'12px 32px', borderRadius:10, fontWeight:700, fontSize:'0.95rem', border:'1px solid rgba(30,58,52,0.2)', cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif" },
-  cancelBtn:{ background:'#fff', color:'#526266', padding:'12px 32px', borderRadius:10, fontWeight:700, fontSize:'0.95rem', border:'1px solid rgba(30,58,52,0.15)', cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif" },
+  cancelBtn:{ background:'#f4ede4', color:'#526266', padding:'12px 32px', borderRadius:10, fontWeight:700, fontSize:'0.95rem', border:'1px solid rgba(30,58,52,0.15)', cursor:'pointer', fontFamily:"'Tajawal','Cairo',sans-serif" },
 }
 
 const emptyForm = {
@@ -374,7 +374,7 @@ export default function AdminPage() {
       {/* Maintenance reason modal */}
       {showMaintModal && (
         <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', zIndex:9999, display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
-          <div style={{ background:'#fff', borderRadius:18, padding:'36px 32px', maxWidth:460, width:'100%', boxShadow:'0 20px 60px rgba(0,0,0,0.3)', direction:'rtl' }}>
+          <div style={{ background:'#f4ede4', borderRadius:18, padding:'36px 32px', maxWidth:460, width:'100%', boxShadow:'0 20px 60px rgba(0,0,0,0.3)', direction:'rtl' }}>
             <h2 style={{ fontSize:'1.2rem', fontWeight:900, color:'#1e3a34', marginBottom:8 }}>🔴 تعطيل الموقع</h2>
             <p style={{ color:'#526266', fontSize:'0.88rem', marginBottom:20, lineHeight:1.7 }}>اكتب سبب التعطيل — سيظهر للزوار على صفحة الإنشاء</p>
             <textarea
@@ -517,7 +517,7 @@ export default function AdminPage() {
           <div>
             <div style={{display:'flex',gap:8,marginBottom:16,flexWrap:'wrap'}}>
               {[{key:'pending',label:'⏳ معلقة',c:'#f59e0b'},{key:'approved',label:'✅ موافق',c:'#22c55e'},{key:'rejected',label:'❌ مرفوضة',c:'#ef4444'},{key:'',label:'📋 الكل',c:'#41646d'}].map(f=>(
-                <span key={f.key} style={{background:'#fff',border:`1px solid ${f.c}40`,color:f.c,borderRadius:50,padding:'6px 16px',fontSize:'0.8rem',fontWeight:700}}>
+                <span key={f.key} style={{background:'#f4ede4',border:`1px solid ${f.c}40`,color:f.c,borderRadius:50,padding:'6px 16px',fontSize:'0.8rem',fontWeight:700}}>
                   {f.label} ({f.key?reviews.filter(r=>r.status===f.key).length:reviews.length})
                 </span>
               ))}
@@ -827,7 +827,7 @@ export default function AdminPage() {
             {/* Edit user permissions modal */}
             {editingUser && (
               <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.5)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000,padding:20}}>
-                <div style={{background:'#fff',borderRadius:20,padding:32,width:'100%',maxWidth:560,maxHeight:'90vh',overflow:'auto',direction:'rtl',fontFamily:"'Tajawal','Cairo',sans-serif"}}>
+                <div style={{background:'#f4ede4',borderRadius:20,padding:32,width:'100%',maxWidth:560,maxHeight:'90vh',overflow:'auto',direction:'rtl',fontFamily:"'Tajawal','Cairo',sans-serif"}}>
                   <div style={{fontSize:'1.1rem',fontWeight:800,color:'#1e3a34',marginBottom:24}}>✏️ تعديل صلاحيات: {editingUser.username}</div>
                   <div style={{marginBottom:20}}>
                     <label style={S.label}>الدور</label>

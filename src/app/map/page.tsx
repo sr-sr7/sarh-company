@@ -67,7 +67,7 @@ export default function MapPage() {
         borderBottom:'1px solid rgba(30,58,52,0.12)',
         display:'flex', gap:8, alignItems:'center', padding:'0 16px', flexWrap:'nowrap',
       }}>
-        <div className="map-filter-search" style={{ display:'flex', alignItems:'center', gap:6, background:'#fff', borderRadius:8, padding:'0 10px', border:'1px solid rgba(30,58,52,0.12)', height:34, flex:'1 1 140px', maxWidth:220, minWidth:0 }}>
+        <div className="map-filter-search" style={{ display:'flex', alignItems:'center', gap:6, background:'#f4ede4', borderRadius:8, padding:'0 10px', border:'1px solid rgba(30,58,52,0.12)', height:34, flex:'1 1 140px', maxWidth:220, minWidth:0 }}>
           <svg width="14" height="14" fill="none" stroke="#7a9188" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="ابحث..."
             style={{ border:'none', outline:'none', background:'none', fontSize:'0.8rem', fontFamily:"'Tajawal','Cairo',sans-serif", color:'#1e3a34', width:'100%' }} />
@@ -189,7 +189,7 @@ export default function MapPage() {
 }
 
 const SEL: React.CSSProperties = {
-  background:'#fff', border:'1px solid rgba(30,58,52,0.12)', borderRadius:8,
+  background:'#f4ede4', border:'1px solid rgba(30,58,52,0.12)', borderRadius:8,
   padding:'0 10px', fontSize:'0.8rem', fontFamily:"'Tajawal','Cairo',sans-serif",
   color:'#1e3a34', outline:'none', cursor:'pointer', height:34, flexShrink:0,
 }

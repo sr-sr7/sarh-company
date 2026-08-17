@@ -79,7 +79,7 @@ function CompareInner() {
             </a>
           </div>
         ) : (
-          <div style={{ background:'#fff', borderRadius:20, overflow:'hidden', border:'1px solid rgba(39,66,62,0.1)', boxShadow:'0 4px 24px rgba(39,66,62,0.08)' }}>
+          <div style={{ background:'#f4ede4', borderRadius:20, overflow:'hidden', border:'1px solid rgba(39,66,62,0.1)', boxShadow:'0 4px 24px rgba(39,66,62,0.08)' }}>
             {/* Images & Titles */}
             <div style={{ display:'grid', gridTemplateColumns:`140px repeat(${properties.length}, 1fr)` }}>
               <div style={{ ...head, textAlign:'right' }}>المواصفات</div>

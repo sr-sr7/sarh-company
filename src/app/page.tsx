@@ -61,7 +61,7 @@ const S = {
   propsSub: { color: '#7a9188', fontSize: '0.95rem' },
   tabsRow: { display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' as const, marginBottom: 40 },
   tabActive: { display: 'flex', alignItems: 'center', gap: 8, padding: '10px 28px', borderRadius: 50, border: '2px solid rgba(30,58,52,0.25)', fontWeight: 700, fontSize: '0.9rem', background: '#d3e2dc', color: '#1e3a34', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 14px rgba(30,58,52,0.12)', fontFamily: "'Tajawal','Cairo',sans-serif" },
-  tabInactive: { display: 'flex', alignItems: 'center', gap: 8, padding: '10px 28px', borderRadius: 50, border: '2px solid rgba(30,58,52,0.18)', fontWeight: 600, fontSize: '0.9rem', background: '#fff', color: '#526266', cursor: 'pointer', transition: 'all 0.2s', fontFamily: "'Tajawal','Cairo',sans-serif" },
+  tabInactive: { display: 'flex', alignItems: 'center', gap: 8, padding: '10px 28px', borderRadius: 50, border: '2px solid rgba(30,58,52,0.18)', fontWeight: 600, fontSize: '0.9rem', background: '#f4ede4', color: '#526266', cursor: 'pointer', transition: 'all 0.2s', fontFamily: "'Tajawal','Cairo',sans-serif" },
   grid3: { display: 'grid', gridTemplateColumns: '1fr', gap: 16 },
   skeleton: { background: '#e4ede8', borderRadius: 20, height: 288, border: '1px solid rgba(30,58,52,0.1)' },
   empty: { textAlign: 'center' as const, padding: '80px 0' },
@@ -247,7 +247,7 @@ export default function Home() {
               {/* الزر الحالي */}
               <button
                 onClick={() => setMobileDropOpen(o => !o)}
-                style={{ width: '100%', background: '#fff', border: '2px solid rgba(30,58,52,0.18)', borderRadius: 12, padding: '10px 16px', fontSize: '1rem', fontWeight: 700, color: '#1e3a34', fontFamily: "'Tajawal','Cairo',sans-serif", cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'space-between', direction: 'rtl' }}
+                style={{ width: '100%', background: '#f4ede4', border: '2px solid rgba(30,58,52,0.18)', borderRadius: 12, padding: '10px 16px', fontSize: '1rem', fontWeight: 700, color: '#1e3a34', fontFamily: "'Tajawal','Cairo',sans-serif", cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'space-between', direction: 'rtl' }}
               >
                 <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <img src={TABS.find(t => t.key === activeTab)?.icon} alt="" width={20} height={20} />
@@ -258,7 +258,7 @@ export default function Home() {
 
               {/* القائمة */}
               {mobileDropOpen && (
-                <div style={{ position: 'absolute', top: '110%', right: 0, left: 0, background: '#fff', border: '2px solid rgba(30,58,52,0.18)', borderRadius: 12, zIndex: 999, overflow: 'hidden', boxShadow: '0 8px 24px rgba(30,58,52,0.12)' }}>
+                <div style={{ position: 'absolute', top: '110%', right: 0, left: 0, background: '#f4ede4', border: '2px solid rgba(30,58,52,0.18)', borderRadius: 12, zIndex: 999, overflow: 'hidden', boxShadow: '0 8px 24px rgba(30,58,52,0.12)' }}>
                   {TABS.map(tab => (
                     <button
                       key={tab.key}
@@ -274,7 +274,7 @@ export default function Home() {
             </div>
 
             {/* Grid / Map toggle */}
-            <div style={{ display: 'flex', gap: 6, background: '#fff', borderRadius: 12, padding: 4, border: '1px solid rgba(39,66,62,0.15)', flexShrink: 0 }}>
+            <div style={{ display: 'flex', gap: 6, background: '#f4ede4', borderRadius: 12, padding: 4, border: '1px solid rgba(39,66,62,0.15)', flexShrink: 0 }}>
               <button onClick={() => setViewMode('grid')} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', borderRadius: 9, border: 'none', fontFamily: "'Tajawal','Cairo',sans-serif", fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s', background: viewMode === 'grid' ? '#d3e2dc' : 'transparent', color: '#1e3a34' }}>
                 ⊞ شبكة
               </button>

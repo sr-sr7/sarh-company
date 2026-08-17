@@ -72,7 +72,7 @@ export default function PromoWidget() {
         {/* Panel */}
         {open && (
           <div style={{
-            marginBottom: 10, width: 280, background: '#fff',
+            marginBottom: 10, width: 280, background: '#f4ede4',
             borderRadius: 16, boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
             animation: 'promoSlideUp 0.25s ease',
           }}>

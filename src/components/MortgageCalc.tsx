@@ -24,7 +24,7 @@ export default function MortgageCalc({ price }: { price: number }) {
   )
 
   return (
-    <div style={{ background:'#fff', borderRadius:16, padding:'18px 20px', border:'1px solid rgba(39,66,62,0.08)', marginTop:16 }}>
+    <div style={{ background:'#f4ede4', borderRadius:16, padding:'18px 20px', border:'1px solid rgba(39,66,62,0.08)', marginTop:16 }}>
       <h3 style={{ fontSize:'0.9rem', fontWeight:800, color:'#1e3a34', margin:'0 0 16px', display:'flex', alignItems:'center', gap:8 }}>
         🏦 حاسبة التمويل العقاري
       </h3>
