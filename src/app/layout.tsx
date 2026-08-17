@@ -57,8 +57,18 @@ const jsonLd = {
   name:          'شركة صرح العقارية',
   alternateName: 'SARH Real Estate',
   url:           'https://sarh-company.com',
-  logo:          'https://sarh-company.com/icon-512.png',
-  image:         'https://sarh-company.com/icon-512.png',
+  logo: {
+    '@type':  'ImageObject',
+    url:      'https://sarh-company.com/logo.png',
+    width:    1891,
+    height:   507,
+  },
+  image: {
+    '@type':  'ImageObject',
+    url:      'https://sarh-company.com/icon-512.png',
+    width:    512,
+    height:   512,
+  },
   description:   'شركة صرح العقارية في القصيم — بريدة. خدمات عقارية متكاملة من بيع وإيجار وتطوير.',
   telephone:     '+966557340222',
   address: {
