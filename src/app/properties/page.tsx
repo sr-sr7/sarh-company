@@ -206,7 +206,7 @@ function PropertiesInner() {
               <label style={lbl}>🏠 نوع العقار</label>
               <select className="filter-inp" value={filters.type} onChange={e=>setF('type',e.target.value)} style={inp}>
                 <option value="">الكل</option>
-                {['فيلا','أرض','شقة','استراحة','شاليه','دبلكس','محل تجاري','مستودع','مزرعة','قصر'].map(t=><option key={t}>{t}</option>)}
+                {['فيلا','أرض','شقة','استراحة','شاليه','دبلكس','مزرعة','محل تجاري','وحدة علوية','وحدة أرضية','دور علوي','دور أرضي'].map(t=><option key={t}>{t}</option>)}
               </select>
             </div>
             <div>

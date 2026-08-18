@@ -34,6 +34,8 @@ const TYPE_ICONS: Record<string, string> = {
   'استراحة':'icon_r6_c9','شاليه':'icon_r6_c9','دبلكس':'icon_r2_c7',
   'محل تجاري':'icon_r6_c2','تجاري':'icon_r6_c2',
   'مستودع':'icon_r6_c15','مزرعة':'icon_r4_c4','قصر':'icon_r3_c1',
+  'وحدة علوية':'icon_r2_c7','وحدة أرضية':'icon_r2_c7',
+  'دور علوي':'icon_r2_c7','دور أرضي':'icon_r2_c7',
 }
 
 function BIcon({ name, size=20 }: { name:string; size?:number }) {

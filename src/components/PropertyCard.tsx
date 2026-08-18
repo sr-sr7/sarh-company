@@ -3,17 +3,22 @@ import { Property } from '@/lib/supabase'
 import { useFavorites, useCompare } from '@/lib/favorites'
 
 const TYPE_ICON: Record<string, string> = {
-  'فيلا':    'icon_r3_c1',
-  'شقة':     'icon_r2_c7',
-  'عمارة':   'icon_r2_c7',
-  'دبلكس':   'icon_r2_c7',
-  'أرض':     'icon_r2_c3',
-  'استراحة': 'icon_r6_c9',
-  'شاليه':   'icon_r6_c9',
-  'مزرعة':   'icon_r4_c4',
-  'تجاري':   'icon_r6_c2',
-  'محل':     'icon_r6_c2',
-  'مستودع':  'icon_r6_c15',
+  'فيلا':        'icon_r3_c1',
+  'شقة':         'icon_r2_c7',
+  'عمارة':       'icon_r2_c7',
+  'دبلكس':       'icon_r2_c7',
+  'وحدة علوية':  'icon_r2_c7',
+  'وحدة أرضية':  'icon_r2_c7',
+  'دور علوي':    'icon_r2_c7',
+  'دور أرضي':    'icon_r2_c7',
+  'أرض':         'icon_r2_c3',
+  'استراحة':     'icon_r6_c9',
+  'شاليه':       'icon_r6_c9',
+  'مزرعة':       'icon_r4_c4',
+  'تجاري':       'icon_r6_c2',
+  'محل':         'icon_r6_c2',
+  'محل تجاري':   'icon_r6_c2',
+  'مستودع':      'icon_r6_c15',
 }
 
 export default function PropertyCard({ property: p }: { property: Property }) {

@@ -10,18 +10,23 @@ const PropertyMap = dynamic(() => import('@/components/PropertyMap'), { ssr: fal
   <div style={{ height: 500, background: '#d3e2dc', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#41646d', fontSize: '1rem' }}><img src="/icons/icon_r1_c16.png" width={24} height={24} style={{verticalAlign:'middle',marginLeft:8,opacity:0.5}} /> جاري تحميل الخريطة...</div>
 )})
 
-type TabKey = 'الكل' | 'فيلا' | 'أرض' | 'استراحة' | 'مزرعة' | 'إيجار' | 'شقة' | 'دبلكس' | 'تجاري'
+type TabKey = 'الكل' | 'فيلا' | 'أرض' | 'استراحة' | 'شاليه' | 'مزرعة' | 'إيجار' | 'شقة' | 'دبلكس' | 'محل تجاري' | 'وحدة علوية' | 'وحدة أرضية' | 'دور علوي' | 'دور أرضي'
 
 const TABS: { key: TabKey; label: string; icon: string }[] = [
-  { key: 'الكل',    label: 'الكل',      icon: '/icons/icon_r3_c1.png' },
-  { key: 'فيلا',   label: 'فلل',       icon: '/icons/icon_r3_c1.png' },
-  { key: 'أرض',   label: 'أراضي',     icon: '/icons/icon_r2_c3.png' },
-  { key: 'شقة',   label: 'شقق',       icon: '/icons/icon_r2_c7.png' },
-  { key: 'استراحة',label: 'استراحات',  icon: '/icons/icon_r6_c9.png' },
-  { key: 'مزرعة', label: 'مزارع',     icon: '/icons/icon_r4_c4.png' },
-  { key: 'دبلكس', label: 'دبلكس',     icon: '/icons/icon_r2_c7.png' },
-  { key: 'تجاري', label: 'تجاري',     icon: '/icons/icon_r6_c2.png' },
-  { key: 'إيجار', label: 'إيجار',     icon: '/icons/icon_r5_c8.png' },
+  { key: 'الكل',        label: 'الكل',        icon: '/icons/icon_r3_c1.png' },
+  { key: 'فيلا',        label: 'فلل',         icon: '/icons/icon_r3_c1.png' },
+  { key: 'أرض',        label: 'أراضي',       icon: '/icons/icon_r2_c3.png' },
+  { key: 'شقة',        label: 'شقق',         icon: '/icons/icon_r2_c7.png' },
+  { key: 'استراحة',    label: 'استراحات',    icon: '/icons/icon_r6_c9.png' },
+  { key: 'شاليه',      label: 'شاليهات',     icon: '/icons/icon_r6_c9.png' },
+  { key: 'دبلكس',      label: 'دبلكس',       icon: '/icons/icon_r2_c7.png' },
+  { key: 'مزرعة',      label: 'مزارع',       icon: '/icons/icon_r4_c4.png' },
+  { key: 'محل تجاري',  label: 'تجاري',       icon: '/icons/icon_r6_c2.png' },
+  { key: 'وحدة علوية', label: 'وحدة علوية',  icon: '/icons/icon_r2_c7.png' },
+  { key: 'وحدة أرضية', label: 'وحدة أرضية',  icon: '/icons/icon_r2_c7.png' },
+  { key: 'دور علوي',   label: 'دور علوي',    icon: '/icons/icon_r2_c7.png' },
+  { key: 'دور أرضي',   label: 'دور أرضي',    icon: '/icons/icon_r2_c7.png' },
+  { key: 'إيجار',      label: 'إيجار',       icon: '/icons/icon_r5_c8.png' },
 ]
 
 const S = {
