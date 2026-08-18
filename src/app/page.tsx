@@ -166,7 +166,7 @@ export default function Home() {
       let filter = ''
       if      (tab === 'الكل')    filter = ''
       else if (tab === 'إيجار')  filter = `&operation=eq.${encodeURIComponent('للإيجار')}`
-      else if (tab === 'تجاري')  filter = `&type=in.(${encodeURIComponent('محل تجاري')},${encodeURIComponent('مستودع')})`
+      else if (tab === 'محل تجاري') filter = `&type=in.(${encodeURIComponent('محل تجاري')},${encodeURIComponent('تجاري')})`
       else                        filter = `&type=eq.${encodeURIComponent(tab)}`
       const data = await sbFetch(
         `properties?select=*&status=in.(active,sold)${filter}&order=is_featured.desc,created_at.desc`,
