@@ -85,7 +85,7 @@ export default function Navbar() {
           </select>
           <select value={srchType} onChange={e => setSrchType(e.target.value)} style={{ ...inputStyle, minWidth: 72 }}>
             <option value="">النوع</option>
-            {['فيلا','أرض','شقة','استراحة','دبلكس','مستودع','مزرعة','قصر'].map(t => <option key={t} value={t}>{t}</option>)}
+            {['فيلا','أرض','شقة','استراحة','شاليه','دبلكس','مزرعة','محل تجاري','وحدة علوية','وحدة أرضية','دور علوي','دور أرضي'].map(t => <option key={t} value={t}>{t}</option>)}
           </select>
           <select value={srchCity} onChange={e => setSrchCity(e.target.value)} style={{ ...inputStyle, minWidth: 72 }}>
             <option value="">المدينة</option>
@@ -166,7 +166,7 @@ export default function Navbar() {
               </select>
               <select value={srchType} onChange={e => setSrchType(e.target.value)} style={{ ...mobileInputStyle, padding: '11px 10px' }}>
                 <option value="">النوع</option>
-                {['فيلا','أرض','شقة','استراحة','دبلكس','مستودع','مزرعة','قصر'].map(t => <option key={t} value={t}>{t}</option>)}
+                {['فيلا','أرض','شقة','استراحة','شاليه','دبلكس','مزرعة','محل تجاري','وحدة علوية','وحدة أرضية','دور علوي','دور أرضي'].map(t => <option key={t} value={t}>{t}</option>)}
               </select>
               <select value={srchCity} onChange={e => setSrchCity(e.target.value)} style={{ ...mobileInputStyle, padding: '11px 10px' }}>
                 <option value="">المدينة</option>
