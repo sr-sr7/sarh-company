@@ -91,6 +91,8 @@ export default function PropertyDetail({ id }: { id: string }) {
   const [activeImg, setActiveImg] = useState(0)
   const [showVideo, setShowVideo] = useState(false)
   const [lightbox, setLightbox]   = useState<string|null>(null)
+  const touchStartX = useRef<number|null>(null)
+  const touchStartY = useRef<number|null>(null)
   const [copied,   setCopied]     = useState(false)
 
   // Reviews
@@ -200,7 +202,23 @@ export default function PropertyDetail({ id }: { id: string }) {
 
       {/* Lightbox */}
       {lightbox && (
-        <div onClick={() => setLightbox(null)} style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.93)', display:'flex', alignItems:'center', justifyContent:'center', cursor:'zoom-out' }}>
+        <div
+          onClick={() => setLightbox(null)}
+          style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.93)', display:'flex', alignItems:'center', justifyContent:'center', cursor:'zoom-out' }}
+          onTouchStart={e => { touchStartX.current = e.touches[0].clientX; touchStartY.current = e.touches[0].clientY }}
+          onTouchEnd={e => {
+            if (touchStartX.current === null || touchStartY.current === null || allImgs.length <= 1) return
+            const dx = e.changedTouches[0].clientX - touchStartX.current
+            const dy = e.changedTouches[0].clientY - touchStartY.current
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+              e.stopPropagation()
+              const cur = allImgs.indexOf(lightbox)
+              if (dx > 0) setLightbox(allImgs[(cur + allImgs.length - 1) % allImgs.length])
+              else        setLightbox(allImgs[(cur + 1) % allImgs.length])
+            }
+            touchStartX.current = null; touchStartY.current = null
+          }}
+        >
           <img src={lightbox} alt="" style={{ maxWidth:'95vw', maxHeight:'92vh', objectFit:'contain', borderRadius:8 }} />
           <button onClick={() => setLightbox(null)} style={{ position:'absolute', top:20, left:20, background:'rgba(255,255,255,0.12)', color:'#fff', border:'none', borderRadius:'50%', width:44, height:44, fontSize:'1.4rem', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}>✕</button>
           {allImgs.length>1 && <>
@@ -213,7 +231,20 @@ export default function PropertyDetail({ id }: { id: string }) {
       )}
 
       {/* Hero image */}
-      <div style={{ background:'#1e3a34', position:'relative', maxHeight:520, overflow:'hidden' }}>
+      <div
+        style={{ background:'#1e3a34', position:'relative', maxHeight:520, overflow:'hidden' }}
+        onTouchStart={e => { touchStartX.current = e.touches[0].clientX; touchStartY.current = e.touches[0].clientY }}
+        onTouchEnd={e => {
+          if (touchStartX.current === null || touchStartY.current === null || allImgs.length <= 1) return
+          const dx = e.changedTouches[0].clientX - touchStartX.current
+          const dy = e.changedTouches[0].clientY - touchStartY.current
+          if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+            if (dx > 0) setActiveImg(i => (i + allImgs.length - 1) % allImgs.length)
+            else        setActiveImg(i => (i + 1) % allImgs.length)
+          }
+          touchStartX.current = null; touchStartY.current = null
+        }}
+      >
         {allImgs.length>0 ? (
           <img src={allImgs[activeImg]} alt={p.title} onClick={()=>setLightbox(allImgs[activeImg])}
             style={{ width:'100%', maxHeight:520, objectFit:'cover', display:'block', opacity:0.92, cursor:'zoom-in' }} />
