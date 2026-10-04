@@ -106,10 +106,31 @@ export default function PropertyDetail({ id }: { id: string }) {
   useEffect(() => {
     if (!id) return
     let cancelled = false
-    fetch(`${SB_URL}/rest/v1/properties?id=eq.${id}&select=*`, { headers:H, cache:'no-store' })
-      .then(r => r.ok ? r.json() : [])
-      .then((data:Property[]) => { if (!cancelled) { if (data.length>0) setProperty(data[0]); setLoading(false) } })
-      .catch(() => { if (!cancelled) setLoading(false) })
+
+    async function load() {
+      // Try Supabase first, fallback to local cache
+      try {
+        const r = await fetch(`${SB_URL}/rest/v1/properties?id=eq.${id}&select=*`, { headers:H, cache:'no-store' })
+        if (r.ok) {
+          const data: Property[] = await r.json()
+          if (!cancelled) { if (data.length > 0) setProperty(data[0]); setLoading(false) }
+          return
+        }
+      } catch {}
+      // Fallback to cache API
+      try {
+        const r = await fetch('/api/properties-cache')
+        if (r.ok) {
+          const all: Property[] = await r.json()
+          const found = all.find(p => p.id === id)
+          if (!cancelled) { if (found) setProperty(found); setLoading(false) }
+        }
+      } catch {}
+      if (!cancelled) setLoading(false)
+    }
+
+    load()
+
     fetch(`${SB_URL}/rest/v1/inquiries?property_id=eq.${id}&type=eq.review&status=eq.approved&order=created_at.desc`, { headers:H, cache:'no-store' })
       .then(r => r.ok ? r.json() : [])
       .then(data => { if (!cancelled) setReviews(Array.isArray(data) ? data : []) })

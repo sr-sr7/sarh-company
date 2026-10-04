@@ -137,12 +137,20 @@ export default function Home() {
 
   // Load hero images — limit to 8 max
   useEffect(() => {
-    sbFetch('properties?select=main_image&status=eq.active&main_image=not.is.null&limit=8')
-      .then((data: any[]) => {
-        if (!data?.length) return
-        const imgs = data.map((p: any) => p.main_image).filter(Boolean)
-        setHeroImages(imgs)
-      })
+    async function loadHero() {
+      const data = await sbFetch('properties?select=main_image&status=eq.active&main_image=not.is.null&limit=8')
+      if (data?.length) { setHeroImages(data.map((p: any) => p.main_image).filter(Boolean)); return }
+      // Fallback to cache
+      try {
+        const r = await fetch('/api/properties-cache')
+        if (r.ok) {
+          const all: Property[] = await r.json()
+          const imgs = all.filter(p => p.status === 'active' && p.main_image).slice(0, 8).map(p => p.main_image!)
+          setHeroImages(imgs)
+        }
+      } catch {}
+    }
+    loadHero()
   }, [])
 
   // Cycle hero images every 4 seconds
@@ -155,9 +163,18 @@ export default function Home() {
   useEffect(() => { loadProperties(activeTab) }, [activeTab])
 
   useEffect(() => {
-    sbFetch('properties?select=*&status=eq.sold&order=created_at.desc', { cache: 'no-store' })
-      .then((data: any) => setSoldProperties(Array.isArray(data) ? data : []))
-      .catch(() => setSoldProperties([]))
+    async function loadSold() {
+      const data = await sbFetch('properties?select=*&status=eq.sold&order=created_at.desc', { cache: 'no-store' })
+      if (Array.isArray(data) && data.length) { setSoldProperties(data); return }
+      try {
+        const r = await fetch('/api/properties-cache')
+        if (r.ok) {
+          const all: Property[] = await r.json()
+          setSoldProperties(all.filter(p => p.status === 'sold').sort((a,b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()))
+        }
+      } catch {}
+    }
+    loadSold()
   }, [])
 
   async function loadProperties(tab: TabKey) {
@@ -172,7 +189,18 @@ export default function Home() {
         `properties?select=*&status=in.(active,sold)${filter}&order=is_featured.desc,created_at.desc`,
         { cache: 'no-store' }
       )
-      setProperties(Array.isArray(data) ? data : [])
+      if (Array.isArray(data) && data.length) { setProperties(data); return }
+      // Fallback to cache
+      const r = await fetch('/api/properties-cache')
+      if (r.ok) {
+        let all: Property[] = await r.json()
+        all = all.filter(p => p.status === 'active' || p.status === 'sold')
+        if (tab === 'إيجار') all = all.filter(p => p.operation === 'للإيجار')
+        else if (tab === 'محل تجاري') all = all.filter(p => p.type === 'محل تجاري' || p.type === 'تجاري')
+        else if (tab !== 'الكل') all = all.filter(p => p.type === tab)
+        all.sort((a,b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0) || new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+        setProperties(all)
+      }
     } catch {
       setProperties([])
     } finally {

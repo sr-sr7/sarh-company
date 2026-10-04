@@ -42,18 +42,49 @@ function PropertiesInner() {
     setLoading(true)
     setVisible(false)
     try {
-      let url = `${SB_URL}/rest/v1/properties?select=*&status=in.(active,sold)&order=is_featured.desc,created_at.desc`
-      if (filters.operation) url += `&operation=eq.${encodeURIComponent(filters.operation)}`
-      if (filters.type)      url += `&type=eq.${encodeURIComponent(filters.type)}`
-      if (filters.city)      url += `&city=eq.${encodeURIComponent(filters.city)}`
-      if (filters.search)        url += `&title=ilike.${encodeURIComponent('%' + filters.search + '%')}`
-      if (filters.minPrice)      url += `&price=gte.${filters.minPrice}`
-      if (filters.maxPrice)      url += `&price=lte.${filters.maxPrice}`
-      if (filters.bedrooms)      url += `&bedrooms=gte.${filters.bedrooms}`
-      if (filters.listingNumber) url += `&listing_number=eq.${filters.listingNumber}`
-      const res  = await fetch(url, { headers: H, cache: 'no-store' })
-      const data = res.ok ? await res.json() : []
-      setProperties(Array.isArray(data) ? data : [])
+      let data: Property[] = []
+      let usedCache = false
+
+      // Try Supabase REST API first
+      try {
+        let url = `${SB_URL}/rest/v1/properties?select=*&status=in.(active,sold)&order=is_featured.desc,created_at.desc`
+        if (filters.operation) url += `&operation=eq.${encodeURIComponent(filters.operation)}`
+        if (filters.type)      url += `&type=eq.${encodeURIComponent(filters.type)}`
+        if (filters.city)      url += `&city=eq.${encodeURIComponent(filters.city)}`
+        if (filters.search)        url += `&title=ilike.${encodeURIComponent('%' + filters.search + '%')}`
+        if (filters.minPrice)      url += `&price=gte.${filters.minPrice}`
+        if (filters.maxPrice)      url += `&price=lte.${filters.maxPrice}`
+        if (filters.bedrooms)      url += `&bedrooms=gte.${filters.bedrooms}`
+        if (filters.listingNumber) url += `&listing_number=eq.${filters.listingNumber}`
+        const res = await fetch(url, { headers: H, cache: 'no-store' })
+        if (res.ok) {
+          const json = await res.json()
+          data = Array.isArray(json) ? json : []
+        } else {
+          usedCache = true
+        }
+      } catch {
+        usedCache = true
+      }
+
+      // Fallback to local cache if Supabase is unavailable
+      if (usedCache) {
+        const cacheRes = await fetch('/api/properties-cache')
+        const cached: Property[] = cacheRes.ok ? await cacheRes.json() : []
+        data = cached.filter(p => p.status === 'active' || p.status === 'sold')
+        // Apply filters client-side
+        if (filters.operation) data = data.filter(p => p.operation === filters.operation)
+        if (filters.type)      data = data.filter(p => p.type === filters.type)
+        if (filters.city)      data = data.filter(p => p.city === filters.city)
+        if (filters.search)    data = data.filter(p => p.title?.toLowerCase().includes(filters.search.toLowerCase()))
+        if (filters.minPrice)  data = data.filter(p => p.price >= Number(filters.minPrice))
+        if (filters.maxPrice)  data = data.filter(p => p.price <= Number(filters.maxPrice))
+        if (filters.bedrooms)  data = data.filter(p => p.bedrooms >= Number(filters.bedrooms))
+        if (filters.listingNumber) data = data.filter(p => String(p.listing_number) === filters.listingNumber)
+        data.sort((a, b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0) || new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      }
+
+      setProperties(data)
     } catch {
       setProperties([])
     } finally {

@@ -1,6 +1,9 @@
 import { Metadata } from 'next'
 import { SB_URL, SB_HEADERS, Property } from '@/lib/supabase'
 import PropertyDetail from './PropertyDetail'
+import cacheData from '@/data/properties-cache.json'
+
+const cache = cacheData as unknown as Partial<Property>[]
 
 const BASE = 'https://sarh-company.com'
 
@@ -53,9 +56,13 @@ async function getProperty(id: string): Promise<Partial<Property> | null> {
       `${SB_URL}/rest/v1/properties?id=eq.${id}&select=*`,
       { headers: SB_HEADERS, cache: 'no-store' }
     )
-    const data: Partial<Property>[] = res.ok ? await res.json() : []
-    return data[0] ?? null
-  } catch { return null }
+    if (res.ok) {
+      const data: Partial<Property>[] = await res.json()
+      return data[0] ?? null
+    }
+  } catch {}
+  // Fallback to local cache
+  return cache.find(p => p.id === id) ?? null
 }
 
 export default async function PropertyPage({ params }: { params: { id: string } }) {
@@ -106,9 +113,10 @@ export async function generateStaticParams() {
       `${SB_URL}/rest/v1/properties?select=id`,
       { headers: SB_HEADERS }
     )
-    const data: { id: string }[] = res.ok ? await res.json() : []
-    return data.map(p => ({ id: p.id }))
-  } catch {
-    return []
-  }
+    if (res.ok) {
+      const data: { id: string }[] = await res.json()
+      return data.map(p => ({ id: p.id }))
+    }
+  } catch {}
+  return cache.map(p => ({ id: p.id! }))
 }
