@@ -24,7 +24,27 @@ export function sanitizePropertyPartial(body: Record<string, unknown>): Record<s
   return result
 }
 
+function extractLatLng(mapUrl: string): { lat: number | null; lng: number | null } {
+  const patterns = [
+    /!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/,
+    /@(-?\d+\.\d+),(-?\d+\.\d+)/,
+    /[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)/,
+    /[?&]ll=(-?\d+\.\d+),(-?\d+\.\d+)/,
+    /pb=.*!3d(-?\d+\.\d+).*!4d(-?\d+\.\d+)/,
+  ]
+  for (const re of patterns) {
+    const m = mapUrl.match(re)
+    if (m) {
+      const lat = parseFloat(m[1]), lng = parseFloat(m[2])
+      if (isFinite(lat) && isFinite(lng)) return { lat, lng }
+    }
+  }
+  return { lat: null, lng: null }
+}
+
 export function sanitizeProperty(body: Record<string, unknown>) {
+  const mapUrl = body.map_url ? sanitizeText(body.map_url) : null
+  const { lat, lng } = mapUrl ? extractLatLng(mapUrl) : { lat: null, lng: null }
   return {
     title:       sanitizeText(body.title),
     description: sanitizeText(body.description),
@@ -48,7 +68,9 @@ export function sanitizeProperty(body: Record<string, unknown>) {
     is_new:      Boolean(body.is_new),
     whatsapp:    sanitizeText(body.whatsapp).replace(/\D/g, ''),
     video_url:   body.video_url ? sanitizeText(body.video_url) : null,
-    map_url:     body.map_url ? sanitizeText(body.map_url) : null,
+    map_url:     mapUrl,
+    lat:         lat,
+    lng:         lng,
     listing_number: body.listing_number != null ? sanitizeNumber(body.listing_number) : undefined,
     maid_rooms:  body.maid_rooms != null ? sanitizeNumber(body.maid_rooms) : null,
     kitchens:    body.kitchens != null ? sanitizeNumber(body.kitchens) : null,
