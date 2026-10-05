@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { Property } from '@/lib/supabase'
 import { LOGO_GIF } from '@/lib/logo'
 
-type Tab = 'properties' | 'reviews' | 'promo' | 'add' | 'users'
+type Tab = 'properties' | 'reviews' | 'promo' | 'add' | 'users' | 'map_fix'
 type Role = 'admin' | 'user'
 type Session = { id: string; username: string; role: Role; permissions: Record<string, boolean> }
 type AdminUser = { id: string; username: string; role: Role; permissions: Record<string, boolean>; created_at: string }
@@ -356,6 +356,7 @@ export default function AdminPage() {
   // ── Visible tabs ──
   const tabs: [Tab, string, boolean][] = [
     ['properties', '🏠 العقارات',                                       true],
+    ['map_fix',    `📍 الخرائط (${properties.filter(p=>!p.lat||!p.lng).length} بدون موقع)`, session?.role==='admin'||can('edit_property')],
     ['reviews',    `⭐ التعليقات (${reviews.filter(r=>r.status==='pending').length} معلق)`, can('view_reviews')],
     ['promo',      `🎁 العروض (${promoLeads.length})`,                    can('view_promo')],
     ['add',        editId ? '✏️ تعديل عقار' : '➕ إضافة عقار',            can('add_property')||(!!editId&&can('edit_property'))],
@@ -790,6 +791,9 @@ export default function AdminPage() {
           </form>
         )}
 
+        {/* ── MAP FIX ── */}
+        {tab==='map_fix' && <MapFixTab properties={properties} onSaved={loadAll} />}
+
         {/* ── USERS MANAGEMENT ── */}
         {tab==='users' && session.role==='admin' && (
           <div>
@@ -898,6 +902,152 @@ export default function AdminPage() {
         )}
 
       </div>
+    </div>
+  )
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MapFixTab — تحديث إحداثيات العقارات مباشرة بالضغط على الخريطة
+───────────────────────────────────────────────────────────── */
+function MapFixTab({ properties, onSaved }: { properties: Property[]; onSaved: () => void }) {
+  const missing = properties.filter(p => !p.lat || !p.lng)
+  const [selected, setSelected] = useState<Property | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [msg, setMsg] = useState('')
+  const mapRef = useRef<any>(null)
+  const markerRef = useRef<any>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // تهيئة الخريطة عند اختيار عقار
+  useEffect(() => {
+    if (!selected || !containerRef.current) return
+    if (typeof window === 'undefined') return
+    import('leaflet').then(L => {
+      // تنظيف الخريطة القديمة
+      if (mapRef.current) { mapRef.current.remove(); mapRef.current = null; markerRef.current = null }
+
+      const map = L.map(containerRef.current!, { center: [24.7, 46.7], zoom: 10 })
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+      }).addTo(map)
+
+      const icon = L.icon({
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        iconSize: [25, 41], iconAnchor: [12, 41],
+      })
+
+      // لو عنده إحداثيات قديمة اعرضها
+      if (selected.lat && selected.lng) {
+        map.setView([selected.lat, selected.lng], 14)
+        markerRef.current = L.marker([selected.lat, selected.lng], { icon }).addTo(map)
+      }
+
+      // عند الضغط على الخريطة ضع pin
+      map.on('click', (e: any) => {
+        const { lat, lng } = e.latlng
+        if (markerRef.current) markerRef.current.remove()
+        markerRef.current = L.marker([lat, lng], { icon }).addTo(map)
+          .bindPopup(`📍 ${lat.toFixed(5)}, ${lng.toFixed(5)}`).openPopup()
+        markerRef.current._latlng = { lat, lng }
+      })
+
+      mapRef.current = map
+    })
+    return () => { if (mapRef.current) { mapRef.current.remove(); mapRef.current = null } }
+  }, [selected?.id])
+
+  async function saveCoords() {
+    if (!markerRef.current) { setMsg('⚠️ اضغط على الخريطة لتحديد الموقع أولاً'); return }
+    const { lat, lng } = markerRef.current._latlng || markerRef.current.getLatLng()
+    setSaving(true); setMsg('')
+    try {
+      const res = await fetch(`/api/admin/properties/${selected!.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lat, lng }),
+      })
+      if (res.ok) {
+        setMsg('✅ تم الحفظ')
+        onSaved()
+        setSelected(null)
+      } else {
+        const d = await res.json()
+        setMsg('❌ ' + (d.error || 'خطأ'))
+      }
+    } catch { setMsg('❌ خطأ في الاتصال') }
+    setSaving(false)
+  }
+
+  const S2 = {
+    wrap: { fontFamily:"'Tajawal','Cairo',sans-serif", direction:'rtl' as const },
+    card: { background:'#fff', borderRadius:16, padding:20, marginBottom:16, boxShadow:'0 2px 12px rgba(30,58,52,0.08)' },
+    title: { fontSize:'1.1rem', fontWeight:800, color:'#1e3a34', marginBottom:12 },
+    row: { display:'flex', alignItems:'center', gap:12, padding:'10px 0', borderBottom:'1px solid rgba(30,58,52,0.06)', cursor:'pointer' as const },
+    name: { flex:1, fontSize:'0.9rem', fontWeight:700, color:'#1e3a34' },
+    city: { fontSize:'0.8rem', color:'#526266' },
+    badge: (has: boolean) => ({ fontSize:'0.72rem', padding:'3px 10px', borderRadius:20, fontWeight:700, background: has ? '#d3e2dc' : '#fff3cd', color: has ? '#1e3a34' : '#856404' }),
+    btn: { background:'#27423e', color:'#fff', border:'none', borderRadius:10, padding:'10px 24px', fontSize:'0.9rem', fontWeight:700, cursor:'pointer' as const, fontFamily:"'Tajawal','Cairo',sans-serif" },
+    back: { background:'transparent', color:'#41646d', border:'1px solid rgba(39,66,62,0.3)', borderRadius:10, padding:'10px 20px', fontSize:'0.88rem', fontWeight:700, cursor:'pointer' as const, fontFamily:"'Tajawal','Cairo',sans-serif" },
+  }
+
+  if (selected) return (
+    <div style={S2.wrap}>
+      <div style={S2.card}>
+        <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:16 }}>
+          <button style={S2.back} onClick={() => setSelected(null)}>← رجوع</button>
+          <div style={{ flex:1 }}>
+            <div style={{ fontWeight:800, color:'#1e3a34', fontSize:'1rem' }}>{selected.title}</div>
+            <div style={{ fontSize:'0.8rem', color:'#526266' }}>{selected.city} — {selected.type}</div>
+          </div>
+        </div>
+        <div style={{ background:'#f0f7f4', borderRadius:10, padding:'10px 14px', marginBottom:12, fontSize:'0.82rem', color:'#41646d', fontWeight:600 }}>
+          📌 اضغط على الخريطة لتحديد موقع العقار، ثم اضغط "حفظ الموقع"
+        </div>
+        <div ref={containerRef} style={{ width:'100%', height:380, borderRadius:12, overflow:'hidden', border:'2px solid rgba(39,66,62,0.15)', marginBottom:12 }} />
+        {msg && <div style={{ marginBottom:10, padding:'8px 14px', borderRadius:8, background: msg.startsWith('✅') ? '#d3e2dc' : '#fff3cd', fontSize:'0.85rem', fontWeight:700 }}>{msg}</div>}
+        <div style={{ display:'flex', gap:10 }}>
+          <button style={{ ...S2.btn, opacity: saving ? 0.6 : 1 }} disabled={saving} onClick={saveCoords}>
+            {saving ? '⏳ جاري الحفظ...' : '💾 حفظ الموقع'}
+          </button>
+          <button style={S2.back} onClick={() => setSelected(null)}>إلغاء</button>
+        </div>
+      </div>
+    </div>
+  )
+
+  return (
+    <div style={S2.wrap}>
+      <div style={S2.card}>
+        <div style={S2.title}>📍 العقارات بدون موقع على الخريطة</div>
+        {missing.length === 0
+          ? <div style={{ textAlign:'center', padding:32, color:'#41646d', fontWeight:700 }}>✅ جميع العقارات لديها موقع محدد!</div>
+          : missing.map(p => (
+            <div key={p.id} style={S2.row} onClick={() => setSelected(p)}>
+              {p.main_image && <img src={p.main_image} alt="" style={{ width:48, height:48, borderRadius:8, objectFit:'cover', flexShrink:0 }} />}
+              {!p.main_image && <div style={{ width:48, height:48, borderRadius:8, background:'#d3e2dc', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', flexShrink:0 }}>🏠</div>}
+              <div style={S2.name}>{p.title}</div>
+              <div style={S2.city}>{p.city}</div>
+              <span style={S2.badge(false)}>بدون موقع</span>
+              <span style={{ color:'#41646d', fontSize:'1rem' }}>←</span>
+            </div>
+          ))
+        }
+      </div>
+      {properties.filter(p => p.lat && p.lng).length > 0 && (
+        <div style={S2.card}>
+          <div style={{ ...S2.title, fontSize:'0.95rem', color:'#41646d' }}>✅ عقارات لديها موقع ({properties.filter(p=>p.lat&&p.lng).length})</div>
+          {properties.filter(p => p.lat && p.lng).map(p => (
+            <div key={p.id} style={{ ...S2.row, cursor:'default' }}>
+              <div style={S2.name}>{p.title}</div>
+              <div style={S2.city}>{p.city}</div>
+              <span style={S2.badge(true)}>📍 {(p.lat as number).toFixed(4)}, {(p.lng as number).toFixed(4)}</span>
+              <button style={{ ...S2.back, fontSize:'0.78rem', padding:'4px 12px' }} onClick={() => setSelected(p)}>تعديل</button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

@@ -44,7 +44,12 @@ function extractLatLng(mapUrl: string): { lat: number | null; lng: number | null
 
 export function sanitizeProperty(body: Record<string, unknown>) {
   const mapUrl = body.map_url ? sanitizeText(body.map_url) : null
-  const { lat, lng } = mapUrl ? extractLatLng(mapUrl) : { lat: null, lng: null }
+  const extracted = mapUrl ? extractLatLng(mapUrl) : { lat: null, lng: null }
+  // direct lat/lng override extracted ones (used by map fix tool)
+  const directLat = body.lat != null ? parseFloat(String(body.lat)) : null
+  const directLng = body.lng != null ? parseFloat(String(body.lng)) : null
+  const lat = (directLat !== null && isFinite(directLat)) ? directLat : extracted.lat
+  const lng = (directLng !== null && isFinite(directLng)) ? directLng : extracted.lng
   return {
     title:       sanitizeText(body.title),
     description: sanitizeText(body.description),
