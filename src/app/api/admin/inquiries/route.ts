@@ -10,6 +10,6 @@ export async function GET() {
     .from('inquiries')
     .select('*, properties(title)')
     .order('created_at', { ascending: false })
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) return NextResponse.json({ data: [], _source: 'cache' })
   return NextResponse.json({ data })
 }

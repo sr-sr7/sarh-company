@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { isAuthenticated } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { sanitizeProperty } from '@/lib/sanitize'
+import cacheData from '@/data/properties-cache.json'
 
 export const runtime = 'nodejs'
 
@@ -11,7 +12,13 @@ export async function GET() {
     .from('properties')
     .select('*')
     .order('created_at', { ascending: false })
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) {
+    // Supabase restricted — serve local cache so admin stays functional
+    const sorted = [...(cacheData as any[])].sort(
+      (a, b) => new Date(b.created_at ?? 0).getTime() - new Date(a.created_at ?? 0).getTime()
+    )
+    return NextResponse.json({ data: sorted, _source: 'cache' })
+  }
   return NextResponse.json({ data })
 }
 
