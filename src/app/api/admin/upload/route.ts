@@ -33,10 +33,11 @@ async function r2Put(key: string, body: Buffer, contentType: string): Promise<vo
   const bodyHash = sha256hex(body)
 
   const headers: Record<string, string> = {
-    'host':                 host,
-    'x-amz-date':           amzDate,
-    'x-amz-content-sha256': bodyHash,
+    'cache-control':        'public, max-age=31536000, immutable',
     'content-type':         contentType,
+    'host':                 host,
+    'x-amz-content-sha256': bodyHash,
+    'x-amz-date':           amzDate,
   }
 
   const sortedKeys       = Object.keys(headers).sort()
