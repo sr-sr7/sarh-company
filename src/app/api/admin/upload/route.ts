@@ -57,7 +57,7 @@ async function r2Put(key: string, body: Buffer, contentType: string): Promise<vo
   const res = await fetch(url, {
     method:  'PUT',
     headers: { ...headers, Authorization: authHeader },
-    body,
+    body: new Uint8Array(body),
   })
   if (!res.ok) {
     const txt = await res.text()
