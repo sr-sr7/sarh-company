@@ -3,7 +3,6 @@ import Script from 'next/script'
 import './globals.css'
 import PromoWidget     from '@/components/PromoWidget'
 import InstallPrompt   from '@/components/InstallPrompt'
-import WaterDropIntro  from '@/components/WaterDropIntro'
 import CapacitorInit   from '@/components/CapacitorInit'
 import PushNotifications from '@/components/PushNotifications'
 import CompareBar      from '@/components/CompareBar'
@@ -90,7 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Amiri:wght@400;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap"
           rel="stylesheet"
         />
         <meta name="mobile-web-app-capable"       content="yes" />

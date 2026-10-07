@@ -78,7 +78,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
       <div className="sarh-card-img" style={{ position: 'relative', width: 220, minWidth: 220, alignSelf: 'stretch', background: '#d3e2dc', flexShrink: 0 }}>
         {img ? (
           <Image src={img} alt={p.title} fill sizes="220px"
-            style={{ objectFit: 'cover' }} priority={p.is_featured} />
+            style={{ objectFit: 'cover' }} />
         ) : (
           <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', opacity: 0.15 }}>
             🏠

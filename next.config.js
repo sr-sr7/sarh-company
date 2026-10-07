@@ -40,6 +40,9 @@ const nextConfig = {
     async headers() {
       return [{ source: '/(.*)', headers: securityHeaders }]
     },
+    async redirects() {
+      return [{ source: '/favicon.ico', destination: '/icon-192.png', permanent: true }]
+    },
   } : {}),
 
   images: {
