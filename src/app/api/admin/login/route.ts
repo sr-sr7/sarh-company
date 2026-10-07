@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { COOKIE_NAME, makeSessionCookie } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import { createHash } from 'crypto'
+import { createHash, timingSafeEqual } from 'crypto'
 import bcrypt from 'bcryptjs'
 
 export const runtime = 'nodejs'
@@ -22,8 +22,11 @@ export async function POST(req: Request) {
     // ── Owner login via env var ──────────────────────────────
     if (username.trim() === 'admin') {
       const expected = process.env.ADMIN_PASSWORD
-      if (expected && password === expected) {
-        session = { id: 'owner', username: 'admin', role: 'admin', permissions: {} }
+      if (expected) {
+        const a = Buffer.from(password)
+        const b = Buffer.from(expected)
+        const match = a.length === b.length && timingSafeEqual(a, b)
+        if (match) session = { id: 'owner', username: 'admin', role: 'admin', permissions: {} }
       }
     }
 
@@ -67,7 +70,7 @@ export async function POST(req: Request) {
     const res = NextResponse.json({ ok: true, username: session.username, role: session.role })
     res.cookies.set(COOKIE_NAME, makeSessionCookie(session), {
       httpOnly: true,
-      secure:   process.env.NODE_ENV === 'production',
+      secure:   process.env.NODE_ENV === 'production' || process.env.VERCEL === '1',
       sameSite: 'strict',
       path:     '/',
       maxAge:   60 * 60 * 24 * 7,

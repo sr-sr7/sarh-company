@@ -113,6 +113,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ url: `${R2_PUBLIC_BASE}/${r2Key}` })
   } catch (e: any) {
-    return NextResponse.json({ error: e.message || 'فشل الرفع' }, { status: 500 })
+    return NextResponse.json({ error: 'فشل الرفع' }, { status: 500 })
   }
 }
