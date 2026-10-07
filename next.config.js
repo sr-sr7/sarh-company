@@ -31,6 +31,8 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
+  reactStrictMode: true,
+  poweredByHeader: false,
   ...(isMobile ? { output: 'export', trailingSlash: true } : {}),
 
   // Security headers (web only — ignored in static export)
