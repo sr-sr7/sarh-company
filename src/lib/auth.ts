@@ -12,7 +12,7 @@ export type SessionData = {
 }
 
 function signingSecret(): string {
-  return (process.env.ADMIN_PASSWORD || '') + 'sarh_session_2026'
+  return process.env.SESSION_SECRET || (process.env.ADMIN_PASSWORD || '') + 'sarh_session_2026'
 }
 
 // ── Build signed cookie value ─────────────────────────────────
