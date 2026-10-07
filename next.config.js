@@ -38,7 +38,12 @@ const nextConfig = {
   // Security headers (web only — ignored in static export)
   ...(!isMobile ? {
     async headers() {
-      return [{ source: '/(.*)', headers: securityHeaders }]
+      const weekCache = [{ key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' }]
+      return [
+        { source: '/(.*)', headers: securityHeaders },
+        { source: '/icons/:path*', headers: weekCache },
+        { source: '/:file(logo.png|icon-192.png|icon-512.png|sold-stamp.svg|sold-stamp.png)', headers: weekCache },
+      ]
     },
     async redirects() {
       return [{ source: '/favicon.ico', destination: '/icon-192.png', permanent: true }]

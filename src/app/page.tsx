@@ -152,23 +152,40 @@ export default function Home() {
     el.scrollTo({ left: carouselIdx * CARD, behavior: 'smooth' })
   }, [carouselIdx])
 
-  // Load hero images — limit to 8 max
+  // One request for everything: tabs, hero images and sold list are derived client-side
+  const [allProps, setAllProps] = useState<Property[] | null>(null)
+
   useEffect(() => {
-    async function loadHero() {
-      const data = await sbFetch('properties?select=main_image&status=eq.active&main_image=not.is.null&limit=8')
-      if (data?.length) { setHeroImages(data.map((p: any) => p.main_image).filter(Boolean)); return }
-      // Fallback to cache
+    async function loadAll() {
+      const data = await sbFetch('properties?select=*&status=in.(active,sold)&order=is_featured.desc,created_at.desc')
+      if (Array.isArray(data) && data.length) { setAllProps(data); return }
       try {
         const r = await fetch('/api/properties-cache')
-        if (r.ok) {
-          const all: Property[] = await r.json()
-          const imgs = all.filter(p => p.status === 'active' && p.main_image).slice(0, 8).map(p => p.main_image!)
-          setHeroImages(imgs)
-        }
-      } catch {}
+        const all: Property[] = r.ok ? await r.json() : []
+        setAllProps(all
+          .filter(p => p.status === 'active' || p.status === 'sold')
+          .sort((a,b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0) || new Date(b.created_at).getTime() - new Date(a.created_at).getTime()))
+      } catch { setAllProps([]) }
     }
-    loadHero()
+    loadAll()
   }, [])
+
+  useEffect(() => {
+    if (!allProps) return
+    setHeroImages(allProps.filter(p => p.status === 'active' && p.main_image).slice(0, 8).map(p => p.main_image!))
+    setSoldProperties(allProps.filter(p => p.status === 'sold').sort((a,b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()))
+  }, [allProps])
+
+  useEffect(() => {
+    if (!allProps) return
+    const tab = activeTab
+    let list = allProps
+    if      (tab === 'إيجار')     list = list.filter(p => p.operation === 'للإيجار')
+    else if (tab === 'محل تجاري') list = list.filter(p => p.type === 'محل تجاري' || p.type === 'تجاري')
+    else if (tab !== 'الكل')      list = list.filter(p => p.type === tab)
+    setProperties(list)
+    setLoading(false)
+  }, [allProps, activeTab])
 
   // Cycle hero images every 4 seconds
   useEffect(() => {
@@ -176,54 +193,6 @@ export default function Home() {
     const timer = setInterval(() => setHeroIdx(i => (i + 1) % heroImages.length), 4000)
     return () => clearInterval(timer)
   }, [heroImages])
-
-  useEffect(() => { loadProperties(activeTab) }, [activeTab])
-
-  useEffect(() => {
-    async function loadSold() {
-      const data = await sbFetch('properties?select=*&status=eq.sold&order=created_at.desc', { cache: 'no-store' })
-      if (Array.isArray(data) && data.length) { setSoldProperties(data); return }
-      try {
-        const r = await fetch('/api/properties-cache')
-        if (r.ok) {
-          const all: Property[] = await r.json()
-          setSoldProperties(all.filter(p => p.status === 'sold').sort((a,b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()))
-        }
-      } catch {}
-    }
-    loadSold()
-  }, [])
-
-  async function loadProperties(tab: TabKey) {
-    setLoading(true)
-    try {
-      let filter = ''
-      if      (tab === 'الكل')    filter = ''
-      else if (tab === 'إيجار')  filter = `&operation=eq.${encodeURIComponent('للإيجار')}`
-      else if (tab === 'محل تجاري') filter = `&type=in.(${encodeURIComponent('محل تجاري')},${encodeURIComponent('تجاري')})`
-      else                        filter = `&type=eq.${encodeURIComponent(tab)}`
-      const data = await sbFetch(
-        `properties?select=*&status=in.(active,sold)${filter}&order=is_featured.desc,created_at.desc`,
-        { cache: 'no-store' }
-      )
-      if (Array.isArray(data) && data.length) { setProperties(data); return }
-      // Fallback to cache
-      const r = await fetch('/api/properties-cache')
-      if (r.ok) {
-        let all: Property[] = await r.json()
-        all = all.filter(p => p.status === 'active' || p.status === 'sold')
-        if (tab === 'إيجار') all = all.filter(p => p.operation === 'للإيجار')
-        else if (tab === 'محل تجاري') all = all.filter(p => p.type === 'محل تجاري' || p.type === 'تجاري')
-        else if (tab !== 'الكل') all = all.filter(p => p.type === tab)
-        all.sort((a,b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0) || new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-        setProperties(all)
-      }
-    } catch {
-      setProperties([])
-    } finally {
-      setLoading(false)
-    }
-  }
 
   return (
     <main style={S.main}>
