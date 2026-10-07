@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Property, sbFetch } from '@/lib/supabase'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -7,26 +7,43 @@ import PropertyCard from '@/components/PropertyCard'
 import dynamic from 'next/dynamic'
 
 const PropertyMap = dynamic(() => import('@/components/PropertyMap'), { ssr: false, loading: () => (
-  <div style={{ height: 500, background: '#d3e2dc', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#41646d', fontSize: '1rem' }}><img src="/icons/icon_r1_c16.png" width={24} height={24} style={{verticalAlign:'middle',marginLeft:8,opacity:0.5}} /> جاري تحميل الخريطة...</div>
+  <div style={{ height: 500, background: '#d3e2dc', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#41646d', fontSize: '1rem' }}>
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="#41646d" strokeWidth="1.5" style={{verticalAlign:'middle',marginLeft:8,opacity:0.5}}><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 9m0 8V9m0 0L9 7" strokeLinecap="round" strokeLinejoin="round"/></svg>
+    جاري تحميل الخريطة...
+  </div>
 )})
 
 type TabKey = 'الكل' | 'فيلا' | 'أرض' | 'استراحة' | 'شاليه' | 'مزرعة' | 'إيجار' | 'شقة' | 'دبلكس' | 'محل تجاري' | 'وحدة علوية' | 'وحدة أرضية' | 'دور علوي' | 'دور أرضي'
 
-const TABS: { key: TabKey; label: string; icon: string }[] = [
-  { key: 'الكل',        label: 'الكل',        icon: '/icons/icon_r3_c1.png' },
-  { key: 'فيلا',        label: 'فلل',         icon: '/icons/icon_r3_c1.png' },
-  { key: 'أرض',        label: 'أراضي',       icon: '/icons/icon_r2_c3.png' },
-  { key: 'شقة',        label: 'شقق',         icon: '/icons/icon_r2_c7.png' },
-  { key: 'استراحة',    label: 'استراحات',    icon: '/icons/icon_r6_c9.png' },
-  { key: 'شاليه',      label: 'شاليهات',     icon: '/icons/icon_r6_c9.png' },
-  { key: 'دبلكس',      label: 'دبلكس',       icon: '/icons/icon_r2_c7.png' },
-  { key: 'مزرعة',      label: 'مزارع',       icon: '/icons/icon_r4_c4.png' },
-  { key: 'محل تجاري',  label: 'تجاري',       icon: '/icons/icon_r6_c2.png' },
-  { key: 'وحدة علوية', label: 'وحدة علوية',  icon: '/icons/icon_r2_c7.png' },
-  { key: 'وحدة أرضية', label: 'وحدة أرضية',  icon: '/icons/icon_r2_c7.png' },
-  { key: 'دور علوي',   label: 'دور علوي',    icon: '/icons/icon_r2_c7.png' },
-  { key: 'دور أرضي',   label: 'دور أرضي',    icon: '/icons/icon_r2_c7.png' },
-  { key: 'إيجار',      label: 'إيجار',       icon: '/icons/icon_r5_c8.png' },
+type IconKey = 'all' | 'villa' | 'land' | 'apt' | 'rest' | 'farm' | 'commercial' | 'rent' | 'map'
+
+const TAB_ICONS: Record<IconKey, React.ReactNode> = {
+  all:        <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+  villa:      <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+  land:       <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/></svg>,
+  apt:        <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22V12h6v10M8 6h.01M12 6h.01M16 6h.01M8 10h.01M16 10h.01"/></svg>,
+  rest:       <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 17l4-8 5 6 3-4 6 6"/><path d="M3 21h18"/></svg>,
+  farm:       <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5"/></svg>,
+  commercial: <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9h18v11a1 1 0 01-1 1H4a1 1 0 01-1-1V9z"/><path d="M3 9l2.5-5h13L21 9"/><path d="M9 22V13h6v9"/></svg>,
+  rent:       <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="7" cy="7" r="4"/><path d="M11 11l10 10M16 21l5-5"/></svg>,
+  map:        <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 9m0 8V9m0 0L9 7"/></svg>,
+}
+
+const TABS: { key: TabKey; label: string; iconKey: IconKey }[] = [
+  { key: 'الكل',        label: 'الكل',        iconKey: 'all' },
+  { key: 'فيلا',        label: 'فلل',         iconKey: 'villa' },
+  { key: 'أرض',        label: 'أراضي',       iconKey: 'land' },
+  { key: 'شقة',        label: 'شقق',         iconKey: 'apt' },
+  { key: 'استراحة',    label: 'استراحات',    iconKey: 'rest' },
+  { key: 'شاليه',      label: 'شاليهات',     iconKey: 'rest' },
+  { key: 'دبلكس',      label: 'دبلكس',       iconKey: 'apt' },
+  { key: 'مزرعة',      label: 'مزارع',       iconKey: 'farm' },
+  { key: 'محل تجاري',  label: 'تجاري',       iconKey: 'commercial' },
+  { key: 'وحدة علوية', label: 'وحدة علوية',  iconKey: 'apt' },
+  { key: 'وحدة أرضية', label: 'وحدة أرضية',  iconKey: 'apt' },
+  { key: 'دور علوي',   label: 'دور علوي',    iconKey: 'apt' },
+  { key: 'دور أرضي',   label: 'دور أرضي',    iconKey: 'apt' },
+  { key: 'إيجار',      label: 'إيجار',       iconKey: 'rent' },
 ]
 
 const S = {
@@ -270,7 +287,7 @@ export default function Home() {
               {TABS.map(tab => (
                 <button key={tab.key} onClick={() => setActiveTab(tab.key)}
                   style={activeTab === tab.key ? S.tabActive : S.tabInactive}>
-                  <img src={tab.icon} alt="" width={20} height={20} style={{ display:'inline-block', verticalAlign:'middle', marginLeft:4 }} /> {tab.label}
+                  {TAB_ICONS[tab.iconKey]} {tab.label}
                 </button>
               ))}
             </div>
@@ -283,7 +300,7 @@ export default function Home() {
                 style={{ width: '100%', background: '#f4ede4', border: '2px solid rgba(30,58,52,0.18)', borderRadius: 12, padding: '10px 16px', fontSize: '1rem', fontWeight: 700, color: '#1e3a34', fontFamily: "'Tajawal','Cairo',sans-serif", cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'space-between', direction: 'rtl' }}
               >
                 <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <img src={TABS.find(t => t.key === activeTab)?.icon} alt="" width={20} height={20} />
+                  {TAB_ICONS[TABS.find(t => t.key === activeTab)?.iconKey ?? 'all']}
                   {TABS.find(t => t.key === activeTab)?.label}
                 </span>
                 <span style={{ fontSize: '0.75rem', opacity: 0.5 }}>{mobileDropOpen ? '▲' : '▼'}</span>
@@ -298,7 +315,7 @@ export default function Home() {
                       onClick={() => { setActiveTab(tab.key); setMobileDropOpen(false) }}
                       style={{ width: '100%', background: tab.key === activeTab ? '#d3e2dc' : '#fff', border: 'none', padding: '12px 16px', fontSize: '0.95rem', fontWeight: 700, color: '#1e3a34', fontFamily: "'Tajawal','Cairo',sans-serif", cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, direction: 'rtl', borderBottom: '1px solid rgba(30,58,52,0.07)' }}
                     >
-                      <img src={tab.icon} alt="" width={22} height={22} />
+                      {TAB_ICONS[tab.iconKey]}
                       {tab.label}
                     </button>
                   ))}
@@ -312,7 +329,7 @@ export default function Home() {
                 ⊞ شبكة
               </button>
               <button onClick={() => setViewMode('map')} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', borderRadius: 9, border: 'none', fontFamily: "'Tajawal','Cairo',sans-serif", fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s', background: viewMode === 'map' ? '#d3e2dc' : 'transparent', color: '#1e3a34' }}>
-                <img src="/icons/icon_r1_c16.png" alt="" width={18} height={18} style={{verticalAlign:'middle'}} /> خريطة
+                {TAB_ICONS.map} خريطة
               </button>
             </div>
           </div>
@@ -329,7 +346,7 @@ export default function Home() {
             loading
               ? <div style={{ height: 500, background: '#d3e2dc', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#41646d' }}>جاري التحميل...</div>
               : properties.length === 0
-                ? <div style={S.empty}><img src="/icons/icon_r1_c16.png" style={{width:48,height:48,opacity:0.4,marginBottom:12}} /><p style={S.emptyText}>لا توجد عقارات في هذه الفئة حالياً</p></div>
+                ? <div style={S.empty}><span style={{display:'block',fontSize:'3rem',opacity:0.4,marginBottom:12,color:'#41646d'}}>{TAB_ICONS.map}</span><p style={S.emptyText}>لا توجد عقارات في هذه الفئة حالياً</p></div>
                 : <PropertyMap properties={properties} />
           )}
 
