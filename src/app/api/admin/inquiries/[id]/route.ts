@@ -4,11 +4,12 @@ import { supabaseAdmin } from '@/lib/supabase-admin'
 
 export const runtime = 'nodejs'
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
-  if (!isAuthenticated()) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  const { id } = await params
   try {
     const body = await req.json()
-    const { error } = await supabaseAdmin.from('inquiries').update(body).eq('id', params.id)
+    const { error } = await supabaseAdmin.from('inquiries').update(body).eq('id', id)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     return NextResponse.json({ success: true })
   } catch {
@@ -16,10 +17,11 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   }
 }
 
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
-  if (!isAuthenticated()) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  const { id } = await params
   try {
-    const { error } = await supabaseAdmin.from('inquiries').delete().eq('id', params.id)
+    const { error } = await supabaseAdmin.from('inquiries').delete().eq('id', id)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     return NextResponse.json({ success: true })
   } catch {

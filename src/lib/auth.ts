@@ -24,9 +24,10 @@ export function makeSessionCookie(user: Omit<SessionData, 'exp'>): string {
 }
 
 // ── Verify and decode cookie (Node.js) ───────────────────────
-export function getSession(): SessionData | null {
+export async function getSession(): Promise<SessionData | null> {
   try {
-    const value = cookies().get(COOKIE_NAME)?.value
+    const jar = await cookies()
+    const value = jar.get(COOKIE_NAME)?.value
     if (!value) return null
     const [b64, sig] = value.split('.')
     if (!b64 || !sig) return null
@@ -40,8 +41,8 @@ export function getSession(): SessionData | null {
   }
 }
 
-export function isAuthenticated(): boolean {
-  return getSession() !== null
+export async function isAuthenticated(): Promise<boolean> {
+  return (await getSession()) !== null
 }
 
 // ── Permission check ──────────────────────────────────────────

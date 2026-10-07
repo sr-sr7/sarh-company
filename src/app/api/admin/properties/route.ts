@@ -7,7 +7,7 @@ import cacheData from '@/data/properties-cache.json'
 export const runtime = 'nodejs'
 
 export async function GET() {
-  if (!isAuthenticated()) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
   const { data, error } = await supabaseAdmin
     .from('properties')
     .select('*')
@@ -23,7 +23,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  if (!isAuthenticated()) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
   try {
     const raw  = await req.json()
     const body = sanitizeProperty(raw)

@@ -6,7 +6,7 @@ import { createHash } from 'crypto'
 export const runtime = 'nodejs'
 
 export async function GET() {
-  const session = getSession()
+  const session = await getSession()
   if (!session || session.role !== 'admin') return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
   const { data, error } = await supabaseAdmin
     .from('admin_users')
@@ -17,7 +17,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const session = getSession()
+  const session = await getSession()
   if (!session || session.role !== 'admin') return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
   try {
     const { username, password, role, permissions } = await req.json()

@@ -5,16 +5,17 @@ import { createHash } from 'crypto'
 
 export const runtime = 'nodejs'
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
-  const session = getSession()
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const session = await getSession()
   if (!session || session.role !== 'admin') return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  const { id } = await params
   try {
     const body = await req.json()
     const update: Record<string, any> = {}
     if (body.permissions !== undefined) update.permissions = body.permissions
     if (body.role !== undefined) update.role = body.role
     if (body.password) update.password_hash = createHash('sha256').update(body.password).digest('hex')
-    const { error } = await supabaseAdmin.from('admin_users').update(update).eq('id', params.id)
+    const { error } = await supabaseAdmin.from('admin_users').update(update).eq('id', id)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     return NextResponse.json({ success: true })
   } catch {
@@ -22,10 +23,11 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   }
 }
 
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
-  const session = getSession()
+export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const session = await getSession()
   if (!session || session.role !== 'admin') return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
-  const { error } = await supabaseAdmin.from('admin_users').delete().eq('id', params.id)
+  const { id } = await params
+  const { error } = await supabaseAdmin.from('admin_users').delete().eq('id', id)
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ success: true })
 }

@@ -8,11 +8,12 @@ const cache = cacheData as unknown as Partial<Property>[]
 const BASE = 'https://sarh-company.com'
 
 export async function generateMetadata(
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<Metadata> {
+  const { id } = await params
   try {
     const res = await fetch(
-      `${SB_URL}/rest/v1/properties?id=eq.${params.id}&select=title,description,type,operation,city,district,price,price_unit,main_image`,
+      `${SB_URL}/rest/v1/properties?id=eq.${id}&select=title,description,type,operation,city,district,price,price_unit,main_image`,
       { headers: SB_HEADERS, cache: 'no-store' }
     )
     const data: Partial<Property>[] = res.ok ? await res.json() : []
@@ -29,7 +30,7 @@ export async function generateMetadata(
       openGraph: {
         title:       p.title,
         description: desc,
-        url:         `${BASE}/properties/${params.id}`,
+        url:         `${BASE}/properties/${id}`,
         siteName:    'صرح العقارية',
         locale:      'ar_SA',
         type:        'website',
@@ -42,7 +43,7 @@ export async function generateMetadata(
         images:      p.main_image ? [p.main_image] : [],
       },
       alternates: {
-        canonical: `${BASE}/properties/${params.id}`,
+        canonical: `${BASE}/properties/${id}`,
       },
     }
   } catch {
@@ -50,7 +51,8 @@ export async function generateMetadata(
   }
 }
 
-async function getProperty(id: string): Promise<Partial<Property> | null> {
+async function getProperty(propId: string): Promise<Partial<Property> | null> {
+  const id = propId
   try {
     const res = await fetch(
       `${SB_URL}/rest/v1/properties?id=eq.${id}&select=*`,
@@ -65,8 +67,9 @@ async function getProperty(id: string): Promise<Partial<Property> | null> {
   return cache.find(p => p.id === id) ?? null
 }
 
-export default async function PropertyPage({ params }: { params: { id: string } }) {
-  const p = await getProperty(params.id)
+export default async function PropertyPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const p = await getProperty(id)
   const price = p?.price ? new Intl.NumberFormat('ar-SA').format(p.price) : null
 
   const schema = p ? {
@@ -74,7 +77,7 @@ export default async function PropertyPage({ params }: { params: { id: string } 
     '@type': 'RealEstateListing',
     name: p.title,
     description: p.description || `${p.type} ${p.operation} في ${p.city}`,
-    url: `${BASE}/properties/${params.id}`,
+    url: `${BASE}/properties/${id}`,
     image: p.main_image ? [p.main_image] : undefined,
     address: {
       '@type': 'PostalAddress',
@@ -102,7 +105,7 @@ export default async function PropertyPage({ params }: { params: { id: string } 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       )}
-      <PropertyDetail id={params.id} />
+      <PropertyDetail id={id} />
     </>
   )
 }
