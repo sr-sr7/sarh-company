@@ -5,6 +5,17 @@ export const runtime = 'nodejs'
 export async function GET(req: NextRequest) {
   const url = req.nextUrl.searchParams.get('url')
   if (!url) return NextResponse.json({ error: 'no url' }, { status: 400 })
+
+  try {
+    const parsed = new URL(url)
+    const allowed = ['tiktok.com', 'www.tiktok.com', 'vm.tiktok.com', 'vt.tiktok.com']
+    if (!allowed.includes(parsed.hostname)) {
+      return NextResponse.json({ error: 'invalid url' }, { status: 400 })
+    }
+  } catch {
+    return NextResponse.json({ error: 'invalid url' }, { status: 400 })
+  }
+
   try {
     const res = await fetch(`https://www.tiktok.com/oembed?url=${encodeURIComponent(url)}`)
     if (!res.ok) throw new Error('failed')
