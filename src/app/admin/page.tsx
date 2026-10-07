@@ -753,7 +753,16 @@ export default function AdminPage() {
                 <input
                   type="url"
                   value={form.video_url}
-                  onChange={e => setForm(f => ({...f, video_url: e.target.value}))}
+                  onChange={e => {
+                    const val = e.target.value.trim()
+                    try {
+                      if (val) {
+                        const host = new URL(val).hostname.replace(/^www\./, '')
+                        if (!['tiktok.com', 'vm.tiktok.com', 'vt.tiktok.com'].includes(host)) return
+                      }
+                    } catch { return }
+                    setForm(f => ({...f, video_url: val}))
+                  }}
                   style={{...S.input, fontFamily:'monospace', fontSize:'0.82rem'}}
                   placeholder="https://www.tiktok.com/@username/video/123456..."
                 />

@@ -14,7 +14,7 @@ export async function generateMetadata(
   try {
     const res = await fetch(
       `${SB_URL}/rest/v1/properties?id=eq.${id}&select=title,description,type,operation,city,district,price,price_unit,main_image`,
-      { headers: SB_HEADERS, cache: 'no-store' }
+      { headers: SB_HEADERS, next: { revalidate: 3600 } }
     )
     const data: Partial<Property>[] = res.ok ? await res.json() : []
     if (!data.length) return { title: 'عقار | صرح العقارية' }
@@ -51,12 +51,14 @@ export async function generateMetadata(
   }
 }
 
+export const revalidate = 3600 // ISR: revalidate every hour
+
 async function getProperty(propId: string): Promise<Partial<Property> | null> {
   const id = propId
   try {
     const res = await fetch(
       `${SB_URL}/rest/v1/properties?id=eq.${id}&select=*`,
-      { headers: SB_HEADERS, cache: 'no-store' }
+      { headers: SB_HEADERS, next: { revalidate: 3600 } }
     )
     if (res.ok) {
       const data: Partial<Property>[] = await res.json()

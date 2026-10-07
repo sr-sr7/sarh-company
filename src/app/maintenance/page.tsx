@@ -9,9 +9,9 @@ export const metadata = {
 async function getReason(): Promise<string> {
   try {
     const { data } = await supabaseAdmin
-      .from('inquiries').select('message')
-      .eq('type', '__maintenance__').eq('status', 'on').limit(1).single()
-    return data?.message || ''
+      .from('site_settings').select('value')
+      .eq('key', 'maintenance').single()
+    return (data?.value as any)?.reason || ''
   } catch { return '' }
 }
 

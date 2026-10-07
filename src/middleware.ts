@@ -13,13 +13,14 @@ async function isMaintenance(): Promise<boolean> {
   if (Date.now() < maintCache.expiresAt) return maintCache.active
   try {
     const res = await fetch(
-      `${SB_URL}/rest/v1/inquiries?type=eq.__maintenance__&status=eq.on&select=id&limit=1`,
+      `${SB_URL}/rest/v1/site_settings?key=eq.maintenance&select=value&limit=1`,
       { headers: { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}` } }
     )
     const data = res.ok ? await res.json() : []
-    maintCache = { active: Array.isArray(data) && data.length > 0, expiresAt: Date.now() + 30_000 }
+    const active = Array.isArray(data) && data[0]?.value?.active === true
+    maintCache = { active, expiresAt: Date.now() + 30_000 }
   } catch {
-    maintCache.expiresAt = Date.now() + 10_000 // retry sooner on error
+    maintCache.expiresAt = Date.now() + 10_000
   }
   return maintCache.active
 }
