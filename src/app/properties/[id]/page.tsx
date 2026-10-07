@@ -24,7 +24,7 @@ export async function generateMetadata(
       `${p.type} ${p.operation} في ${p.city}${p.district ? ' — ' + p.district : ''} — السعر: ${price} ${p.price_unit}`
 
     return {
-      title:       `${p.title} | صرح العقارية`,
+      title:       p.title,
       description: desc,
       openGraph: {
         title:       p.title,
