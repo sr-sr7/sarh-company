@@ -1,24 +1,33 @@
 'use client'
+import React from 'react'
+import Image from 'next/image'
 import { Property } from '@/lib/supabase'
 import { useFavorites, useCompare } from '@/lib/favorites'
 
-const TYPE_ICON: Record<string, string> = {
-  'فيلا':        'icon_r3_c1',
-  'شقة':         'icon_r2_c7',
-  'عمارة':       'icon_r2_c7',
-  'دبلكس':       'icon_r2_c7',
-  'وحدة علوية':  'icon_r2_c7',
-  'وحدة أرضية':  'icon_r2_c7',
-  'دور علوي':    'icon_r2_c7',
-  'دور أرضي':    'icon_r2_c7',
-  'أرض':         'icon_r2_c3',
-  'استراحة':     'icon_r6_c9',
-  'شاليه':       'icon_r6_c9',
-  'مزرعة':       'icon_r4_c4',
-  'تجاري':       'icon_r6_c2',
-  'محل':         'icon_r6_c2',
-  'محل تجاري':   'icon_r6_c2',
-  'مستودع':      'icon_r6_c15',
+// ── Inline SVG icons — no HTTP requests ───────────────────────
+const SV: Record<string, React.ReactNode> = {
+  house:      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+  apt:        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22V12h6v10M8 6h.01M12 6h.01M16 6h.01M8 10h.01M16 10h.01"/></svg>,
+  land:       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/></svg>,
+  rest:       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 17l4-8 5 6 3-4 6 6"/><path d="M3 21h18"/></svg>,
+  farm:       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5"/></svg>,
+  commercial: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9h18v11a1 1 0 01-1 1H4a1 1 0 01-1-1V9z"/><path d="M3 9l2.5-5h13L21 9"/><path d="M9 22V13h6v9"/></svg>,
+  map:        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 9m0 8V9m0 0L9 7"/></svg>,
+  area:       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>,
+  bed:        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 20V10a2 2 0 012-2h14a2 2 0 012 2v10M3 20h18M3 12h18M7 8V6a1 1 0 011-1h8a1 1 0 011 1v2"/></svg>,
+  bath:       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12h16v3a4 4 0 01-4 4H8a4 4 0 01-4-4v-3z"/><path d="M6 12V5a2 2 0 012-2h1v2"/><path d="M4 19l-1 2M20 19l1 2"/></svg>,
+  pool:       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0M2 16c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><circle cx="7" cy="7" r="2"/><path d="M7 5V2"/></svg>,
+  parking:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7h4a3 3 0 010 6H9"/></svg>,
+  garden:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22V12M12 12C12 12 7 9 7 4a5 5 0 0110 0c0 5-5 8-5 8z"/><path d="M8 22h8"/></svg>,
+  whatsapp:   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 2C6.479 2 2 6.478 2 12.004c0 1.85.484 3.584 1.332 5.09L2.05 21.95l4.945-1.297A10.01 10.01 0 0012.004 22C17.53 22 22 17.522 22 12.004 22 6.479 17.53 2 12.004 2zm0 18.371a8.322 8.322 0 01-4.246-1.16l-.305-.18-3.151.828.843-3.065-.2-.32a8.32 8.32 0 01-1.278-4.47c0-4.6 3.742-8.343 8.337-8.343 4.593 0 8.335 3.742 8.335 8.343 0 4.6-3.742 8.367-8.335 8.367z"/></svg>,
+}
+
+const TYPE_ICON: Record<string, keyof typeof SV> = {
+  'فيلا': 'house', 'شقة': 'apt', 'عمارة': 'apt', 'دبلكس': 'apt',
+  'وحدة علوية': 'apt', 'وحدة أرضية': 'apt', 'دور علوي': 'apt', 'دور أرضي': 'apt',
+  'أرض': 'land', 'استراحة': 'rest', 'شاليه': 'rest',
+  'مزرعة': 'farm', 'تجاري': 'commercial', 'محل': 'commercial',
+  'محل تجاري': 'commercial', 'مستودع': 'commercial',
 }
 
 export default function PropertyCard({ property: p }: { property: Property }) {
@@ -68,8 +77,8 @@ export default function PropertyCard({ property: p }: { property: Property }) {
       {/* الصورة */}
       <div className="sarh-card-img" style={{ position: 'relative', width: 220, minWidth: 220, alignSelf: 'stretch', background: '#d3e2dc', flexShrink: 0 }}>
         {img ? (
-          <img src={img} alt={p.title} loading="eager"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', position: 'absolute', inset: 0 }} />
+          <Image src={img} alt={p.title} fill sizes="220px"
+            style={{ objectFit: 'cover' }} priority={p.is_featured} />
         ) : (
           <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', opacity: 0.15 }}>
             🏠
@@ -89,7 +98,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
         {/* مباع */}
         {isSold && (
           <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img src="/sold-stamp.png" alt="تم البيع" style={{ width: 110, height: 110, objectFit: 'contain', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.4))' }} />
+            <img src="/sold-stamp.svg" alt="تم البيع" width={110} height={110} style={{ filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.4))' }} />
           </div>
         )}
 
@@ -121,17 +130,17 @@ export default function PropertyCard({ property: p }: { property: Property }) {
           </h3>
 
           <p style={{ fontSize: '0.82rem', color: '#7a9188', margin: '0 0 14px', display: 'flex', alignItems: 'center', gap: 4 }}>
-            <BIcon name="icon_r1_c16" /> {p.city}{p.district ? ` — ${p.district}` : ''}
+            <BIcon name="map" /> {p.city}{p.district ? ` — ${p.district}` : ''}
           </p>
 
           {/* المواصفات */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
-            {p.area        ? <Spec label={`${p.area} م²`} icon="icon_r1_c5" /> : null}
-            {p.bedrooms >0 ? <Spec label={`${p.bedrooms} غرف`} icon="icon_r1_c3" /> : null}
-            {p.bathrooms>0 ? <Spec label={`${p.bathrooms} حمام`} icon="icon_r1_c2" /> : null}
-            {p.has_pool    ? <Spec label="مسبح" icon="icon_r6_c8" /> : null}
-            {p.has_parking ? <Spec label="مواقف" icon="icon_r1_c7" /> : null}
-            {p.has_garden  ? <Spec label="حديقة" icon="icon_r4_c4" /> : null}
+            {p.area        ? <Spec label={`${p.area} م²`} icon="area" /> : null}
+            {p.bedrooms >0 ? <Spec label={`${p.bedrooms} غرف`} icon="bed" /> : null}
+            {p.bathrooms>0 ? <Spec label={`${p.bathrooms} حمام`} icon="bath" /> : null}
+            {p.has_pool    ? <Spec label="مسبح" icon="pool" /> : null}
+            {p.has_parking ? <Spec label="مواقف" icon="parking" /> : null}
+            {p.has_garden  ? <Spec label="حديقة" icon="garden" /> : null}
           </div>
         </div>
 
@@ -168,7 +177,7 @@ export default function PropertyCard({ property: p }: { property: Property }) {
               href={`https://wa.me/${p.whatsapp}?text=${encodeURIComponent('مرحبا، استفسر عن: ' + p.title)}`}
               target="_blank"
               style={{ background: '#25D366', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '8px 16px', borderRadius: 10, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
-              <BIcon name="icon_r3_c6" size={18} /> واتساب
+              <BIcon name="whatsapp" size={18} /> واتساب
             </a>
           </div>
         </div>
@@ -177,11 +186,15 @@ export default function PropertyCard({ property: p }: { property: Property }) {
   )
 }
 
-function BIcon({ name, size = 18 }: { name: string; size?: number }) {
-  return <img src={`/icons/${name}.png`} alt="" width={size} height={size} style={{ display:'inline-block', verticalAlign:'middle', flexShrink:0 }} />
+function BIcon({ name, size = 18 }: { name: keyof typeof SV; size?: number }) {
+  return (
+    <span style={{ display:'inline-flex', flexShrink:0, width:size, height:size, verticalAlign:'middle' }}>
+      {React.cloneElement(SV[name] as React.ReactElement, { width: size, height: size })}
+    </span>
+  )
 }
 
-function Spec({ icon, label }: { icon: string; label: string }) {
+function Spec({ icon, label }: { icon: keyof typeof SV; label: string }) {
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: '#d3e2dc', color: '#3a5a54', fontSize: '0.78rem', fontWeight: 600, padding: '4px 10px', borderRadius: 20 }}>
       <BIcon name={icon} size={16} /> {label}

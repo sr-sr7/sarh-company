@@ -3,11 +3,11 @@ export const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
 export const SB_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 export const SB_HEADERS = { 'apikey': SB_KEY, 'authorization': `Bearer ${SB_KEY}` }
 
-export async function sbFetch(path: string, opts: RequestInit = {}) {
+export async function sbFetch(path: string, opts: RequestInit & { next?: { revalidate?: number } } = {}) {
   try {
     const r = await fetch(`${SB_URL}/rest/v1/${path}`, {
       headers: SB_HEADERS,
-      cache: 'no-store',
+      cache: 'no-store',  // callers override with { next: { revalidate: N } } for cacheable data
       ...opts,
     })
     return r.ok ? r.json() : []

@@ -20,11 +20,10 @@ export async function GET(req: NextRequest) {
     const res = await fetch(`https://www.tiktok.com/oembed?url=${encodeURIComponent(url)}`)
     if (!res.ok) throw new Error('failed')
     const data = await res.json()
-    return NextResponse.json({
-      thumbnail: data.thumbnail_url,
-      title: data.title,
-      author: data.author_name,
-    })
+    return NextResponse.json(
+      { thumbnail: data.thumbnail_url, title: data.title, author: data.author_name },
+      { headers: { 'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800' } }
+    )
   } catch {
     return NextResponse.json({ error: 'failed' }, { status: 500 })
   }
