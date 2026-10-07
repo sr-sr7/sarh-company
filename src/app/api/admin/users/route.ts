@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getSession } from '@/lib/auth'
+import { requireAdmin } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import bcrypt from 'bcryptjs'
 
 export const runtime = 'nodejs'
 
 export async function GET() {
-  const session = await getSession()
-  if (!session || session.role !== 'admin') return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await requireAdmin())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 403 })
   const { data, error } = await supabaseAdmin
     .from('admin_users')
     .select('id, username, role, permissions, created_at')
@@ -17,8 +16,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const session = await getSession()
-  if (!session || session.role !== 'admin') return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await requireAdmin())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 403 })
   try {
     const { username, password, role, permissions } = await req.json()
     if (!username?.trim() || !password?.trim()) {

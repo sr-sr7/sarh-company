@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import { isAuthenticated } from '@/lib/auth'
+import { requirePerm } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
 export const runtime = 'nodejs'
 
 export async function POST() {
-  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await requirePerm('add_property'))) return NextResponse.json({ error: 'غير مصرّح' }, { status: 403 })
   try {
     // Use MAX(listing_number)+1 instead of loading all used numbers into memory
     const { data, error } = await supabaseAdmin
@@ -20,7 +20,7 @@ export async function POST() {
       : (data.listing_number as number) + 1
 
     return NextResponse.json({ number: next })
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 })
+  } catch {
+    return NextResponse.json({ error: 'تعذّر تنفيذ العملية' }, { status: 500 })
   }
 }

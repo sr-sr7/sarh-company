@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { COOKIE_NAME, makeSessionCookie } from '@/lib/auth'
+import { COOKIE_NAME, makeSessionCookie, passwordVersion } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { createHash, timingSafeEqual } from 'crypto'
 import bcrypt from 'bcryptjs'
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'أدخل اسم المستخدم وكلمة المرور' }, { status: 400 })
     }
 
-    let session: { id: string; username: string; role: 'admin' | 'user'; permissions: Record<string, boolean> } | null = null
+    let session: { id: string; username: string; role: 'admin' | 'user'; permissions: Record<string, boolean>; pv?: string } | null = null
 
     // ── Owner login via env var ──────────────────────────────
     if (username.trim() === 'admin') {
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
         .single()
 
       if (data) {
-        const hash: string = data.password_hash
+        let hash: string = data.password_hash
         const isBcrypt = hash.startsWith('$2')
         let valid = false
 
@@ -54,11 +54,12 @@ export async function POST(req: Request) {
               .from('admin_users')
               .update({ password_hash: newHash })
               .eq('id', data.id)
+            hash = newHash
           }
         }
 
         if (valid) {
-          session = { id: data.id, username: data.username, role: data.role, permissions: data.permissions || {} }
+          session = { id: data.id, username: data.username, role: data.role, permissions: data.permissions || {}, pv: passwordVersion(hash) }
         }
       }
     }

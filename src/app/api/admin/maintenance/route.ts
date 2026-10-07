@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { isAuthenticated } from '@/lib/auth'
+import { isAuthenticated, requirePerm } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
 export const runtime = 'nodejs'
@@ -16,7 +16,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await requirePerm('maintenance'))) return NextResponse.json({ error: 'غير مصرّح' }, { status: 403 })
   const { enable, reason } = await req.json()
   await supabaseAdmin
     .from('site_settings')

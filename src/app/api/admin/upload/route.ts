@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { isAuthenticated } from '@/lib/auth'
+import { requirePerm } from '@/lib/auth'
 import { createHash, createHmac } from 'crypto'
 
 export const runtime = 'nodejs'
@@ -67,7 +67,7 @@ async function r2Put(key: string, body: Buffer, contentType: string): Promise<vo
 }
 
 export async function POST(req: Request) {
-  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await requirePerm('add_property', 'edit_property'))) return NextResponse.json({ error: 'غير مصرّح' }, { status: 403 })
   try {
     const formData = await req.formData()
     const file = formData.get('file') as File | null

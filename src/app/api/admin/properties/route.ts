@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { isAuthenticated } from '@/lib/auth'
+import { requirePerm } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { sanitizeProperty } from '@/lib/sanitize'
 import cacheData from '@/data/properties-cache.json'
@@ -7,7 +7,7 @@ import cacheData from '@/data/properties-cache.json'
 export const runtime = 'nodejs'
 
 export async function GET() {
-  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await requirePerm('view_properties'))) return NextResponse.json({ error: 'غير مصرّح' }, { status: 403 })
   const { data, error } = await supabaseAdmin
     .from('properties')
     .select('*')
@@ -23,7 +23,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await requirePerm('add_property'))) return NextResponse.json({ error: 'غير مصرّح' }, { status: 403 })
   try {
     const raw  = await req.json()
     const body = sanitizeProperty(raw)

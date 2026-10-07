@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import { isAuthenticated } from '@/lib/auth'
+import { requirePerm } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
 export const runtime = 'nodejs'
 
 export async function POST() {
-  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await requirePerm('edit_property'))) return NextResponse.json({ error: 'غير مصرّح' }, { status: 403 })
 
   // Get all properties without a listing_number
   const { data: properties, error: pErr } = await supabaseAdmin
@@ -13,7 +13,7 @@ export async function POST() {
     .select('id, listing_number')
     .is('listing_number', null)
 
-  if (pErr) return NextResponse.json({ error: pErr.message }, { status: 500 })
+  if (pErr) return NextResponse.json({ error: 'تعذّر تنفيذ العملية' }, { status: 500 })
   if (!properties?.length) return NextResponse.json({ message: 'جميع العقارات لديها أرقام بالفعل', updated: 0 })
 
   // Get all used numbers

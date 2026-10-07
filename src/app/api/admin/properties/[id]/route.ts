@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { isAuthenticated } from '@/lib/auth'
+import { requirePerm } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { sanitizePropertyPartial } from '@/lib/sanitize'
 
 export const runtime = 'nodejs'
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await requirePerm('edit_property'))) return NextResponse.json({ error: 'غير مصرّح' }, { status: 403 })
   const { id } = await params
   try {
     const raw  = await req.json()
@@ -20,7 +20,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 }
 
 export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await requirePerm('delete_property'))) return NextResponse.json({ error: 'غير مصرّح' }, { status: 403 })
   const { id } = await params
   try {
     const { error } = await supabaseAdmin.from('properties').delete().eq('id', id)

@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import { isAuthenticated } from '@/lib/auth'
+import { requirePerm } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
 export const runtime = 'nodejs'
 
 export async function GET() {
-  if (!(await isAuthenticated())) return NextResponse.json({ error: 'غير مصرّح' }, { status: 401 })
+  if (!(await requirePerm('view_promo'))) return NextResponse.json({ error: 'غير مصرّح' }, { status: 403 })
   const { data, error } = await supabaseAdmin
     .from('promo_leads')
     .select('*')

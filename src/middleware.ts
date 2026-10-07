@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { COOKIE_NAME } from '@/lib/auth'
+
+// Kept in sync with COOKIE_NAME in lib/auth.ts (not imported: auth.ts pulls Node-only deps)
+const COOKIE_NAME = 'sarh_admin'
+
+function safeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false
+  let diff = 0
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i)
+  return diff === 0
+}
 
 const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
 // Anon key — RLS policy "anon_read_maintenance" grants SELECT on key='maintenance' only
@@ -50,7 +59,7 @@ async function verifySession(cookieValue: string): Promise<boolean> {
     const enc = new TextEncoder().encode(b64 + edgeSigningSecret())
     const buf = await crypto.subtle.digest('SHA-256', enc)
     const expected = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('')
-    if (expected !== sig) return false
+    if (!safeEqual(expected, sig)) return false
     // Decode and check expiry
     const std = b64.replace(/-/g, '+').replace(/_/g, '/')
     const padded = std + '==='.slice(0, (4 - std.length % 4) % 4)
