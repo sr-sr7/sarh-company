@@ -12,7 +12,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const raw  = await req.json()
     const body = sanitizePropertyPartial(raw)
     const { error } = await supabaseAdmin.from('properties').update(body).eq('id', id)
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    if (error) return NextResponse.json({ error: 'فشل تحديث العقار' }, { status: 500 })
     return NextResponse.json({ success: true })
   } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
@@ -24,7 +24,7 @@ export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id:
   const { id } = await params
   try {
     const { error } = await supabaseAdmin.from('properties').delete().eq('id', id)
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    if (error) return NextResponse.json({ error: 'فشل حذف العقار' }, { status: 500 })
     return NextResponse.json({ success: true })
   } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })

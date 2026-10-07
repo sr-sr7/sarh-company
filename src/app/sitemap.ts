@@ -11,15 +11,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     const res = await fetch(
-      `${SB_URL}/rest/v1/properties?select=id,updated_at&status=in.(active,sold)&order=updated_at.desc`,
+      `${SB_URL}/rest/v1/properties?select=id,updated_at,status&status=in.(active,sold)&order=updated_at.desc`,
       { headers: SB_HEADERS, next: { revalidate: 3600 } }
     )
-    const data: { id: string; updated_at: string }[] = res.ok ? await res.json() : []
+    const data: { id: string; updated_at: string; status: string }[] = res.ok ? await res.json() : []
     const dynamic: MetadataRoute.Sitemap = data.map(p => ({
       url:             `${BASE}/properties/${p.id}`,
       lastModified:    new Date(p.updated_at),
-      changeFrequency: 'weekly',
-      priority:        0.8,
+      changeFrequency: p.status === 'sold' ? 'never' : 'weekly',
+      priority:        p.status === 'sold' ? 0.4 : 0.8,
     }))
     return [...statics, ...dynamic]
   } catch {

@@ -12,7 +12,7 @@ export async function GET() {
     .from('admin_users')
     .select('id, username, role, permissions, created_at')
     .order('created_at', { ascending: true })
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) return NextResponse.json({ error: 'فشل جلب المستخدمين' }, { status: 500 })
   return NextResponse.json({ data })
 }
 
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
       .insert({ username: username.trim(), password_hash: hash, role: role || 'user', permissions: permissions || {} })
       .select('id, username, role, permissions, created_at')
       .single()
-    if (error) return NextResponse.json({ error: error.message }, { status: 400 })
+    if (error) return NextResponse.json({ error: 'فشل إنشاء المستخدم' }, { status: 400 })
     return NextResponse.json({ data })
   } catch {
     return NextResponse.json({ error: 'طلب غير صالح' }, { status: 400 })

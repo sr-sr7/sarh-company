@@ -35,12 +35,19 @@ function isRateLimited(ip: string): boolean {
   return entry.count > 10
 }
 
+// ── Signing secret — mirrors auth.ts signingSecret() ─────────
+function edgeSigningSecret(): string {
+  // SESSION_SECRET takes precedence, matching auth.ts signingSecret() logic
+  return process.env.SESSION_SECRET ||
+    (process.env.ADMIN_PASSWORD || '') + 'sarh_session_2026'
+}
+
 // ── Verify signed session cookie (Edge-compatible) ───────────
-async function verifySession(cookieValue: string, secret: string): Promise<boolean> {
+async function verifySession(cookieValue: string): Promise<boolean> {
   const [b64, sig] = cookieValue.split('.')
   if (!b64 || !sig) return false
   try {
-    const enc = new TextEncoder().encode(b64 + secret + 'sarh_session_2026')
+    const enc = new TextEncoder().encode(b64 + edgeSigningSecret())
     const buf = await crypto.subtle.digest('SHA-256', enc)
     const expected = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('')
     if (expected !== sig) return false
@@ -68,8 +75,7 @@ export async function middleware(request: NextRequest) {
   // ── Protect /admin routes ────────────────────────────────
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
     const cookie = request.cookies.get(COOKIE_NAME)
-    const secret = process.env.ADMIN_PASSWORD || ''
-    if (!cookie || !(await verifySession(cookie.value, secret))) {
+    if (!cookie || !(await verifySession(cookie.value))) {
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
     return NextResponse.next()
@@ -90,7 +96,7 @@ export async function middleware(request: NextRequest) {
 
   // ── Admin bypass for maintenance mode (signed session required) ─
   const bypassCookie = request.cookies.get(COOKIE_NAME)
-  if (bypassCookie && (await verifySession(bypassCookie.value, process.env.ADMIN_PASSWORD || ''))) {
+  if (bypassCookie && (await verifySession(bypassCookie.value))) {
     return NextResponse.next()
   }
 

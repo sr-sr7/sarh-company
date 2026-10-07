@@ -76,17 +76,12 @@ export default async function PropertyPage({ params }: { params: Promise<{ id: s
 
   const schema = p ? {
     '@context': 'https://schema.org',
-    '@type': 'RealEstateListing',
+    '@type': 'Product',
     name: p.title,
     description: p.description || `${p.type} ${p.operation} في ${p.city}`,
     url: `${BASE}/properties/${id}`,
     image: p.main_image ? [p.main_image] : undefined,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: p.city,
-      addressRegion: p.district ?? undefined,
-      addressCountry: 'SA',
-    },
+    brand: { '@type': 'Organization', name: 'صرح العقارية' },
     offers: price ? {
       '@type': 'Offer',
       price: p.price,
@@ -94,9 +89,17 @@ export default async function PropertyPage({ params }: { params: Promise<{ id: s
       availability: p.status === 'sold'
         ? 'https://schema.org/SoldOut'
         : 'https://schema.org/InStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'صرح العقارية',
+        url: BASE,
+      },
     } : undefined,
-    floorSize: p.area ? { '@type': 'QuantitativeValue', value: p.area, unitCode: 'MTK' } : undefined,
-    numberOfRooms: p.bedrooms || undefined,
+    additionalProperty: [
+      p.area ? { '@type': 'PropertyValue', name: 'المساحة', value: `${p.area} م²` } : null,
+      p.bedrooms ? { '@type': 'PropertyValue', name: 'غرف النوم', value: p.bedrooms } : null,
+      p.city ? { '@type': 'PropertyValue', name: 'المدينة', value: p.city } : null,
+    ].filter(Boolean),
   } : null
 
   return (

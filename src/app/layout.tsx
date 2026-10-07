@@ -41,13 +41,13 @@ export const metadata: Metadata = {
     locale:      'ar_SA',
     type:        'website',
     url:         'https://sarh-company.com',
-    images:      [{ url: '/icon-512.png', width: 512, height: 512, alt: 'شركة صرح العقارية' }],
+    // images omitted — Next.js auto-uses opengraph-image.tsx (1200×630)
   },
   twitter: {
     card:        'summary_large_image',
     title:       'شركة صرح العقارية — القصيم | بريدة',
     description: 'خدمات عقارية متكاملة في القصيم — بريدة',
-    images:      ['/icon-512.png'],
+    // images omitted — inherited from opengraph-image.tsx
   },
 }
 

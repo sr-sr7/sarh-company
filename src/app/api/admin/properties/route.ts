@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       .insert(body)
       .select()
       .single()
-    if (error) return NextResponse.json({ error: error.message }, { status: 400 })
+    if (error) return NextResponse.json({ error: 'فشل حفظ العقار' }, { status: 400 })
     return NextResponse.json({ data })
   } catch {
     return NextResponse.json({ error: 'طلب غير صالح' }, { status: 400 })
