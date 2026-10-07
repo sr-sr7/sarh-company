@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { COOKIE_NAME, makeSessionCookie } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { createHash } from 'crypto'
+import bcrypt from 'bcryptjs'
 
 export const runtime = 'nodejs'
 
@@ -28,15 +29,34 @@ export async function POST(req: Request) {
 
     // ── DB user login ────────────────────────────────────────
     if (!session) {
-      const hash = sha256(password)
       const { data } = await supabaseAdmin
         .from('admin_users')
-        .select('id, username, role, permissions')
+        .select('id, username, role, permissions, password_hash')
         .eq('username', username.trim())
-        .eq('password_hash', hash)
         .single()
+
       if (data) {
-        session = { id: data.id, username: data.username, role: data.role, permissions: data.permissions || {} }
+        const hash: string = data.password_hash
+        const isBcrypt = hash.startsWith('$2')
+        let valid = false
+
+        if (isBcrypt) {
+          valid = await bcrypt.compare(password, hash)
+        } else {
+          // Legacy SHA-256 — verify then migrate to bcrypt on the fly
+          valid = hash === sha256(password)
+          if (valid) {
+            const newHash = await bcrypt.hash(password, 12)
+            await supabaseAdmin
+              .from('admin_users')
+              .update({ password_hash: newHash })
+              .eq('id', data.id)
+          }
+        }
+
+        if (valid) {
+          session = { id: data.id, username: data.username, role: data.role, permissions: data.permissions || {} }
+        }
       }
     }
 

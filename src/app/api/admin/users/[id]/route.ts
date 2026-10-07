@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import { createHash } from 'crypto'
+import bcrypt from 'bcryptjs'
 
 export const runtime = 'nodejs'
 
@@ -14,7 +14,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const update: Record<string, any> = {}
     if (body.permissions !== undefined) update.permissions = body.permissions
     if (body.role !== undefined) update.role = body.role
-    if (body.password) update.password_hash = createHash('sha256').update(body.password).digest('hex')
+    if (body.password) update.password_hash = await bcrypt.hash(body.password, 12)
     const { error } = await supabaseAdmin.from('admin_users').update(update).eq('id', id)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     return NextResponse.json({ success: true })

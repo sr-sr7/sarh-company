@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import { createHash } from 'crypto'
+import bcrypt from 'bcryptjs'
 
 export const runtime = 'nodejs'
 
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     if (username.trim() === 'admin') {
       return NextResponse.json({ error: 'اسم المستخدم "admin" محجوز' }, { status: 400 })
     }
-    const hash = createHash('sha256').update(password).digest('hex')
+    const hash = await bcrypt.hash(password, 12)
     const { data, error } = await supabaseAdmin
       .from('admin_users')
       .insert({ username: username.trim(), password_hash: hash, role: role || 'user', permissions: permissions || {} })
