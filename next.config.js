@@ -46,7 +46,17 @@ const nextConfig = {
       ]
     },
     async redirects() {
-      return [{ source: '/favicon.ico', destination: '/icon-192.png', permanent: true }]
+      const toApex = host => ({
+        source: '/:path*',
+        has: [{ type: 'host', value: host }],
+        destination: 'https://sarh-company.com/:path*',
+        permanent: true,
+      })
+      return [
+        toApex('www.sarh-company.com'),
+        toApex('sarh-drab.vercel.app'),
+        { source: '/favicon.ico', destination: '/icon-192.png', permanent: true },
+      ]
     },
   } : {}),
 
