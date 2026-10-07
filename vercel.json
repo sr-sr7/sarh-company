@@ -1,0 +1,11 @@
+{
+  "regions": ["fra1"],
+  "functions": {
+    "src/app/api/**": {
+      "maxDuration": 10
+    },
+    "src/app/api/admin/upload/route.ts": {
+      "maxDuration": 60
+    }
+  }
+}
